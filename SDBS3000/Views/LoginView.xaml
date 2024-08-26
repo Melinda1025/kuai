@@ -1,0 +1,69 @@
+﻿<UserControl x:Class="SDBS3000.Views.LoginView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="clr-namespace:SDBS3000.Controls"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:hc="https://handyorg.github.io/handycontrol"
+             xmlns:local="clr-namespace:SDBS3000.Views"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:o="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options"
+             xmlns:vm="clr-namespace:SDBS3000.ViewModels"
+             Width="1920"
+             Height="1080"
+             d:DataContext="{d:DesignInstance vm:LoginViewModel}"
+             mc:Ignorable="d">
+    <UserControl.Background>
+        <ImageBrush ImageSource="../Assets/Images/Login/背景.png" />
+    </UserControl.Background>
+    <UserControl.Resources />
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2*" />
+            <RowDefinition Height="0.6*" />
+            <RowDefinition Height="0.6*" />
+            <RowDefinition Height="*" />
+            <RowDefinition />
+
+        </Grid.RowDefinitions>
+
+        <controls:SpacedTextBlock Margin="0,0,0,50"
+                                  Padding="2"
+                                  HorizontalAlignment="Center"
+                                  VerticalAlignment="Bottom"
+                                  FontSize="40"
+                                  FontWeight="ExtraLight"
+                                  Foreground="White"
+                                  Text="Super Dynamic Balance System 3000" />
+        <ComboBox Grid.Row="1"
+                  Width="475"
+                  Height="70"
+                  Padding="4,1"
+                  BorderThickness="0"
+                  FocusVisualStyle="{StaticResource FocusVisual}"
+                  FontSize="24"
+                  IsEditable="True" />
+        <hc:PasswordBox Grid.Row="2"
+                        Width="475"
+                        Height="70" />
+
+        <Button Grid.Row="3"
+                Width="475"
+                Height="70"
+                VerticalAlignment="Bottom"
+                BorderThickness="0"
+                Command="{Binding LoginCommand}"
+                Content="登录"
+                FontSize="24"
+                Foreground="White" />
+
+        <controls:SpacedTextBlock Grid.Row="4"
+                                  Margin="0,0,0,50"
+                                  Padding="0.5"
+                                  HorizontalAlignment="Center"
+                                  VerticalAlignment="Bottom"
+                                  FontSize="20"
+                                  FontWeight="ExtraLight"
+                                  Foreground="White"
+                                  Text="© Shanghai Jianping Dynamic Balancing Machine Manufacturing Co.,L" />
+    </Grid>
+</UserControl>

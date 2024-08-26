@@ -1,0 +1,111 @@
+﻿<UserControl x:Class="SDBS3000.Views.IndexView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="clr-namespace:SDBS3000.Controls"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:hc="https://handyorg.github.io/handycontrol"
+             xmlns:local="clr-namespace:SDBS3000.Views"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:o="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options"
+             xmlns:vm="clr-namespace:SDBS3000.ViewModels"
+             Width="1920"
+             Height="1080"
+             d:DataContext="{d:DesignInstance vm:IndexViewModel}"
+             mc:Ignorable="d">
+    <UserControl.Background>
+        <ImageBrush ImageSource="../Assets/Images/背景.png" />
+    </UserControl.Background>
+    <UserControl.Resources>
+        <ImageBrush x:Key="SelectedBgBrush"
+                    o:Freeze="True"
+                    ImageSource="../Assets/Images/Measure/按钮选中背景.png" />
+        <Style x:Key="ToolRadioButtonStyle" TargetType="RadioButton">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="FontSize" Value="18" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="RadioButton">
+                        <Border Background="{TemplateBinding Background}">
+                            <hc:SimpleStackPanel HorizontalAlignment="Center"
+                                                 VerticalAlignment="Center"
+                                                 Orientation="Vertical">
+                                <Border Name="Icon"
+                                        Width="80"
+                                        Height="80"
+                                        HorizontalAlignment="Center"
+                                        Background="{TemplateBinding hc:BackgroundSwitchElement.MouseHoverBackground}" />
+                                <ContentPresenter HorizontalAlignment="Center" />
+                            </hc:SimpleStackPanel>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter Property="Background" Value="{StaticResource SelectedBgBrush}" />
+                                <Setter TargetName="Icon" Property="Background" Value="{Binding RelativeSource={RelativeSource Mode=Self}, Path=(hc:BackgroundSwitchElement.MouseDownBackground)}" />
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="{StaticResource SelectedBgBrush}" />
+                                <Setter TargetName="Icon" Property="Background" Value="{Binding RelativeSource={RelativeSource Mode=Self}, Path=(hc:BackgroundSwitchElement.MouseDownBackground)}" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="ToolButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="FontSize" Value="18" />
+            <Setter Property="BorderThickness" Value="0" />
+        </Style>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80" />
+            <RowDefinition />
+            <RowDefinition Height="120" />
+        </Grid.RowDefinitions>
+
+        <!--  标题栏  -->
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition />
+                <ColumnDefinition Width="auto" />
+            </Grid.ColumnDefinitions>
+
+            <Image Margin="20,10" Source="../Assets/Images/剑平logo.png" />
+
+
+            <controls:DateTimeViewer Grid.Column="2"
+                                     Margin="30,0"
+                                     VerticalAlignment="Center" />
+        </Grid>
+        <!--  子页面  -->
+        <ContentControl Grid.Row="1" Content="{Binding Page}" />
+
+        <!--  导航栏  -->
+        <UniformGrid Grid.Row="2" Rows="1">
+            <UniformGrid.Background>
+                <ImageBrush ImageSource="../Assets/Images/Measure/底部栏.png" />
+            </UniformGrid.Background>
+            <RadioButton Content="动平衡" Style="{StaticResource ToolRadioButtonStyle}" />
+            <RadioButton Content="端径跳" Style="{StaticResource ToolRadioButtonStyle}" />
+            <RadioButton Command="{Binding NavigatePageCommand}"
+                         CommandParameter="{x:Type local:CalView}"
+                         Content="标定"
+                         Style="{StaticResource ToolRadioButtonStyle}" />
+            <RadioButton Content="转子设置" Style="{StaticResource ToolRadioButtonStyle}" />
+            <RadioButton Content="机器设置" Style="{StaticResource ToolRadioButtonStyle}" />
+            <RadioButton Content="夹具补偿" Style="{StaticResource ToolRadioButtonStyle}" />
+            <RadioButton Content="键补偿" Style="{StaticResource ToolRadioButtonStyle}" />
+            <RadioButton Content="定位" Style="{StaticResource ToolRadioButtonStyle}" />
+            <RadioButton Content="单步" Style="{StaticResource ToolRadioButtonStyle}" />
+            <RadioButton Content="用户管理" Style="{StaticResource ToolRadioButtonStyle}" />
+            <RadioButton Content="打印" Style="{StaticResource ToolRadioButtonStyle}" />
+            <RadioButton Content="记录" Style="{StaticResource ToolRadioButtonStyle}" />
+            <RadioButton Content="报警" Style="{StaticResource ToolRadioButtonStyle}" />
+            <Button Content="退出" Style="{StaticResource ToolButtonStyle}" />
+        </UniformGrid>
+    </Grid>
+</UserControl>
