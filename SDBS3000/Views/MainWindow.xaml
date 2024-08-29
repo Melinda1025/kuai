@@ -15,7 +15,9 @@
         WindowStyle="None"
         mc:Ignorable="d">
     <Viewbox Stretch="Fill">
-        <hc:DialogContainer Width="1920" Height="1080">
+        <hc:DialogContainer Width="1920"
+                            Height="1080"
+                            hc:Dialog.Token="MainContainer">
             <ContentControl Content="{Binding Content, Mode=OneWay}" />
         </hc:DialogContainer>
     </Viewbox>

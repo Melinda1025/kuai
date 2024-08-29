@@ -9,8 +9,10 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/HandyControl;component/Themes/SkinDefault.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/HandyControl;component/Themes/Theme.xaml" />
+                <ResourceDictionary Source="Dictionary/Converter.xaml" />
                 <ResourceDictionary Source="Dictionary/ImageBrushes.xaml" />
                 <ResourceDictionary Source="Dictionary/Button.xaml" />
+                <ResourceDictionary Source="Dictionary/ComboBox.xaml" />
                 <ResourceDictionary Source="Dictionary/TextBox.xaml" />
             </ResourceDictionary.MergedDictionaries>
 

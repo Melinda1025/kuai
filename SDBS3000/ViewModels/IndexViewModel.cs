@@ -27,5 +27,11 @@ namespace SDBS3000.ViewModels
             var view = App.Container.Resolve(type, IfUnresolved.Throw);
             Page = view;
         }
+
+        [RelayCommand]
+        public void Exit()
+        {
+            App.Current.Shutdown();
+        }
     }
 }

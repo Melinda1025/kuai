@@ -1,0 +1,87 @@
+﻿<UserControl x:Class="SDBS3000.Controls.SupportModeEditor"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:SDBS3000.Controls"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d">
+    <UserControl.Resources>
+        <Style x:Key="EmptyTextBox" TargetType="TextBox">
+            <Setter Property="TextAlignment" Value="Center" />
+            <Setter Property="MinWidth" Value="91" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="CaretBrush" Value="White" />
+            <Setter Property="FontSize" Value="21" />
+            <Setter Property="Padding" Value="5" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="20">
+                            <ScrollViewer Name="PART_ContentHost"
+                                          VerticalAlignment="Center"
+                                          HorizontalScrollBarVisibility="Hidden"
+                                          IsEnabled="False"
+                                          VerticalScrollBarVisibility="Hidden" />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+    <Viewbox>
+        <Border Name="BackgroundBorder"
+                Width="1000"
+                Height="500"
+                Background="{StaticResource 支撑编辑1}">
+            <Canvas>
+                <TextBox x:Name="R1Tbx"
+                         Canvas.Left="40"
+                         Canvas.Top="210"
+                         HorizontalAlignment="Left"
+                         VerticalAlignment="Center"
+                         Style="{StaticResource EmptyTextBox}"
+                         Text="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:SupportModeEditor}, Path=R1, Mode=TwoWay, Converter={StaticResource TextToNullableDoubleConverter}, UpdateSourceTrigger=LostFocus}" />
+                <TextBox x:Name="R2Tbx"
+                         Canvas.Left="870"
+                         Canvas.Top="226"
+                         Canvas.Right="53"
+                         HorizontalAlignment="Left"
+                         VerticalAlignment="Center"
+                         Style="{StaticResource EmptyTextBox}"
+                         Text="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:SupportModeEditor}, Path=R2, Mode=TwoWay, UpdateSourceTrigger=LostFocus, Converter={StaticResource TextToNullableDoubleConverter}}" />
+                <TextBox x:Name="ATbx"
+                         Canvas.Left="216"
+                         Canvas.Top="73"
+                         HorizontalAlignment="Left"
+                         VerticalAlignment="Center"
+                         Style="{StaticResource EmptyTextBox}"
+                         Text="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:SupportModeEditor}, Path=A, Mode=TwoWay, UpdateSourceTrigger=LostFocus, Converter={StaticResource TextToNullableDoubleConverter}}" />
+                <TextBox x:Name="BTbx"
+                         Canvas.Left="460"
+                         Canvas.Top="73"
+                         HorizontalAlignment="Left"
+                         VerticalAlignment="Center"
+                         Style="{StaticResource EmptyTextBox}"
+                         Text="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:SupportModeEditor}, Path=B, Mode=TwoWay, UpdateSourceTrigger=LostFocus, Converter={StaticResource TextToNullableDoubleConverter}}" />
+                <TextBox x:Name="CTbx"
+                         Canvas.Left="697"
+                         Canvas.Top="73"
+                         HorizontalAlignment="Left"
+                         VerticalAlignment="Center"
+                         Style="{StaticResource EmptyTextBox}"
+                         Text="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:SupportModeEditor}, Path=C, Mode=TwoWay, UpdateSourceTrigger=LostFocus, Converter={StaticResource TextToNullableDoubleConverter}}" />
+                <TextBox x:Name="SpeedTbx"
+                         Canvas.Left="344"
+                         Canvas.Top="261"
+                         MinWidth="284"
+                         MinHeight="62"
+                         HorizontalAlignment="Left"
+                         VerticalAlignment="Center"
+                         FontSize="32"
+                         Style="{StaticResource EmptyTextBox}"
+                         Text="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:SupportModeEditor}, Path=Speed, Mode=TwoWay, UpdateSourceTrigger=LostFocus, Converter={StaticResource TextToNullableDoubleConverter}}" />
+            </Canvas>
+        </Border>
+    </Viewbox>
+</UserControl>

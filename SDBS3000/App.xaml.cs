@@ -14,6 +14,8 @@ using System.Windows;
 using System.Windows.Threading;
 using SDBS3000.Views;
 using SDBS3000.ViewModels;
+using SDBS3000.ViewModels.Dialogs;
+using SDBS3000.Views.Dialogs;
 
 namespace SDBS3000
 {
@@ -97,6 +99,8 @@ namespace SDBS3000
             Container.Register<IndexView>(Reuse.Singleton);
             Container.Register<CalViewModel>(Reuse.Singleton);
             Container.Register<CalView>(Reuse.Singleton);
+            Container.Register<RotorViewModel>(Reuse.Singleton);
+            Container.Register<RotorView>(Reuse.Singleton);
         }
 
         /// <summary>

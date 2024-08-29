@@ -5,6 +5,7 @@
              xmlns:hc="https://handyorg.github.io/handycontrol"
              xmlns:local="clr-namespace:SDBS3000.Views"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:o="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options"
              xmlns:vm="clr-namespace:SDBS3000.ViewModels"
              Width="1720"
              Height="680"
@@ -12,53 +13,23 @@
              d:DataContext="{d:DesignInstance vm:CalViewModel}"
              mc:Ignorable="d">
     <UserControl.Resources>
-        <LinearGradientBrush x:Key="MeasureTextBrush" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0" EndPoint="0.5,1">
+        <LinearGradientBrush x:Key="ConfirmBrush" o:Freeze="True" StartPoint="0,0" EndPoint="0,1">
+            <GradientStop Offset="0.0" Color="#35BAFF" />
+            <GradientStop Offset="1.0" Color="#073045" />
+        </LinearGradientBrush>
+        <LinearGradientBrush x:Key="StopBrush" o:Freeze="True" StartPoint="0,0" EndPoint="0,1">
+            <GradientStop Offset="0.0" Color="#DF2121" />
+            <GradientStop Offset="1.0" Color="#3B0505" />
+        </LinearGradientBrush>
+        <LinearGradientBrush x:Key="UnableBrush" o:Freeze="True" StartPoint="0,0" EndPoint="0,1">
+            <GradientStop Offset="1.0" Color="#8C8C8C" />
+            <GradientStop Offset="0.0" Color="#3E3E3E" />
+        </LinearGradientBrush>
+        <LinearGradientBrush x:Key="MeasureTextBrush" o:Freeze="True" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0" EndPoint="0.5,1">
             <GradientStop Offset="0" Color="#FFFFFF" />
             <GradientStop Offset="1" Color="#7FE6FF" />
         </LinearGradientBrush>
-        <Style x:Key="CalTbxStyle" TargetType="TextBox">
-            <Setter Property="Background" Value="{StaticResource 标定文本框}" />
-            <Setter Property="BorderBrush" Value="#FFABAdB3" />
-            <Setter Property="BorderThickness" Value="1" />
-            <Setter Property="FontSize" Value="24" />
-            <Setter Property="Height" Value="60" />
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type TextBox}">
-                        <Border x:Name="border"
-                                Background="{TemplateBinding Background}"
-                                BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="{TemplateBinding BorderThickness}"
-                                SnapsToDevicePixels="True">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="40*" />
-                                    <ColumnDefinition Width="99*" />
-                                </Grid.ColumnDefinitions>
-                                <TextBlock HorizontalAlignment="Center"
-                                           VerticalAlignment="Center"
-                                           FontSize="20"
-                                           Foreground="#35BAFF"
-                                           Text="{TemplateBinding Tag}" />
-                                <ScrollViewer x:Name="PART_ContentHost"
-                                              Grid.Column="1"
-                                              HorizontalScrollBarVisibility="Hidden"
-                                              IsEnabled="False"
-                                              VerticalScrollBarVisibility="Hidden" />
-                            </Grid>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="true">
-                                <Setter TargetName="border" Property="BorderBrush" Value="#FF7EB4EA" />
-                            </Trigger>
-                            <Trigger Property="IsKeyboardFocused" Value="true">
-                                <Setter TargetName="border" Property="BorderBrush" Value="#FF569DE5" />
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
+
         <Style x:Key="CalRbtnStyle" TargetType="RadioButton">
             <Setter Property="Background" Value="{StaticResource 单选框}" />
             <Setter Property="Width" Value="67" />
@@ -77,6 +48,42 @@
                 </Setter.Value>
             </Setter>
         </Style>
+
+        <Style x:Key="CalBtnStyle" TargetType="Button">
+            <Setter Property="Background" Value="{StaticResource ConfirmBrush}" />
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="BorderThickness" Value="2" />
+            <Setter Property="Width" Value="138" />
+            <Setter Property="Height" Value="60" />
+            <Setter Property="FontSize" Value="22" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Name="border"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="10">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter TargetName="border" Property="Opacity" Value="0.8" />
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="true">
+                                <Setter TargetName="border" Property="Opacity" Value="0.8" />
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter TargetName="border" Property="Background" Value="{StaticResource UnableBrush}" />
+                                <Setter TargetName="border" Property="BorderBrush" Value="#8C8C8C" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+
     </UserControl.Resources>
     <Border Background="{StaticResource 主体模块背景}" CornerRadius="20">
         <Grid>
@@ -94,7 +101,7 @@
                 <TextBlock HorizontalAlignment="Center"
                            VerticalAlignment="Center"
                            Foreground="{StaticResource MeasureTextBrush}">
-                    <Run FontSize="35" Text="{Binding Speed}" />
+                    <Run FontSize="35" />
                     <Run FontSize="28" Text="r/min" />
                 </TextBlock>
             </Border>
@@ -147,16 +154,20 @@
                                           Color="#35BAFF" />
                     </Border.Effect>
                     <Canvas>
-                        <Border Canvas.Left="145"
+                        <Border Name="Arrow1"
+                                Canvas.Left="145"
                                 Canvas.Top="19"
                                 Width="29"
                                 Height="33"
-                                Background="{StaticResource 箭头}" />
-                        <Border Canvas.Left="241"
+                                Background="{StaticResource 箭头}"
+                                Visibility="Collapsed" />
+                        <Border Name="Arrow2"
+                                Canvas.Left="241"
                                 Canvas.Top="29"
                                 Width="29"
                                 Height="33"
-                                Background="{StaticResource 箭头}" />
+                                Background="{StaticResource 箭头}"
+                                Visibility="Collapsed" />
                     </Canvas>
                 </Border>
 
@@ -194,26 +205,110 @@
                     <ColumnDefinition Width="auto" />
                     <ColumnDefinition />
                     <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="auto" />
                 </Grid.ColumnDefinitions>
 
-                <RadioButton Style="{StaticResource CalRbtnStyle}" />
-                <RadioButton Grid.Row="1" Style="{StaticResource CalRbtnStyle}" />
-                <RadioButton Grid.Row="2" Style="{StaticResource CalRbtnStyle}" />
+                <RadioButton Name="CalRbtn1"
+                             Checked="CalRbtn_Checked"
+                             Style="{StaticResource CalRbtnStyle}"
+                             Tag="1" />
+                <RadioButton Name="CalRbtn2"
+                             Grid.Row="1"
+                             Checked="CalRbtn_Checked"
+                             Style="{StaticResource CalRbtnStyle}"
+                             Tag="2" />
+                <RadioButton Name="CalRbtn3"
+                             Grid.Row="2"
+                             Checked="CalRbtn_Checked"
+                             Style="{StaticResource CalRbtnStyle}"
+                             Tag="3" />
 
-                <hc:UniformSpacingPanel Grid.Column="1"
-                                        Margin="20,0,0,0"
-                                        VerticalAlignment="Center"
-                                        Orientation="Horizontal"
-                                        Spacing="10">
-                    <TextBlock Text="平面1相位加" />
-                    <TextBox Width="180" />
-                    <TextBlock>
+                <Border Name="SelectorBorder"
+                        Grid.Column="1"
+                        Grid.ColumnSpan="3"
+                        Background="{StaticResource 标定步骤背景}"
+                        Visibility="Collapsed" />
+                <hc:SimpleStackPanel Grid.Column="1"
+                                     Margin="20,0,0,0"
+                                     Orientation="Horizontal">
+                    <TextBlock Margin="0,0,10,0"
+                               VerticalAlignment="Center"
+                               Text="平面1相位加" />
+                    <TextBox Width="180"
+                             Margin="0,0,10,0"
+                             Style="{StaticResource SciTbxStyle}" />
+                    <TextBlock Margin="0,0,10,0" VerticalAlignment="Center">
                         <Run Text="°, " />
                         <Run Text="感量加" />
                     </TextBlock>
-                    <TextBox Width="180" />
+                    <TextBox Width="180"
+                             Margin="0,0,10,0"
+                             Style="{StaticResource SciTbxStyle}" />
+                    <TextBlock VerticalAlignment="Center" Text="°相位" />
 
-                </hc:UniformSpacingPanel>
+                </hc:SimpleStackPanel>
+                <hc:SimpleStackPanel Grid.Row="1"
+                                     Grid.Column="1"
+                                     Margin="20,0,0,0"
+                                     Orientation="Horizontal">
+                    <TextBlock Margin="0,0,10,0"
+                               VerticalAlignment="Center"
+                               Text="平面2相位加" />
+                    <TextBox Width="180"
+                             Margin="0,0,10,0"
+                             Style="{StaticResource SciTbxStyle}" />
+                    <TextBlock Margin="0,0,10,0" VerticalAlignment="Center">
+                        <Run Text="°, " />
+                        <Run Text="感量加" />
+                    </TextBlock>
+                    <TextBox Width="180"
+                             Margin="0,0,10,0"
+                             Style="{StaticResource SciTbxStyle}" />
+                    <TextBlock VerticalAlignment="Center" Text="°相位" />
+
+                </hc:SimpleStackPanel>
+                <TextBlock Grid.Row="2"
+                           Grid.Column="1"
+                           Margin="20,0,0,0"
+                           VerticalAlignment="Center"
+                           Text="转子不加感量" />
+
+                <Button Grid.Column="2"
+                        Margin="15,0"
+                        Content="测量"
+                        IsEnabled="{Binding ElementName=CalRbtn1, Path=IsChecked}"
+                        Style="{StaticResource CalBtnStyle}" />
+                <Button Grid.Column="3"
+                        Background="{StaticResource StopBrush}"
+                        Content="停止"
+                        IsEnabled="{Binding ElementName=CalRbtn1, Path=IsChecked}"
+                        Style="{StaticResource CalBtnStyle}" />
+
+                <Button Grid.Row="1"
+                        Grid.Column="2"
+                        Margin="15,0"
+                        Content="测量"
+                        IsEnabled="{Binding ElementName=CalRbtn2, Path=IsChecked}"
+                        Style="{StaticResource CalBtnStyle}" />
+                <Button Grid.Row="1"
+                        Grid.Column="3"
+                        Background="{StaticResource StopBrush}"
+                        Content="停止"
+                        IsEnabled="{Binding ElementName=CalRbtn2, Path=IsChecked}"
+                        Style="{StaticResource CalBtnStyle}" />
+
+                <Button Grid.Row="2"
+                        Grid.Column="2"
+                        Margin="15,0"
+                        Content="测量"
+                        IsEnabled="{Binding ElementName=CalRbtn3, Path=IsChecked}"
+                        Style="{StaticResource CalBtnStyle}" />
+                <Button Grid.Row="2"
+                        Grid.Column="3"
+                        Background="{StaticResource StopBrush}"
+                        Content="停止"
+                        IsEnabled="{Binding ElementName=CalRbtn3, Path=IsChecked}"
+                        Style="{StaticResource CalBtnStyle}" />
             </Grid>
 
 
@@ -224,7 +319,7 @@
                     HorizontalAlignment="Stretch"
                     VerticalAlignment="Top"
                     hc:BorderElement.CornerRadius="0"
-                    Background="{StaticResource 蓝色模块1}"
+                    Background="{StaticResource 蓝色模块上圆角}"
                     BorderThickness="0"
                     Style="{StaticResource CommonBtnStyle}">
                 <hc:SimpleStackPanel Margin="0,20,0,0" Orientation="Vertical">
