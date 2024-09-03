@@ -1,4 +1,4 @@
-﻿using SDBS3000.ViewModels;
+﻿using SDBS3000.ViewModels.Dialogs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,22 +14,17 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace SDBS3000.Views
+namespace SDBS3000.Views.Dialogs
 {
     /// <summary>
-    /// LoginView.xaml 的交互逻辑
+    /// AxisParamsDialog.xaml 的交互逻辑
     /// </summary>
-    public partial class LoginView : UserControl
+    public partial class AxisParamsDialog : UserControl
     {
-        public LoginView(LoginViewModel model)
+        public AxisParamsDialog(AxisParamsViewModel model)
         {
             InitializeComponent();
-            this.DataContext = model;
-        }
-
-        private void CloseBtn_Click(object sender, RoutedEventArgs e)
-        {
-            App.Current.Shutdown();
+            DataContext = model;
         }
     }
 }

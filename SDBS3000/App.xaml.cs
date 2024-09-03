@@ -24,7 +24,7 @@ namespace SDBS3000
     /// </summary>
     public partial class App : Application
     {
-        public static IContainer Container { get; } = new Container();
+        public static Container Container { get; } = new Container();
         private readonly ILogger logger;
         public App()
         {            
@@ -101,6 +101,20 @@ namespace SDBS3000
             Container.Register<CalView>(Reuse.Singleton);
             Container.Register<RotorViewModel>(Reuse.Singleton);
             Container.Register<RotorView>(Reuse.Singleton);
+            Container.Register<SettingViewModel>(Reuse.Singleton);
+            Container.Register<SettingView>(Reuse.Singleton);
+            Container.Register<PositionViewModel>(Reuse.Singleton);
+            Container.Register<PositionView>(Reuse.Singleton);
+            Container.Register<AxisParamsViewModel>(Reuse.Singleton);
+            Container.Register<AxisParamsDialog>(Reuse.Singleton);
+            Container.Register<KeyCompensationViewModel>(Reuse.Singleton);
+            Container.Register<KeyCompensationView>(Reuse.Singleton);
+            Container.Register<SingleStepViewModel>(Reuse.Singleton);
+            Container.Register<SingleStepView>(Reuse.Singleton);
+            Container.Register<UserViewModel>(Reuse.Singleton);
+            Container.Register<UserView>(Reuse.Singleton);
+            Container.Register<AlarmViewModel>(Reuse.Singleton);
+            Container.Register<AlarmView>(Reuse.Singleton);
         }
 
         /// <summary>

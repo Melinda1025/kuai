@@ -7,6 +7,7 @@
              xmlns:local="clr-namespace:SDBS3000.Views"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:o="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options"
+             xmlns:system="clr-namespace:System;assembly=mscorlib"
              xmlns:vm="clr-namespace:SDBS3000.ViewModels"
              Width="1920"
              Height="1080"
@@ -15,16 +16,234 @@
     <UserControl.Background>
         <ImageBrush ImageSource="../Assets/Images/Login/背景.png" />
     </UserControl.Background>
-    <UserControl.Resources />
+    <UserControl.Resources>
+        <ImageBrush x:Key="输入框"
+                    o:Freeze="True"
+                    ImageSource="../Assets/Images/Login/输入框.png"
+                    Stretch="Fill" />
+        <ImageBrush x:Key="登录按钮"
+                    o:Freeze="True"
+                    ImageSource="../Assets/Images/Login/登录按钮.png" />
+        <ControlTemplate x:Key="IconSciComboBoxTemplate" TargetType="ComboBox">
+            <Grid Name="root">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" MinWidth="70" />
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <Border Name="border"
+                        Grid.ColumnSpan="3"
+                        MinHeight="70"
+                        Background="{StaticResource 输入框}" />
+
+                <TextBlock Margin="25,5,15,5"
+                           VerticalAlignment="Center"
+                           FontFamily="../Assets/Fonts/#iconfont"
+                           FontSize="30"
+                           Foreground="#3baaff"
+                           Text="{TemplateBinding Tag}" />
+                <hc:Divider Margin="0,20"
+                            HorizontalAlignment="Right"
+                            BorderThickness="1"
+                            LineStroke="#026fc4"
+                            Orientation="Vertical" />
+                <hc:ToggleBlock Grid.Column="1"
+                                Margin="0,0,10,0"
+                                Padding="5,0"
+                                HorizontalContentAlignment="Stretch"
+                                VerticalContentAlignment="Stretch"
+                                Background="Transparent"
+                                IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                ToggleGesture="LeftClick">
+                    <hc:ToggleBlock.UnCheckedContent>
+                        <Path Name="UnCheckedPath"
+                              Width="22"
+                              Margin="{Binding Padding, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource ThicknessSplitConverter}, ConverterParameter='0,0,1,0'}"
+                              HorizontalAlignment="Right"
+                              VerticalAlignment="Center"
+                              Data="{StaticResource DownGeometry}"
+                              Fill="#3baaff"
+                              Stretch="Uniform" />
+                    </hc:ToggleBlock.UnCheckedContent>
+                    <hc:ToggleBlock.CheckedContent>
+                        <Path Width="22"
+                              Margin="{Binding Padding, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource ThicknessSplitConverter}, ConverterParameter='0,0,1,0'}"
+                              HorizontalAlignment="Right"
+                              VerticalAlignment="Center"
+                              Data="{StaticResource UpGeometry}"
+                              Fill="White"
+                              Stretch="Uniform" />
+                    </hc:ToggleBlock.CheckedContent>
+                </hc:ToggleBlock>
+                <hc:ToggleBlock Name="toggleBlock"
+                                Grid.Column="1"
+                                Grid.ColumnSpan="2"
+                                HorizontalContentAlignment="Stretch"
+                                VerticalContentAlignment="Stretch"
+                                Background="Transparent"
+                                IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                ToggleGesture="LeftClick" />
+                <TextBox x:Name="PART_EditableTextBox"
+                         Grid.Column="1"
+                         Padding="{TemplateBinding Padding}"
+                         HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                         VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                         Background="{TemplateBinding Background}"
+                         CaretBrush="White"
+                         Foreground="White"
+                         IsReadOnly="{Binding IsReadOnly, RelativeSource={RelativeSource TemplatedParent}}"
+                         Style="{StaticResource ComboBoxEditableTextBox}" />
+                <Popup x:Name="PART_Popup"
+                       AllowsTransparency="true"
+                       IsOpen="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                       Placement="Bottom"
+                       PlacementTarget="{Binding ElementName=border}"
+                       PopupAnimation="{StaticResource {x:Static SystemParameters.ComboBoxPopupAnimationKey}}">
+                    <Border x:Name="dropDownBorder"
+                            MinWidth="{Binding ActualWidth, ElementName=root}"
+                            MaxHeight="{TemplateBinding MaxDropDownHeight}"
+                            Background="{StaticResource 下拉框}">
+                        <hc:ToggleBlock HorizontalContentAlignment="Stretch"
+                                        VerticalContentAlignment="Stretch"
+                                        IsChecked="{Binding HasItems, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}">
+                            <hc:ToggleBlock.CheckedContent>
+                                <ScrollViewer Margin="12">
+                                    <ItemsPresenter x:Name="ItemsPresenter"
+                                                    KeyboardNavigation.DirectionalNavigation="Contained"
+                                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                </ScrollViewer>
+                            </hc:ToggleBlock.CheckedContent>
+                            <hc:ToggleBlock.UnCheckedContent>
+                                <hc:Empty />
+                            </hc:ToggleBlock.UnCheckedContent>
+                        </hc:ToggleBlock>
+                    </Border>
+                </Popup>
+            </Grid>
+            <ControlTemplate.Triggers>
+                <Trigger Property="HasItems" Value="false">
+                    <Setter TargetName="dropDownBorder" Property="Height" Value="95" />
+                </Trigger>
+                <Trigger Property="hc:DropDownElement.ConsistentWidth" Value="True">
+                    <Setter TargetName="dropDownBorder" Property="MaxWidth" Value="{Binding ActualWidth, ElementName=border}" />
+                    <Setter TargetName="dropDownBorder" Property="MinWidth" Value="{Binding ActualWidth, ElementName=border}" />
+                </Trigger>
+                <Trigger Property="hc:DropDownElement.AutoWidth" Value="True">
+                    <Setter TargetName="dropDownBorder" Property="MaxWidth" Value="{x:Static system:Double.MaxValue}" />
+                    <Setter TargetName="dropDownBorder" Property="MinWidth" Value="{Binding ActualHeight, ElementName=border}" />
+                </Trigger>
+                <MultiTrigger>
+                    <MultiTrigger.Conditions>
+                        <Condition Property="IsMouseOver" Value="true" />
+                        <Condition SourceName="PART_Popup" Property="IsOpen" Value="false" />
+                    </MultiTrigger.Conditions>
+                    <Setter TargetName="UnCheckedPath" Property="Fill" Value="white" />
+                </MultiTrigger>
+                <Trigger Property="IsEnabled" Value="false">
+                    <Setter TargetName="UnCheckedPath" Property="Opacity" Value="0.4" />
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+        <Style x:Key="IconSciTbxStyle" TargetType="hc:PasswordBox">
+            <Setter Property="PasswordChar" Value="●" />
+            <Setter Property="AllowDrop" Value="true" />
+            <Setter Property="ScrollViewer.PanningMode" Value="VerticalFirst" />
+            <Setter Property="Stylus.IsFlicksEnabled" Value="False" />
+            <Setter Property="hc:InfoElement.Symbol" Value="●" />
+            <Setter Property="hc:InfoElement.ContentHeight" Value="{x:Static system:Double.NaN}" />
+            <Setter Property="hc:PasswordBoxAttach.IsMonitoring" Value="True" />
+            <Setter Property="Focusable" Value="False" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="hc:PasswordBox">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto" MinWidth="70" />
+                                <ColumnDefinition />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+
+                            <Border Grid.ColumnSpan="3"
+                                    Background="{StaticResource 输入框}"
+                                    SnapsToDevicePixels="True" />
+
+                            <TextBlock Margin="25,5,15,5"
+                                       VerticalAlignment="Center"
+                                       FontFamily="../Assets/Fonts/#iconfont"
+                                       FontSize="30"
+                                       Foreground="#3baaff"
+                                       Text="{TemplateBinding Tag}" />
+                            <hc:Divider Margin="0,20"
+                                        HorizontalAlignment="Right"
+                                        BorderThickness="1"
+                                        LineStroke="#026fc4"
+                                        Orientation="Vertical" />
+
+                            <PasswordBox x:Name="PART_PasswordBox"
+                                         Grid.Column="1"
+                                         Padding="{TemplateBinding Padding}"
+                                         HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                         VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                         Background="{TemplateBinding Background}"
+                                         CaretBrush="{TemplateBinding CaretBrush}"
+                                         Foreground="{TemplateBinding Foreground}"
+                                         PasswordChar="{TemplateBinding PasswordChar}"
+                                         Style="{StaticResource PasswordBoxPlusInternalStyle}"
+                                         Visibility="{Binding ShowPassword, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource Boolean2VisibilityReConverter}}" />
+                            <hc:WatermarkTextBox x:Name="PART_TextBox"
+                                                 Grid.Column="1"
+                                                 Padding="{TemplateBinding Padding}"
+                                                 HorizontalAlignment="Stretch"
+                                                 HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                 VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                 CaretBrush="{TemplateBinding CaretBrush}"
+                                                 Foreground="{TemplateBinding Foreground}"
+                                                 Visibility="{Binding ShowPassword, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource Boolean2VisibilityConverter}}"
+                                                 Watermark="{Binding Path=(hc:InfoElement.Placeholder), RelativeSource={RelativeSource TemplatedParent}}" />
+                            <ToggleButton x:Name="ButtonEye"
+                                          Grid.Column="2"
+                                          Margin="0,0,15,0"
+                                          Padding="0"
+                                          HorizontalAlignment="Stretch"
+                                          VerticalAlignment="Stretch"
+                                          HorizontalContentAlignment="Left"
+                                          hc:IconElement.Width="22"
+                                          hc:IconSwitchElement.Geometry="{StaticResource EyeCloseGeometry}"
+                                          hc:IconSwitchElement.GeometrySelected="{StaticResource EyeOpenGeometry}"
+                                          Focusable="False"
+                                          Foreground="#3baaff"
+                                          IsChecked="{Binding ShowPassword, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
+                                          Style="{StaticResource ToggleButtonIconTransparent}" />
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="ButtonEye" Property="Foreground" Value="White" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="2*" />
+            <RowDefinition Height="2.15*" />
             <RowDefinition Height="0.6*" />
             <RowDefinition Height="0.6*" />
             <RowDefinition Height="*" />
             <RowDefinition />
-
         </Grid.RowDefinitions>
+
+        <Button Name="CloseBtn"
+                Margin="0,20,20,0"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Top"
+                Click="CloseBtn_Click"
+                Content="&#xe672;"
+                FontSize="40"
+                Style="{StaticResource IconFontButton}" />
 
         <controls:SpacedTextBlock Margin="0,0,0,50"
                                   Padding="2"
@@ -37,14 +256,24 @@
         <ComboBox Grid.Row="1"
                   Width="475"
                   Height="70"
-                  Padding="4,1"
-                  BorderThickness="0"
-                  FocusVisualStyle="{StaticResource FocusVisual}"
+                  Padding="10,0,5,0"
                   FontSize="24"
-                  IsEditable="True" />
+                  IsEditable="True"
+                  IsTabStop="False"
+                  Style="{StaticResource SciComboBoxStyle}"
+                  Tag="&#xe601;"
+                  Template="{StaticResource IconSciComboBoxTemplate}" />
         <hc:PasswordBox Grid.Row="2"
                         Width="475"
-                        Height="70" />
+                        Height="70"
+                        Padding="10,0,5,0"
+                        CaretBrush="White"
+                        FontSize="22"
+                        Foreground="White"
+                        IsSafeEnabled="False"
+                        ShowEyeButton="True"
+                        Style="{StaticResource IconSciTbxStyle}"
+                        Tag="&#xe62b;" />
 
         <Button Grid.Row="3"
                 Width="475"
@@ -54,7 +283,30 @@
                 Command="{Binding LoginCommand}"
                 Content="登录"
                 FontSize="24"
-                Foreground="White" />
+                Foreground="White">
+            <Button.Style>
+                <Style TargetType="Button">
+                    <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}" />
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="Button">
+                                <Border Name="border" Background="{StaticResource 登录按钮}">
+                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="true">
+                                        <Setter TargetName="border" Property="Opacity" Value="0.8" />
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="true">
+                                        <Setter TargetName="border" Property="Opacity" Value="0.5" />
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Button.Style>
+        </Button>
 
         <controls:SpacedTextBlock Grid.Row="4"
                                   Margin="0,0,0,50"

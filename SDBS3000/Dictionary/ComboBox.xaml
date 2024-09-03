@@ -1,4 +1,183 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:hc="https://handyorg.github.io/handycontrol"
-                    xmlns:o="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options" />
+                    xmlns:o="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options"
+                    xmlns:system="clr-namespace:System;assembly=mscorlib">
+    <ControlTemplate x:Key="SciComboBoxTemplate" TargetType="ComboBox">
+        <Grid Name="root">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <hc:SimpleStackPanel Margin="10,0,0,10"
+                                 Orientation="Horizontal"
+                                 Visibility="{TemplateBinding hc:TitleElement.Title,
+                                                              Converter={StaticResource String2VisibilityConverter}}">
+                <Border Width="6"
+                        Height="22"
+                        VerticalAlignment="Center"
+                        Background="#3BAAFF"
+                        CornerRadius="3" />
+                <TextBlock Margin="5,0,0,0"
+                           VerticalAlignment="Center"
+                           FontSize="18"
+                           Foreground="#3BAAFF"
+                           Text="{TemplateBinding hc:TitleElement.Title}" />
+            </hc:SimpleStackPanel>
+
+            <Border Name="border"
+                    Grid.Row="1"
+                    Grid.ColumnSpan="2"
+                    MinHeight="70"
+                    Background="{StaticResource 输入框1}" />
+            <hc:ToggleBlock Grid.Row="1"
+                            Grid.Column="1"
+                            Margin="0,0,10,0"
+                            Padding="5,0"
+                            HorizontalContentAlignment="Stretch"
+                            VerticalContentAlignment="Stretch"
+                            Background="Transparent"
+                            IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                            ToggleGesture="LeftClick">
+                <hc:ToggleBlock.UnCheckedContent>
+                    <Path Name="UnCheckedPath"
+                          Width="22"
+                          Margin="{Binding Padding, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource ThicknessSplitConverter}, ConverterParameter='0,0,1,0'}"
+                          HorizontalAlignment="Right"
+                          VerticalAlignment="Center"
+                          Data="{StaticResource DownGeometry}"
+                          Fill="#3baaff"
+                          Stretch="Uniform" />
+                </hc:ToggleBlock.UnCheckedContent>
+                <hc:ToggleBlock.CheckedContent>
+                    <Path Width="22"
+                          Margin="{Binding Padding, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource ThicknessSplitConverter}, ConverterParameter='0,0,1,0'}"
+                          HorizontalAlignment="Right"
+                          VerticalAlignment="Center"
+                          Data="{StaticResource UpGeometry}"
+                          Fill="White"
+                          Stretch="Uniform" />
+                </hc:ToggleBlock.CheckedContent>
+            </hc:ToggleBlock>
+            <hc:ToggleBlock Name="toggleBlock"
+                            Grid.Row="1"
+                            Grid.Column="0"
+                            Grid.ColumnSpan="2"
+                            HorizontalContentAlignment="Stretch"
+                            VerticalContentAlignment="Stretch"
+                            Background="Transparent"
+                            IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                            ToggleGesture="LeftClick" />
+            <ContentPresenter x:Name="contentPresenter"
+                              Grid.Row="1"
+                              Grid.Column="0"
+                              Margin="{TemplateBinding Padding}"
+                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                              Content="{TemplateBinding SelectionBoxItem}"
+                              ContentStringFormat="{TemplateBinding SelectionBoxItemStringFormat}"
+                              ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
+                              ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
+                              IsHitTestVisible="false"
+                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+            <Popup x:Name="PART_Popup"
+                   Grid.Row="1"
+                   AllowsTransparency="true"
+                   IsOpen="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                   Placement="Bottom"
+                   PlacementTarget="{Binding ElementName=border}"
+                   PopupAnimation="{StaticResource {x:Static SystemParameters.ComboBoxPopupAnimationKey}}">
+                <Border x:Name="dropDownBorder"
+                        MinWidth="{Binding ActualWidth, ElementName=root}"
+                        MaxHeight="{TemplateBinding MaxDropDownHeight}"
+                        Background="{StaticResource 下拉框}">
+                    <hc:ToggleBlock HorizontalContentAlignment="Stretch"
+                                    VerticalContentAlignment="Stretch"
+                                    IsChecked="{Binding HasItems, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}">
+                        <hc:ToggleBlock.CheckedContent>
+                            <ScrollViewer Margin="12">
+                                <ItemsPresenter x:Name="ItemsPresenter"
+                                                KeyboardNavigation.DirectionalNavigation="Contained"
+                                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                            </ScrollViewer>
+                        </hc:ToggleBlock.CheckedContent>
+                        <hc:ToggleBlock.UnCheckedContent>
+                            <hc:Empty />
+                        </hc:ToggleBlock.UnCheckedContent>
+                    </hc:ToggleBlock>
+                </Border>
+            </Popup>
+        </Grid>
+        <ControlTemplate.Triggers>
+            <Trigger Property="HasItems" Value="false">
+                <Setter TargetName="dropDownBorder" Property="Height" Value="95" />
+            </Trigger>
+            <Trigger Property="hc:DropDownElement.ConsistentWidth" Value="True">
+                <Setter TargetName="dropDownBorder" Property="MaxWidth" Value="{Binding ActualWidth, ElementName=border}" />
+                <Setter TargetName="dropDownBorder" Property="MinWidth" Value="{Binding ActualWidth, ElementName=border}" />
+            </Trigger>
+            <Trigger Property="hc:DropDownElement.AutoWidth" Value="True">
+                <Setter TargetName="dropDownBorder" Property="MaxWidth" Value="{x:Static system:Double.MaxValue}" />
+                <Setter TargetName="dropDownBorder" Property="MinWidth" Value="{Binding ActualHeight, ElementName=border}" />
+            </Trigger>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsMouseOver" Value="true" />
+                    <Condition SourceName="PART_Popup" Property="IsOpen" Value="false" />
+                </MultiTrigger.Conditions>
+                <Setter TargetName="UnCheckedPath" Property="Fill" Value="white" />
+            </MultiTrigger>
+            <Trigger Property="IsEnabled" Value="false">
+                <Setter TargetName="UnCheckedPath" Property="Opacity" Value="0.4" />
+                <Setter TargetName="border" Property="Opacity" Value="0.4" />
+                <Setter TargetName="contentPresenter" Property="Opacity" Value="0.4" />
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <Style x:Key="SciComboBoxItemStyle" TargetType="{x:Type ComboBoxItem}">
+        <Setter Property="UIElement.SnapsToDevicePixels" Value="True" />
+        <Setter Property="Padding" Value="10,5" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Foreground" Value="White" />
+        <Setter Property="MinHeight" Value="{StaticResource DefaultControlHeight}" />
+        <Setter Property="Margin" Value="2,4" />
+        <Setter Property="FrameworkElement.FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ComboBoxItem">
+                    <Border Name="border"
+                            Background="{TemplateBinding Background}"
+                            CornerRadius="5">
+                        <ContentPresenter Margin="{TemplateBinding Padding}" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="ListBoxItem.IsSelected" Value="False" />
+                                <Condition Property="UIElement.IsMouseOver" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="border" Property="Background" Value="#770d69af" />
+                        </MultiTrigger>
+                        <Trigger Property="ListBoxItem.IsSelected" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="#770d69af" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="SciComboBoxStyle" TargetType="{x:Type ComboBox}">
+        <Setter Property="Foreground" Value="White" />
+        <Setter Property="HorizontalContentAlignment" Value="Left" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Padding" Value="25,5,5,5" />
+        <Setter Property="FontSize" Value="20" />
+        <Setter Property="Template" Value="{StaticResource SciComboBoxTemplate}" />
+        <Setter Property="ItemContainerStyle" Value="{StaticResource SciComboBoxItemStyle}" />
+    </Style>
+</ResourceDictionary>

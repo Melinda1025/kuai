@@ -1,0 +1,57 @@
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using HandyControl.Tools.Extension;
+using SDBS3000.Core.Utils;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace SDBS3000.ViewModels.Dialogs
+{
+    public partial class ISOViewModel : ObservableObject
+    {
+        private double r1 = 0, r2 = 0;
+        [ObservableProperty]
+        private double balanceLevel = 1;        
+
+        private double speed = 1000;
+        public double Speed
+        {
+            get => speed;
+            set
+            {
+                if (value <= 0) value = 1;
+                SetProperty(ref speed, value);
+            }
+        }
+        
+        private int weight = 2;
+        public int Weight
+        {
+            get => weight;
+            set
+            {
+                if (value <= 0) value = 1;
+                SetProperty(ref weight, value);
+            }
+        }
+
+        public void InitRadius(double r1, double r2)
+        {
+            this.r1 = r1;
+            this.r2 = r2;
+        }
+
+        [RelayCommand]
+        public void CaculateISO()
+        {
+            var panel1MaxUnbalence = r1 == 0 ? 0 : Math.Round(BalanceLevel * 1000 * 10 / Speed * Weight / 2 / r1, 3);
+            var panel2MaxUnbalence = r2 == 0 ? 0 : Math.Round(BalanceLevel * 1000 * 10 / Speed * Weight / 2 / r2, 3);
+            var staticMaxUnbalence = panel1MaxUnbalence + panel2MaxUnbalence;
+            
+            SimpleEventBus<(double, double, double)>.Instance.Publish("CaculateISO_Complete", null, (panel1MaxUnbalence, panel2MaxUnbalence, staticMaxUnbalence));
+        }
+    }
+}

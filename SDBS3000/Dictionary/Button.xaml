@@ -32,6 +32,212 @@
             </Setter.Value>
         </Setter>
     </Style>
+    <LinearGradientBrush x:Key="UnselectedBrush" o:Freeze="True" StartPoint="0,0" EndPoint="0,1">
+        <GradientStop Offset="0.0" Color="#02bbff" />
+        <GradientStop Offset="1.0" Color="#0843c1" />
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="LightUnselectedBrush" o:Freeze="True" StartPoint="0,0" EndPoint="0,1">
+        <GradientStop Offset="0.0" Color="White" />
+        <GradientStop Offset="1.0" Color="#02bbff" />
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="RedUnselectedBrush" o:Freeze="True" StartPoint="0,0" EndPoint="0,1">
+        <GradientStop Offset="0.0" Color="White" />
+        <GradientStop Offset="1.0" Color="#f07373" />
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="SelectedBrush" o:Freeze="True" StartPoint="0,0" EndPoint="0,1">
+        <GradientStop Offset="0.0" Color="#7effa2" />
+        <GradientStop Offset="1.0" Color="#04ff4f" />
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="ConfirmBrush" o:Freeze="True" StartPoint="0,0" EndPoint="0,1">
+        <GradientStop Offset="0.0" Color="#35BAFF" />
+        <GradientStop Offset="1.0" Color="#073045" />
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="StopBrush" o:Freeze="True" StartPoint="0,0" EndPoint="0,1">
+        <GradientStop Offset="0.0" Color="#DF2121" />
+        <GradientStop Offset="1.0" Color="#3B0505" />
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="UnableBrush" o:Freeze="True" StartPoint="0,0" EndPoint="0,1">
+        <GradientStop Offset="1.0" Color="#8C8C8C" />
+        <GradientStop Offset="0.0" Color="#3E3E3E" />
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="MeasureTextBrush" o:Freeze="True" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0" EndPoint="0.5,1">
+        <GradientStop Offset="0" Color="#FFFFFF" />
+        <GradientStop Offset="1" Color="#7FE6FF" />
+    </LinearGradientBrush>
 
+
+    <Style x:Key="CalBtnStyle" TargetType="Button">
+        <Setter Property="Background" Value="{StaticResource ConfirmBrush}" />
+        <Setter Property="Foreground" Value="White" />
+        <Setter Property="BorderThickness" Value="2" />
+        <Setter Property="Width" Value="138" />
+        <Setter Property="Height" Value="60" />
+        <Setter Property="FontSize" Value="22" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border Name="border"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="10">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter TargetName="border" Property="Opacity" Value="0.8" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="true">
+                            <Setter TargetName="border" Property="Opacity" Value="0.5" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource UnableBrush}" />
+                            <Setter TargetName="border" Property="BorderBrush" Value="#8C8C8C" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="ToolButtonStyle" TargetType="Button">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Foreground" Value="White" />
+        <Setter Property="FontSize" Value="18" />
+        <Setter Property="hc:IconElement.Height" Value="50" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border Background="{TemplateBinding Background}">
+                        <hc:SimpleStackPanel Margin="0,10,0,0"
+                                             HorizontalAlignment="Center"
+                                             VerticalAlignment="Center"
+                                             Orientation="Vertical">
+                            <TextBlock Name="IconText"
+                                       Height="{TemplateBinding hc:IconElement.Height}"
+                                       Margin="0,0,0,10"
+                                       HorizontalAlignment="Center"
+                                       FontFamily="../Assets/Fonts/#iconfont"
+                                       FontSize="{TemplateBinding hc:IconElement.Height}"
+                                       Foreground="{StaticResource UnselectedBrush}"
+                                       Text="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Tag}"
+                                       TextAlignment="Center" />
+                            <ContentPresenter HorizontalAlignment="Center" />
+                        </hc:SimpleStackPanel>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="{StaticResource 按钮选中背景}" />
+                            <Setter TargetName="IconText" Property="Foreground" Value="{StaticResource SelectedBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Opacity" Value="0.5" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="LightToolButtonStyle" TargetType="Button">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Foreground" Value="White" />
+        <Setter Property="FontSize" Value="18" />
+        <Setter Property="hc:IconElement.Height" Value="50" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="Bg" Background="{TemplateBinding Background}">
+                        <hc:SimpleStackPanel Margin="0,10,0,0"
+                                             HorizontalAlignment="Center"
+                                             VerticalAlignment="Center"
+                                             Orientation="Vertical">
+                            <TextBlock Name="IconText"
+                                       Height="{TemplateBinding hc:IconElement.Height}"
+                                       Margin="0,0,0,10"
+                                       HorizontalAlignment="Center"
+                                       FontFamily="../Assets/Fonts/#iconfont"
+                                       FontSize="{TemplateBinding hc:IconElement.Height}"
+                                       Foreground="{StaticResource LightUnselectedBrush}"
+                                       Text="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Tag}"
+                                       TextAlignment="Center" />
+                            <ContentPresenter HorizontalAlignment="Center" />
+                        </hc:SimpleStackPanel>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Bg" Property="Background" Value="{StaticResource 按钮选中背景}" />
+                            <Setter TargetName="IconText" Property="Foreground" Value="{StaticResource SelectedBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Opacity" Value="0.5" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="RedToolButtonStyle" TargetType="Button">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Foreground" Value="White" />
+        <Setter Property="FontSize" Value="18" />
+        <Setter Property="hc:IconElement.Height" Value="50" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="Bg" Background="{TemplateBinding Background}">
+                        <hc:SimpleStackPanel Margin="0,10,0,0"
+                                             HorizontalAlignment="Center"
+                                             VerticalAlignment="Center"
+                                             Orientation="Vertical">
+                            <TextBlock Name="IconText"
+                                       Height="{TemplateBinding hc:IconElement.Height}"
+                                       Margin="0,0,0,10"
+                                       HorizontalAlignment="Center"
+                                       FontFamily="../Assets/Fonts/#iconfont"
+                                       FontSize="{TemplateBinding hc:IconElement.Height}"
+                                       Foreground="{StaticResource RedUnselectedBrush}"
+                                       Text="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Tag}"
+                                       TextAlignment="Center" />
+                            <ContentPresenter HorizontalAlignment="Center" />
+                        </hc:SimpleStackPanel>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Bg" Property="Background" Value="{StaticResource 按钮选中背景}" />
+                            <Setter TargetName="IconText" Property="Foreground" Value="{StaticResource SelectedBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Opacity" Value="0.5" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="IconFontButton" TargetType="Button">
+        <Setter Property="FontFamily" Value="../Assets/Fonts/#iconfont" />
+        <Setter Property="Foreground" Value="White" />
+        <Setter Property="FontSize" Value="35" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border Name="border" Background="Transparent">
+                        <ContentPresenter Margin="{TemplateBinding Padding}"
+                                          HorizontalAlignment="Center"
+                                          VerticalAlignment="Center" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Foreground" Value="#80ffffff" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Foreground" Value="#33ffffff" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 
 </ResourceDictionary>

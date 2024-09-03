@@ -44,6 +44,7 @@
         <Setter Property="Height" Value="60" />
         <Setter Property="Foreground" Value="White" />
         <Setter Property="CaretBrush" Value="White" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TextBox}">
@@ -52,11 +53,16 @@
                             SnapsToDevicePixels="True">
                         <ScrollViewer Name="PART_ContentHost"
                                       Margin="{TemplateBinding Padding}"
-                                      VerticalAlignment="Center"
+                                      VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                       HorizontalScrollBarVisibility="Hidden"
                                       IsEnabled="False"
                                       VerticalScrollBarVisibility="Hidden" />
                     </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="border" Property="Opacity" Value="0.4" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -66,11 +72,17 @@
         <Setter Property="Foreground" Value="White" />
         <Setter Property="CaretBrush" Value="White" />
         <Setter Property="FontSize" Value="22" />
+        <Setter Property="Background" Value="{StaticResource 输入框1}" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="Padding" Value="10,5" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="TextBox">
-                    <hc:SimpleStackPanel Orientation="Vertical">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto" />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
                         <hc:SimpleStackPanel Margin="10,0,0,10" Orientation="Horizontal">
                             <Border Width="6"
                                     Height="22"
@@ -83,17 +95,24 @@
                                        Foreground="#3BAAFF"
                                        Text="{TemplateBinding hc:TitleElement.Title}" />
                         </hc:SimpleStackPanel>
-                        <Border MinWidth="{TemplateBinding MinWidth}"
+                        <Border Name="border"
+                                Grid.Row="1"
+                                MinWidth="{TemplateBinding MinWidth}"
                                 MinHeight="70"
-                                Background="{StaticResource 输入框1}">
+                                Background="{TemplateBinding Background}">
                             <ScrollViewer Name="PART_ContentHost"
                                           Margin="{TemplateBinding Padding}"
-                                          VerticalAlignment="Center"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                           HorizontalScrollBarVisibility="Hidden"
                                           IsEnabled="False"
                                           VerticalScrollBarVisibility="Hidden" />
                         </Border>
-                    </hc:SimpleStackPanel>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="border" Property="Opacity" Value="0.4" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

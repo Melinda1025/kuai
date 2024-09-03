@@ -15,50 +15,7 @@
     <UserControl.Background>
         <ImageBrush ImageSource="../Assets/Images/背景.png" />
     </UserControl.Background>
-    <UserControl.Resources>
-        <LinearGradientBrush x:Key="UnselectedBrush" o:Freeze="True" StartPoint="0,0" EndPoint="0,1">
-            <GradientStop Offset="0.0" Color="#02bbff" />
-            <GradientStop Offset="1.0" Color="#0843c1" />
-        </LinearGradientBrush>
-        <LinearGradientBrush x:Key="SelectedBrush" o:Freeze="True" StartPoint="0,0" EndPoint="0,1">
-            <GradientStop Offset="0.0" Color="#7effa2" />
-            <GradientStop Offset="1.0" Color="#04ff4f" />
-        </LinearGradientBrush>
-        <Style x:Key="ToolButtonStyle" TargetType="Button">
-            <Setter Property="Background" Value="Transparent" />
-            <Setter Property="Foreground" Value="White" />
-            <Setter Property="FontSize" Value="18" />
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border Background="{TemplateBinding Background}">
-                            <hc:SimpleStackPanel Margin="0,10,0,0"
-                                                 HorizontalAlignment="Center"
-                                                 VerticalAlignment="Center"
-                                                 Orientation="Vertical">
-                                <TextBlock Name="IconText"
-                                           Height="50"
-                                           Margin="0,0,0,10"
-                                           HorizontalAlignment="Center"
-                                           FontFamily="../Assets/Fonts/#iconfont"
-                                           FontSize="50"
-                                           Foreground="{StaticResource UnselectedBrush}"
-                                           Text="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Tag}"
-                                           TextAlignment="Center" />
-                                <ContentPresenter HorizontalAlignment="Center" />
-                            </hc:SimpleStackPanel>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Background" Value="{StaticResource 按钮选中背景}" />
-                                <Setter TargetName="IconText" Property="Foreground" Value="{StaticResource SelectedBrush}" />
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-    </UserControl.Resources>
+    <UserControl.Resources />
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="80" />
@@ -89,12 +46,12 @@
             <UniformGrid.Background>
                 <ImageBrush ImageSource="../Assets/Images/Measure/底部栏.png" />
             </UniformGrid.Background>
-            <Button Content="动平衡"
+            <Button Content="开始"
                     Style="{StaticResource ToolButtonStyle}"
-                    Tag="&#xe682;" />
-            <Button Content="端径跳"
+                    Tag="&#xe622;" />
+            <Button Content="停止"
                     Style="{StaticResource ToolButtonStyle}"
-                    Tag="&#xeb94;" />
+                    Tag="&#xe62a;" />
             <Button Command="{Binding NavigatePageCommand}"
                     CommandParameter="{x:Type local:CalView}"
                     Content="标定"
@@ -105,22 +62,32 @@
                     Content="转子设置"
                     Style="{StaticResource ToolButtonStyle}"
                     Tag="&#xe6d7;" />
-            <Button Content="机器设置"
+            <Button Command="{Binding NavigatePageCommand}"
+                    CommandParameter="{x:Type local:SettingView}"
+                    Content="机器设置"
                     Style="{StaticResource ToolButtonStyle}"
                     Tag="&#xe637;" />
             <Button Content="夹具补偿"
                     Style="{StaticResource ToolButtonStyle}"
                     Tag="&#xe6f0;" />
-            <Button Content="键补偿"
+            <Button Command="{Binding NavigatePageCommand}"
+                    CommandParameter="{x:Type local:KeyCompensationView}"
+                    Content="键补偿"
                     Style="{StaticResource ToolButtonStyle}"
                     Tag="&#xe642;" />
-            <Button Content="定位"
+            <Button Command="{Binding NavigatePageCommand}"
+                    CommandParameter="{x:Type local:PositionView}"
+                    Content="定位"
                     Style="{StaticResource ToolButtonStyle}"
                     Tag="&#xe8c4;" />
-            <Button Content="单步"
+            <Button Command="{Binding NavigatePageCommand}"
+                    CommandParameter="{x:Type local:SingleStepView}"
+                    Content="单步"
                     Style="{StaticResource ToolButtonStyle}"
                     Tag="&#xe60a;" />
-            <Button Content="用户管理"
+            <Button Command="{Binding NavigatePageCommand}"
+                    CommandParameter="{x:Type local:UserView}"
+                    Content="用户管理"
                     Style="{StaticResource ToolButtonStyle}"
                     Tag="&#xe6ab;" />
             <Button Content="打印"

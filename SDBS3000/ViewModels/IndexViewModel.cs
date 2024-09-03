@@ -24,6 +24,7 @@ namespace SDBS3000.ViewModels
         [RelayCommand]
         private void NavigatePage(Type type)
         {
+            if (Page?.GetType() == type) return;
             var view = App.Container.Resolve(type, IfUnresolved.Throw);
             Page = view;
         }

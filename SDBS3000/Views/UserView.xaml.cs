@@ -17,19 +17,14 @@ using System.Windows.Shapes;
 namespace SDBS3000.Views
 {
     /// <summary>
-    /// LoginView.xaml 的交互逻辑
+    /// UserView.xaml 的交互逻辑
     /// </summary>
-    public partial class LoginView : UserControl
+    public partial class UserView : UserControl
     {
-        public LoginView(LoginViewModel model)
+        public UserView(UserViewModel model)
         {
             InitializeComponent();
-            this.DataContext = model;
-        }
-
-        private void CloseBtn_Click(object sender, RoutedEventArgs e)
-        {
-            App.Current.Shutdown();
+            DataContext = model;
         }
     }
 }

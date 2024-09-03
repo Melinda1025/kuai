@@ -1,0 +1,115 @@
+﻿<UserControl x:Class="SDBS3000.Views.PositionView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:hc="https://handyorg.github.io/handycontrol"
+             xmlns:local="clr-namespace:SDBS3000.Views"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:SDBS3000.ViewModels"
+             Width="1720"
+             Height="732"
+             Margin="75"
+             d:DataContext="{d:DesignInstance vm:PositionViewModel}"
+             mc:Ignorable="d">
+    <Border Background="{StaticResource 主体模块背景}" CornerRadius="20">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="183" />
+                <RowDefinition Height="183" />
+                <RowDefinition Height="183" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="206" />
+            </Grid.ColumnDefinitions>
+
+            <UniformGrid Grid.RowSpan="4"
+                         Columns="4"
+                         Rows="4">
+                <ComboBox Width="220"
+                          VerticalAlignment="Center"
+                          hc:TitleElement.Title="转向"
+                          Style="{StaticResource SciComboBoxStyle}">
+                    <ComboBoxItem Content="反转" />
+                    <ComboBoxItem Content="正转" />
+                </ComboBox>
+                <ComboBox Width="220"
+                          VerticalAlignment="Center"
+                          hc:TitleElement.Title="开关类型"
+                          Style="{StaticResource SciComboBoxStyle}">
+                    <ComboBoxItem Content="光电开关" />
+                    <ComboBoxItem Content="接近开关(数槽)" />
+                </ComboBox>
+                <TextBox Width="220"
+                         VerticalAlignment="Center"
+                         hc:TitleElement.Title="每转脉冲数"
+                         FontSize="20"
+                         Style="{StaticResource TitleTbxStyle}" />
+                <TextBox Width="220"
+                         VerticalAlignment="Center"
+                         hc:TitleElement.Title="转子槽数"
+                         FontSize="20"
+                         Style="{StaticResource TitleTbxStyle}" />
+                <TextBox Width="220"
+                         VerticalAlignment="Center"
+                         hc:TitleElement.Title="定位转速"
+                         FontSize="20"
+                         Style="{StaticResource TitleTbxStyle}" />
+                <TextBox Width="220"
+                         VerticalAlignment="Center"
+                         hc:TitleElement.Title="加速时间"
+                         FontSize="20"
+                         Style="{StaticResource TitleTbxStyle}" />
+                <TextBox Width="220"
+                         VerticalAlignment="Center"
+                         hc:TitleElement.Title="减速时间"
+                         FontSize="20"
+                         Style="{StaticResource TitleTbxStyle}" />
+                <TextBox Width="220"
+                         VerticalAlignment="Center"
+                         hc:TitleElement.Title="定位补偿"
+                         FontSize="20"
+                         Style="{StaticResource TitleTbxStyle}" />
+                <TextBox Width="220"
+                         VerticalAlignment="Center"
+                         hc:TitleElement.Title="转差补偿"
+                         FontSize="20"
+                         Style="{StaticResource TitleTbxStyle}" />
+
+            </UniformGrid>
+
+            <Button Grid.Column="1"
+                    HorizontalAlignment="Stretch"
+                    hc:BorderElement.CornerRadius="0"
+                    Background="{StaticResource 蓝色模块上圆角}"
+                    BorderThickness="0"
+                    Command="{Binding DetectPulseCommand}"
+                    Content="检测脉冲数"
+                    FontSize="22"
+                    Style="{StaticResource LightToolButtonStyle}"
+                    Tag="&#xe609;" />
+            <Button Grid.Row="1"
+                    Grid.Column="1"
+                    HorizontalAlignment="Stretch"
+                    hc:BorderElement.CornerRadius="0"
+                    Background="{StaticResource 蓝色模块}"
+                    BorderThickness="0"
+                    Content="保存"
+                    FontSize="22"
+                    Style="{StaticResource LightToolButtonStyle}"
+                    Tag="&#xe638;" />
+            <Button Grid.Row="2"
+                    Grid.Column="1"
+                    HorizontalAlignment="Stretch"
+                    hc:BorderElement.CornerRadius="0"
+                    Background="{StaticResource 蓝色模块}"
+                    BorderThickness="0"
+                    Command="{Binding ViewParametersCommand}"
+                    Content="轴参数"
+                    FontSize="22"
+                    Style="{StaticResource LightToolButtonStyle}"
+                    Tag="&#xe600;" />
+        </Grid>
+    </Border>
+</UserControl>

@@ -65,14 +65,11 @@
                            FontWeight="Bold"
                            Foreground="White"
                            Text="双击选择支撑方式" />
-                <Button Width="55"
-                        Height="55"
-                        Margin="0,0,10,0"
+                <Button Margin="0,0,15,0"
                         HorizontalAlignment="Right"
-                        hc:IconElement.Geometry="{StaticResource CloseGeometry}"
                         Command="{x:Static hc:ControlCommands.Close}"
-                        Foreground="White"
-                        Style="{StaticResource ButtonIcon}" />
+                        Content="&#xe672;"
+                        Style="{StaticResource IconFontButton}" />
             </hc:SimplePanel>
         </Border>
         <UniformGrid Grid.Row="1"

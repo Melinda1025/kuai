@@ -3,5 +3,6 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:cvt="clr-namespace:SDBS3000.Converters">
     <cvt:ToStringEqualConverter x:Key="ToStringEqualConverter" />
+    <BorderGapMaskConverter x:Key="BorderGapMaskConverter" />
     <cvt:TextToNullableDoubleConverter x:Key="TextToNullableDoubleConverter" />
 </ResourceDictionary>

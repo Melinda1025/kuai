@@ -1,0 +1,169 @@
+﻿<UserControl x:Class="SDBS3000.Views.KeyCompensationView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="clr-namespace:SDBS3000.Controls"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:hc="https://handyorg.github.io/handycontrol"
+             xmlns:local="clr-namespace:SDBS3000.Views"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:system="clr-namespace:System;assembly=mscorlib"
+             xmlns:vm="clr-namespace:SDBS3000.ViewModels"
+             Width="1720"
+             Height="732"
+             Margin="75"
+             d:DataContext="{d:DesignInstance vm:KeyCompensationViewModel}"
+             mc:Ignorable="d">
+    <Border Background="{StaticResource 主体模块背景}" CornerRadius="20">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="206" />
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.RowSpan="4">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="70" />
+                    <RowDefinition Height="1.1*" />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="680" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+
+                <Border Grid.ColumnSpan="3" Background="{StaticResource 顶部框}">
+                    <TextBlock HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               Foreground="{StaticResource MeasureTextBrush}">
+                        <Run FontSize="35" />
+                        <Run FontSize="28" Text="r/min" />
+                    </TextBlock>
+                </Border>
+
+                <controls:SciProgressBar Grid.Row="1"
+                                         Width="50"
+                                         Height="220"
+                                         Margin="50,20,50,0"
+                                         HorizontalAlignment="Left"
+                                         Orientation="Vertical"
+                                         RectCount="15" />
+                <controls:SciProgressBar Grid.Row="1"
+                                         Grid.Column="2"
+                                         Width="50"
+                                         Height="220"
+                                         Margin="50,20,50,0"
+                                         HorizontalAlignment="Right"
+                                         Orientation="Vertical"
+                                         RectCount="15" />
+
+                <Border Grid.Row="1"
+                        Grid.ColumnSpan="3"
+                        Height="250"
+                        VerticalAlignment="Bottom"
+                        Background="{StaticResource Key1}">
+                    <Border.Style>
+                        <Style TargetType="Border">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Step}">
+                                    <DataTrigger.Value>
+                                        <system:Int32>2</system:Int32>
+                                    </DataTrigger.Value>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Border.Style>
+                </Border>
+
+                <TextBlock Grid.Row="2"
+                           Grid.ColumnSpan="2"
+                           Margin="180,75,0,0"
+                           FontSize="26">
+                    <Run Foreground="White" Text="{Binding Tip}" />
+                    <LineBreak />
+                    <Run Foreground="#85919c" Text="步骤1:无键测试，待数据稳定后自动停止运转" />
+                    <LineBreak />
+                    <Run Foreground="#85919c" Text="步骤2:带键测试，待数据稳定后自动停止运转" />
+                </TextBlock>
+
+                <hc:SimpleStackPanel Grid.Row="2"
+                                     Grid.Column="2"
+                                     Margin="0,0,0,0"
+                                     HorizontalAlignment="Left"
+                                     VerticalAlignment="Center"
+                                     Orientation="Vertical">
+                    <TextBox Width="361"
+                             FontSize="24"
+                             IsReadOnly="True"
+                             Style="{StaticResource CalTbxStyle}"
+                             Tag="量值1"
+                             TextAlignment="Center" />
+                    <TextBox Width="361"
+                             FontSize="24"
+                             IsReadOnly="True"
+                             Style="{StaticResource CalTbxStyle}"
+                             Tag="角度1"
+                             TextAlignment="Center" />
+                    <TextBox Width="361"
+                             FontSize="24"
+                             IsReadOnly="True"
+                             Style="{StaticResource CalTbxStyle}"
+                             Tag="量值2"
+                             TextAlignment="Center" />
+                    <TextBox Width="361"
+                             FontSize="24"
+                             IsReadOnly="True"
+                             Style="{StaticResource CalTbxStyle}"
+                             Tag="角度2"
+                             TextAlignment="Center" />
+                </hc:SimpleStackPanel>
+            </Grid>
+
+            <Button Grid.Column="1"
+                    HorizontalAlignment="Stretch"
+                    hc:BorderElement.CornerRadius="0"
+                    Background="{StaticResource 蓝色模块上圆角}"
+                    BorderThickness="0"
+                    Content="启动"
+                    FontSize="22"
+                    Style="{StaticResource LightToolButtonStyle}"
+                    Tag="&#xe7d8;" />
+            <Button Grid.Row="1"
+                    Grid.Column="2"
+                    HorizontalAlignment="Stretch"
+                    hc:BorderElement.CornerRadius="0"
+                    Background="{StaticResource 蓝色模块}"
+                    BorderThickness="0"
+                    Content="开始补偿"
+                    FontSize="22"
+                    Style="{StaticResource LightToolButtonStyle}"
+                    Tag="&#xe60b;" />
+            <Button Grid.Row="2"
+                    Grid.Column="2"
+                    HorizontalAlignment="Stretch"
+                    hc:BorderElement.CornerRadius="0"
+                    Background="{StaticResource 蓝色模块}"
+                    BorderThickness="0"
+                    Content="清除补偿"
+                    FontSize="22"
+                    Style="{StaticResource LightToolButtonStyle}"
+                    Tag="&#xe62f;" />
+            <Button Grid.Row="3"
+                    Grid.Column="2"
+                    HorizontalAlignment="Stretch"
+                    hc:BorderElement.CornerRadius="0"
+                    Background="{StaticResource 红色模块}"
+                    BorderThickness="0"
+                    Content="重置"
+                    FontSize="22"
+                    Style="{StaticResource RedToolButtonStyle}"
+                    Tag="&#xe611;" />
+        </Grid>
+    </Border>
+</UserControl>

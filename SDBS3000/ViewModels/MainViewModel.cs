@@ -22,7 +22,7 @@ namespace SDBS3000.ViewModels
             Navigate(typeof(LoginView));
         }
         private void Navigate(Type type)
-        {
+        {            
             var view = App.Container.Resolve(type, IfUnresolved.Throw);
             Content = view;
         }
