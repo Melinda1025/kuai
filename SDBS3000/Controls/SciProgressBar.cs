@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using Color = System.Windows.Media.Color;
 
 namespace SDBS3000.Controls
@@ -36,6 +30,85 @@ namespace SDBS3000.Controls
             get { return (int)GetValue(RectCountProperty); }
             set { SetValue(RectCountProperty, value); }
         }
+
+        public Brush Background
+        {
+            get { return (Brush)GetValue(BackgroundProperty); }
+            set { SetValue(BackgroundProperty, value); }
+        }
+
+        public Brush BorderBrush
+        {
+            get { return (Brush)GetValue(BorderBrushProperty); }
+            set { SetValue(BorderBrushProperty, value); }
+        }
+
+        public Brush LightFillBrush
+        {
+            get { return (Brush)GetValue(LightFillBrushProperty); }
+            set { SetValue(LightFillBrushProperty, value); }
+        }
+
+        public Brush DarkFillBrush
+        {
+            get { return (Brush)GetValue(DarkFillBrushProperty); }
+            set { SetValue(DarkFillBrushProperty, value); }
+        }
+
+        public double BorderSize
+        {
+            get { return (double)GetValue(BorderSizeProperty); }
+            set { SetValue(BorderSizeProperty, value); }
+        }
+
+        public static readonly DependencyProperty BorderSizeProperty = DependencyProperty.Register(
+            "BorderSize",
+            typeof(double),
+            typeof(SciProgressBar),
+            new PropertyMetadata(1.0, new PropertyChangedCallback(OnBarChanged))
+        );
+
+        public static readonly DependencyProperty DarkFillBrushProperty =
+            DependencyProperty.Register(
+                "DarkFillBrush",
+                typeof(Brush),
+                typeof(SciProgressBar),
+                new PropertyMetadata(
+                    new SolidColorBrush(Color.FromRgb(7, 82, 67)),
+                    new PropertyChangedCallback(OnBarChanged)
+                )
+            );
+
+        public static readonly DependencyProperty LightFillBrushProperty =
+            DependencyProperty.Register(
+                "LightFillBrush",
+                typeof(Brush),
+                typeof(SciProgressBar),
+                new PropertyMetadata(
+                    new SolidColorBrush(Color.FromRgb(0, 255, 72)),
+                    new PropertyChangedCallback(OnBarChanged)
+                )
+            );
+
+        public static readonly DependencyProperty BorderBrushProperty = DependencyProperty.Register(
+            "BorderBrush",
+            typeof(Brush),
+            typeof(SciProgressBar),
+            new PropertyMetadata(
+                new SolidColorBrush(Color.FromRgb(0, 255, 72)),
+                new PropertyChangedCallback(OnBorderBrushChanged)
+            )
+        );
+
+        public static readonly DependencyProperty BackgroundProperty = DependencyProperty.Register(
+            "Background",
+            typeof(Brush),
+            typeof(SciProgressBar),
+            new PropertyMetadata(
+                new SolidColorBrush(Color.FromRgb(6, 37, 65)),
+                new PropertyChangedCallback(OnBarChanged)
+            )
+        );
 
         public static readonly DependencyProperty RectCountProperty = DependencyProperty.Register(
             "RectCount",
@@ -70,23 +143,22 @@ namespace SDBS3000.Controls
             (d as SciProgressBar).DrawBar();
         }
 
+        private static void OnBorderBrushChanged(
+            DependencyObject d,
+            DependencyPropertyChangedEventArgs e
+        )
+        {
+            var bar = (SciProgressBar)d;
+            bar.borderPen.Brush = (Brush)e.NewValue;
+            bar.DrawBar();
+        }
+
         private readonly DrawingVisual layer;
-        private readonly Brush borderBrush,
-            bgBrush,
-            darkBrush;
         private readonly Pen borderPen;
 
         public SciProgressBar()
         {
-            borderBrush = new SolidColorBrush(Color.FromRgb(0, 255, 72));
-            bgBrush = new SolidColorBrush(Color.FromRgb(6, 37, 65));
-            darkBrush = new SolidColorBrush(Color.FromRgb(7, 82, 67));
-            borderPen = new Pen(borderBrush, 1);
-            borderBrush.Freeze();
-            bgBrush.Freeze();
-            darkBrush.Freeze();
-            borderPen.Freeze();
-
+            borderPen = new Pen(BorderBrush, BorderSize);
             layer = new DrawingVisual();
             this.AddVisualChild(layer);
             this.SizeChanged += (s, e) => DrawBar();
@@ -95,20 +167,22 @@ namespace SDBS3000.Controls
 
         private void DrawBar()
         {
-            if (this.ActualHeight <= 0 || this.ActualWidth <= 0) return;
+            if (this.ActualHeight <= 0 || this.ActualWidth <= 0)
+                return;
             using var dc = layer.RenderOpen();
             //边框
             dc.DrawRectangle(
-                bgBrush,
+                Background,
                 borderPen,
                 new Rect(0, 0, this.ActualWidth, this.ActualHeight)
             );
+            var size = BorderSize;
             var rate = Value / MaxValue;
             switch (Orientation)
             {
                 case Orientation.Horizontal:
-                    var width = (this.ActualWidth - 2) / (1.4 * RectCount + 0.4);
-                    var height = (this.ActualHeight - 2 - 0.8 * width);
+                    var width = (this.ActualWidth - 2 * size) / (1.4 * RectCount + 0.4);
+                    var height = (this.ActualHeight - 2 * size - 0.8 * width);
                     if (height <= 0)
                         height = 1;
                     var startX =
@@ -119,48 +193,49 @@ namespace SDBS3000.Controls
                         if (i < RectCount * rate)
                         {
                             dc.DrawRectangle(
-                                borderBrush,
+                                BorderBrush,
                                 null,
-                                new Rect(startX, 1 + 0.4 * width, width, height)
+                                new Rect(startX, 1 * size + 0.4 * width, width, height)
                             );
                         }
                         else
                         {
                             dc.DrawRectangle(
-                                darkBrush,
+                                DarkFillBrush,
                                 null,
-                                new Rect(startX, 1 + 0.4 * width, width, height)
+                                new Rect(startX, 1 * size + 0.4 * width, width, height)
                             );
                         }
                         startX += 1.4 * width;
                     }
                     break;
                 case Orientation.Vertical:
-                    height = (this.ActualHeight - 2) / (1.4 * RectCount + 0.4);
-                    width = (this.ActualWidth - 2 - 0.8 * height);
+                    height = (this.ActualHeight - 2 * size) / (1.4 * RectCount + 0.4);
+                    width = (this.ActualWidth - 2 * size - 0.8 * height);
                     if (width <= 0)
                         width = 1;
                     var startY =
                         this.ActualHeight
                         - (this.ActualHeight - height * RectCount - height * 0.4 * (RectCount - 1))
-                            / 2 - height;
+                            / 2
+                        - height;
 
                     for (var i = 0; i < RectCount; i++)
                     {
                         if (i < RectCount * rate)
                         {
                             dc.DrawRectangle(
-                                borderBrush,
+                                BorderBrush,
                                 null,
-                                new Rect(1 + 0.4 * height, startY, width, height)
+                                new Rect(1 * size + 0.4 * height, startY, width, height)
                             );
                         }
                         else
                         {
                             dc.DrawRectangle(
-                                darkBrush,
+                                DarkFillBrush,
                                 null,
-                                new Rect(1 + 0.4 * height, startY, width, height)
+                                new Rect(1 * size + 0.4 * height, startY, width, height)
                             );
                         }
                         startY -= 1.4 * height;

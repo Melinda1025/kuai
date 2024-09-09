@@ -1,12 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using HandyControl.Tools.Extension;
 using SDBS3000.Core.Utils;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SDBS3000.ViewModels.Dialogs
 {
@@ -14,7 +8,7 @@ namespace SDBS3000.ViewModels.Dialogs
     {
         private double r1 = 0, r2 = 0;
         [ObservableProperty]
-        private double balanceLevel = 1;        
+        private double balanceLevel = 1;
 
         private double speed = 1000;
         public double Speed
@@ -26,7 +20,7 @@ namespace SDBS3000.ViewModels.Dialogs
                 SetProperty(ref speed, value);
             }
         }
-        
+
         private int weight = 2;
         public int Weight
         {
@@ -50,7 +44,7 @@ namespace SDBS3000.ViewModels.Dialogs
             var panel1MaxUnbalence = r1 == 0 ? 0 : Math.Round(BalanceLevel * 1000 * 10 / Speed * Weight / 2 / r1, 3);
             var panel2MaxUnbalence = r2 == 0 ? 0 : Math.Round(BalanceLevel * 1000 * 10 / Speed * Weight / 2 / r2, 3);
             var staticMaxUnbalence = panel1MaxUnbalence + panel2MaxUnbalence;
-            
+
             SimpleEventBus<(double, double, double)>.Instance.Publish("CaculateISO_Complete", null, (panel1MaxUnbalence, panel2MaxUnbalence, staticMaxUnbalence));
         }
     }

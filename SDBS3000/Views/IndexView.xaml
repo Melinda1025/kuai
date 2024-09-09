@@ -31,7 +31,9 @@
                 <ColumnDefinition Width="auto" />
             </Grid.ColumnDefinitions>
 
-            <Image Margin="20,10" Source="../Assets/Images/剑平logo.png" />
+            <Border Width="220"
+                    Margin="20,10"
+                    Background="{StaticResource 剑平logo}" />
 
 
             <controls:DateTimeViewer Grid.Column="2"
@@ -90,13 +92,16 @@
                     Content="用户管理"
                     Style="{StaticResource ToolButtonStyle}"
                     Tag="&#xe6ab;" />
-            <Button Content="打印"
+            <Button Command="{Binding PrintCommand}"
+                    Content="打印"
                     Style="{StaticResource ToolButtonStyle}"
                     Tag="&#xe9c3;" />
             <Button Content="记录"
                     Style="{StaticResource ToolButtonStyle}"
                     Tag="&#xe69e;" />
-            <Button Content="报警"
+            <Button Command="{Binding NavigatePageCommand}"
+                    CommandParameter="{x:Type local:AlarmView}"
+                    Content="报警"
                     Style="{StaticResource ToolButtonStyle}"
                     Tag="&#xe6b8;" />
             <Button Command="{Binding ExitCommand}"

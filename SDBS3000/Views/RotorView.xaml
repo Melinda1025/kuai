@@ -86,19 +86,19 @@
                          hc:TitleElement.Title="平面1允许量"
                          FontSize="20"
                          Style="{StaticResource TitleTbxStyle}"
-                         Text="{Binding Panel1Balence}" />
+                         Text="{Binding Panel1MaxValue}" />
                 <TextBox Width="220"
                          VerticalAlignment="Center"
                          hc:TitleElement.Title="静允许量"
                          FontSize="20"
                          Style="{StaticResource TitleTbxStyle}"
-                         Text="{Binding StaticBalence}" />
+                         Text="{Binding StaticMaxValue}" />
                 <TextBox Width="220"
                          VerticalAlignment="Center"
                          hc:TitleElement.Title="平面2允许量"
                          FontSize="20"
                          Style="{StaticResource TitleTbxStyle}"
-                         Text="{Binding Panel2Balence}" />
+                         Text="{Binding Panel2MaxValue}" />
             </UniformGrid>
 
             <Grid Grid.RowSpan="4" Grid.Column="1">

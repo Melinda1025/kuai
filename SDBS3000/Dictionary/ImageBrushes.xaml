@@ -1,6 +1,14 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:o="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options">
+    <ImageBrush x:Key="剑平logo"
+                o:Freeze="True"
+                ImageSource="../Assets/Images/剑平logo.png"
+                Stretch="Uniform" />
+    <ImageBrush x:Key="剑平logo反色"
+                o:Freeze="True"
+                ImageSource="../Assets/Images/剑平logo反色.png"
+                Stretch="Uniform" />
     <ImageBrush x:Key="Key1"
                 o:Freeze="True"
                 ImageSource="../Assets/Images/key1.png"

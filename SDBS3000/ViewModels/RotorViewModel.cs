@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using HandyControl.Controls;
 using HandyControl.Tools.Extension;
@@ -29,7 +24,7 @@ namespace SDBS3000.ViewModels
         /// 尺寸单位
         /// </summary>
         [ObservableProperty]
-        private int sizeUnit;        
+        private int sizeUnit;
         /// <summary>
         /// 测量模式
         /// </summary>
@@ -44,18 +39,18 @@ namespace SDBS3000.ViewModels
         /// 面板1的允许量
         /// </summary>
         [ObservableProperty]
-        private double panel1Balence;
+        private double panel1MaxValue;
         /// <summary>
         /// 面板2的允许量
         /// </summary>
         [ObservableProperty]
-        private double panel2Balence;
+        private double panel2MaxValue;
         /// <summary>
         /// 静允许量
         /// </summary>
         [ObservableProperty]
-        private double staticBalence;
-        
+        private double staticMaxValue;
+
 
         [ObservableProperty]
         private double? r1;
@@ -80,9 +75,9 @@ namespace SDBS3000.ViewModels
 
         private void OnCaculateISO_Complete(object sender, (double panel1MaxUnbalence, double panel2MaxUnbalence, double staticMaxUnbalence) e)
         {
-            Panel1Balence = e.panel1MaxUnbalence;
-            Panel2Balence = e.panel2MaxUnbalence;
-            StaticBalence = e.staticMaxUnbalence;
+            Panel1MaxValue = e.panel1MaxUnbalence;
+            Panel2MaxValue = e.panel2MaxUnbalence;
+            StaticMaxValue = e.staticMaxUnbalence;
         }
 
         [RelayCommand]
@@ -104,7 +99,7 @@ namespace SDBS3000.ViewModels
             Dialog.Show(dialog, "MainContainer").Initialize<ISOViewModel>(vm =>
             {
                 vm.InitRadius(R1 ?? 0, R2 ?? 0);
-                vm.Speed = Speed ?? 1000;                
+                vm.Speed = Speed ?? 1000;
             });
         }
     }

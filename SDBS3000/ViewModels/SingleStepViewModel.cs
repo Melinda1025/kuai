@@ -1,11 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics.Metrics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SDBS3000.ViewModels
 {
@@ -23,9 +17,9 @@ namespace SDBS3000.ViewModels
         [RelayCommand]
         public void SetRunMode(string mode)
         {
-            switch(mode)
+            switch (mode)
             {
-                case "0":                    
+                case "0":
                     break;
                 case "1":
                     break;

@@ -1,0 +1,167 @@
+﻿<FlowDocument xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+              Background="White"
+              ColumnWidth="400"
+              PageHeight="1122.52"
+              PageWidth="793.7">
+    <BlockUIContainer>
+        <Viewbox>
+            <Border Width="793.7" Height="1122.52">
+                <Grid Margin="10">
+                    <Grid.Resources>
+                        <Style x:Key="TitleTbx" TargetType="TextBlock">
+                            <Setter Property="FontSize" Value="22" />
+                            <Setter Property="FontFamily" Value="宋体" />
+                            <Setter Property="VerticalAlignment" Value="Center" />
+                            <Setter Property="FontWeight" Value="Bold" />
+                        </Style>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="FontSize" Value="20" />
+                            <Setter Property="FontFamily" Value="宋体" />
+                            <Setter Property="VerticalAlignment" Value="Center" />
+                            <Setter Property="Margin" Value="10,0,0,0" />
+                        </Style>
+                    </Grid.Resources>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="80" />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+
+                    <Border Width="220"
+                            Height="60"
+                            HorizontalAlignment="Left"
+                            Background="{StaticResource 剑平logo反色}" />
+
+                    <Grid Grid.Row="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Style="{StaticResource TitleTbx}" Text="数据类型" />
+                        <Border Grid.ColumnSpan="4"
+                                Height="2"
+                                Margin="0"
+                                VerticalAlignment="Bottom"
+                                Background="Black" />
+                        <TextBlock Grid.Row="1" Text="转子名称" />
+                        <TextBlock Grid.Row="1"
+                                   Grid.Column="1"
+                                   Text="{Binding RotorName}" />
+                        <TextBlock Grid.Row="2" Text="测量转速" />
+                        <TextBlock Grid.Row="2"
+                                   Grid.Column="1"
+                                   Text="{Binding Speed}" />
+
+                        <TextBlock Grid.Row="3"
+                                   Style="{StaticResource TitleTbx}"
+                                   Text="几何" />
+                        <TextBlock Grid.Row="3"
+                                   Grid.Column="2"
+                                   Style="{StaticResource TitleTbx}"
+                                   Text="动态不平衡公差" />
+                        <Border Grid.Row="3"
+                                Grid.ColumnSpan="4"
+                                Height="2"
+                                Margin="0"
+                                VerticalAlignment="Bottom"
+                                Background="Black" />
+                        <TextBlock Grid.Row="4" Text="A" />
+                        <TextBlock Grid.Row="4"
+                                   Grid.Column="1"
+                                   Text="{Binding A}" />
+                        <TextBlock Grid.Row="5" Text="B" />
+                        <TextBlock Grid.Row="5"
+                                   Grid.Column="1"
+                                   Text="{Binding B}" />
+                        <TextBlock Grid.Row="6" Text="C" />
+                        <TextBlock Grid.Row="6"
+                                   Grid.Column="1"
+                                   Text="{Binding C}" />
+                        <TextBlock Grid.Row="7" Text="R1" />
+                        <TextBlock Grid.Row="7"
+                                   Grid.Column="1"
+                                   Text="{Binding R1}" />
+                        <TextBlock Grid.Row="8" Text="R2" />
+                        <TextBlock Grid.Row="8"
+                                   Grid.Column="1"
+                                   Text="{Binding R2}" />
+
+                        <TextBlock Grid.Row="4"
+                                   Grid.Column="2"
+                                   Text="平面1允许量" />
+                        <TextBlock Grid.Row="4"
+                                   Grid.Column="3"
+                                   Text="{Binding Panel1MaxValue}" />
+                        <TextBlock Grid.Row="5"
+                                   Grid.Column="2"
+                                   Text="平面2允许量" />
+                        <TextBlock Grid.Row="5"
+                                   Grid.Column="3"
+                                   Text="{Binding Panel2MaxValue}" />
+                        <TextBlock Grid.Row="6"
+                                   Grid.Column="2"
+                                   Text="静允许量" />
+                        <TextBlock Grid.Row="6"
+                                   Grid.Column="3"
+                                   Text="{Binding StaticMaxValue}" />
+                    </Grid>
+
+                    <Grid Grid.Row="2">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="3*" />
+                            <ColumnDefinition Width="1.5*" />
+                            <ColumnDefinition Width="1.5*" />
+                            <ColumnDefinition Width="7*" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Style="{StaticResource TitleTbx}" Text="测量结果" />
+                        <Border Grid.ColumnSpan="2"
+                                Height="2"
+                                Margin="0"
+                                VerticalAlignment="Bottom"
+                                Background="Black" />
+                        <TextBlock Grid.Row="1" Text="校正平面1" />
+                        <TextBlock Grid.Row="1"
+                                   Grid.Column="1"
+                                   Text="{Binding Panel1}" />
+                        <TextBlock Grid.Row="2" Text="校正平面2" />
+                        <TextBlock Grid.Row="2"
+                                   Grid.Column="1"
+                                   Text="{Binding Panel2}" />
+                        <TextBlock Grid.Row="3" Text="静平衡" />
+                        <TextBlock Grid.Row="3"
+                                   Grid.Column="1"
+                                   Text="{Binding StaticValue}" />
+                    </Grid>
+                </Grid>
+            </Border>
+        </Viewbox>
+    </BlockUIContainer>
+</FlowDocument>

@@ -71,7 +71,7 @@
                          FontSize="20"
                          Style="{StaticResource TitleTbxStyle}" />
                 <ComboBox Grid.Column="3"
-                          Margin="15,0"
+                          Margin="15,0" 
                           hc:TitleElement.Title="用户权限"
                           Style="{StaticResource SciComboBoxStyle}">
                     <ComboBoxItem Content="管理员" />

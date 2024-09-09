@@ -1,21 +1,19 @@
-﻿using Dm.filter;
-using DryIoc;
+﻿using DryIoc;
+using HandyControl.Tools;
 using NLog;
 using NLog.Config;
-using NLog.Targets.Wrappers;
 using NLog.Targets;
-using System.CodeDom.Compiler;
-using System.Configuration;
-using System.Data;
-using System.Diagnostics;
-using System.IO;
-using System.Threading;
-using System.Windows;
-using System.Windows.Threading;
-using SDBS3000.Views;
+using NLog.Targets.Wrappers;
+using SDBS3000.Core.Utils;
 using SDBS3000.ViewModels;
 using SDBS3000.ViewModels.Dialogs;
+using SDBS3000.Views;
 using SDBS3000.Views.Dialogs;
+using System.Diagnostics;
+using System.Globalization;
+using System.IO;
+using System.Windows;
+using System.Windows.Threading;
 
 namespace SDBS3000
 {
@@ -27,7 +25,7 @@ namespace SDBS3000
         public static Container Container { get; } = new Container();
         private readonly ILogger logger;
         public App()
-        {            
+        {
             //if(!CheckIsSingleInstance())
             //{
             //    Current.Shutdown();
@@ -35,15 +33,23 @@ namespace SDBS3000
             //}
             ConfigureLogging();
             RegisterTypes();
+            InitializeLanguage();
             logger = LogManager.GetCurrentClassLogger();
         }
 
         protected override void OnStartup(StartupEventArgs e)
-        {            
+        {
             //RegisterErrorHandlers();
             base.OnStartup(e);
-            var window = Container.Resolve<MainWindow>();            
+            MemoryHelper.Instance.FreeMemoryAuto();
+            var window = Container.Resolve<MainWindow>();
             window.Show();
+        }
+
+        protected override void OnExit(ExitEventArgs e)
+        {
+            base.OnExit(e);
+            MemoryHelper.Instance.StopAutoFree();
         }
         /// <summary>
         /// 检测是否只有一个实例程序
@@ -71,8 +77,13 @@ namespace SDBS3000
                 ArchiveAboveSize = 102400,
                 ArchiveNumbering = ArchiveNumberingMode.Sequence,
                 ConcurrentWrites = true,
-                KeepFileOpen = false,
+                KeepFileOpen = true,
                 Name = "log_file",
+                MaxArchiveDays = 30,
+                Encoding = System.Text.Encoding.UTF8,
+                OpenFileCacheTimeout = 30,
+                OpenFileFlushTimeout = 10,
+                AutoFlush = false,
             };
             var asyncTarget = new AsyncTargetWrapper
             {
@@ -85,12 +96,12 @@ namespace SDBS3000
 
             LogManager.Configuration = cfg;
         }
-        
+
         /// <summary>
         /// 注册IOC类型
         /// </summary>
         private static void RegisterTypes()
-        {            
+        {
             Container.Register<MainViewModel>(Reuse.Singleton);
             Container.Register<MainWindow>(Reuse.Singleton);
             Container.Register<LoginViewModel>(Reuse.Transient);
@@ -117,6 +128,22 @@ namespace SDBS3000
             Container.Register<AlarmView>(Reuse.Singleton);
         }
 
+        private static void InitializeLanguage()
+        {
+            LanguageManager.Instance.Init("SDBS3000.Core.Resources.Lang");
+            var systemLanguage = CultureInfo.CurrentCulture.TwoLetterISOLanguageName;
+            if (systemLanguage == "zh")
+            {
+                ConfigHelper.Instance.SetLang("zh-CN");
+                LanguageManager.Instance.ChangeLanguage(new CultureInfo("zh-CN"));
+            }
+            else
+            {
+                ConfigHelper.Instance.SetLang("en");
+                LanguageManager.Instance.ChangeLanguage(new CultureInfo("en"));
+            }
+        }
+
         /// <summary>
         /// 注册全局异常
         /// </summary>
@@ -131,17 +158,17 @@ namespace SDBS3000
         {
             if (e.ExceptionObject is Exception ex)
             {
-                logger.Error(ex, $"非UI线程异常:{ex.Message}");                
+                logger.Error(ex, $"非UI线程异常:{ex.Message}");
             }
             else
             {
-                logger.Error(e.ExceptionObject.ToString());                
+                logger.Error(e.ExceptionObject.ToString());
             }
         }
 
         private void TaskScheduler_UnobservedTaskException(object sender, UnobservedTaskExceptionEventArgs e)
         {
-            logger.Error($"Task异常:{e.Exception.Message}", e.Exception);            
+            logger.Error($"Task异常:{e.Exception.Message}", e.Exception);
             e.SetObserved();
         }
 
@@ -149,14 +176,14 @@ namespace SDBS3000
         {
             try
             {
-                e.Handled = true;                
+                e.Handled = true;
                 logger.Error(e.Exception, $"UI线程异常:{e.Exception.Message}");
             }
             catch (Exception ex)
             {
                 logger.Error(ex, $"致命错误:{ex.Message}");
             }
-        }        
+        }
     }
 
 }

@@ -1,10 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SDBS3000.ViewModels
 {
@@ -27,7 +22,7 @@ namespace SDBS3000.ViewModels
                     Access = "管理员"
                 },
                 new()
-                {                
+                {
                     Name = "李四",
                     Access = "普通用户"
                 }

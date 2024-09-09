@@ -1,13 +1,9 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DryIoc;
+using HandyControl.Controls;
 using SDBS3000.Core.Utils;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.Metadata;
-using System.Text;
-using System.Threading.Tasks;
+using SDBS3000.Views.Dialogs;
 
 namespace SDBS3000.ViewModels
 {
@@ -22,12 +18,20 @@ namespace SDBS3000.ViewModels
         }
 
         [RelayCommand]
-        private void NavigatePage(Type type)
+        public void NavigatePage(Type type)
         {
             if (Page?.GetType() == type) return;
             var view = App.Container.Resolve(type, IfUnresolved.Throw);
             Page = view;
         }
+
+        [RelayCommand]
+        public void Print()
+        {
+            var dialog = new PrintingDialog();
+            Dialog.Show(dialog);
+        }
+
 
         [RelayCommand]
         public void Exit()

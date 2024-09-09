@@ -12,11 +12,15 @@
   <ItemGroup>
     <None Remove="Assets\Fonts\iconfont.ttf" />
     <None Remove="Assets\Images\User\单选框1.png" />
+    <None Remove="Assets\Images\剑平logo反色.png" />
     <None Remove="Assets\Images\支撑图形框.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Remove="Views\Printing\PrintDocument.xaml" />
   </ItemGroup>  
 
   <ItemGroup>
-    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
     <PackageReference Include="HandyControl" Version="3.5.1" />
   </ItemGroup>
 
@@ -90,6 +94,7 @@
     <Resource Include="Assets\Images\停止图标.png" />
     <Resource Include="Assets\Images\停止图标1.png" />
     <Resource Include="Assets\Images\剑平logo.png" />
+    <Resource Include="Assets\Images\剑平logo反色.png" />
     <Resource Include="Assets\Images\单选框.png" />
     <Resource Include="Assets\Images\单选框选中.png" />    
     <Resource Include="Assets\Images\报警背景.png" />
@@ -101,7 +106,8 @@
     <Resource Include="Assets\Images\测量图标1.png" />
     <Resource Include="Assets\Images\箭头.png" />
     <Resource Include="Assets\Images\背景.png" />
-    <Resource Include="Assets\Images\转子图片.png" />    
+    <Resource Include="Assets\Images\转子图片.png" />
+    <Resource Include="Views\Printing\PrintDocument.xaml" />    
   </ItemGroup>
 
 </Project>
