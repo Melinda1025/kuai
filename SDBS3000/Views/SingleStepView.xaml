@@ -13,6 +13,14 @@
              Margin="75"
              d:DataContext="{d:DesignInstance vm:SingleStepViewModel}"
              mc:Ignorable="d">
+    <hc:Interaction.Triggers>
+        <hc:EventTrigger EventName="Loaded">
+            <hc:InvokeCommandAction Command="{Binding ChangeTimerCommand}" CommandParameter="1" />
+        </hc:EventTrigger>
+        <hc:EventTrigger EventName="Unloaded">
+            <hc:InvokeCommandAction Command="{Binding ChangeTimerCommand}" CommandParameter="0" />
+        </hc:EventTrigger>
+    </hc:Interaction.Triggers>
     <Border Background="{StaticResource 主体模块背景}" CornerRadius="20">
         <Grid>
             <Grid.ColumnDefinitions>
@@ -34,12 +42,14 @@
                              VerticalAlignment="Center"
                              hc:TitleElement.Title="单步速度"
                              FontSize="20"
-                             Style="{StaticResource TitleTbxStyle}" />
+                             Style="{StaticResource TitleTbxStyle}"
+                             Text="{Binding Speed, UpdateSourceTrigger=LostFocus}" />
                     <TextBox Width="220"
                              VerticalAlignment="Center"
                              hc:TitleElement.Title="单步行程"
                              FontSize="20"
-                             Style="{StaticResource TitleTbxStyle}" />
+                             Style="{StaticResource TitleTbxStyle}"
+                             Text="{Binding Stroke, UpdateSourceTrigger=LostFocus}" />
                 </hc:UniformSpacingPanel>
                 <TextBlock Margin="10,0,0,0"
                            FontSize="22"
@@ -51,19 +61,22 @@
                              hc:TitleElement.Title="跳动进给轴当前位置"
                              FontSize="20"
                              IsReadOnly="True"
-                             Style="{StaticResource TitleTbxStyle}" />
+                             Style="{StaticResource TitleTbxStyle}"
+                             Text="{Binding XAxis, Mode=OneWay}" />
                     <TextBox Width="220"
                              VerticalAlignment="Center"
                              hc:TitleElement.Title="跳动上Z轴当前位置"
                              FontSize="20"
                              IsReadOnly="True"
-                             Style="{StaticResource TitleTbxStyle}" />
+                             Style="{StaticResource TitleTbxStyle}"
+                             Text="{Binding UpYAxis, Mode=OneWay}" />
                     <TextBox Width="220"
                              VerticalAlignment="Center"
                              hc:TitleElement.Title="跳动下Z轴当前位置"
                              FontSize="20"
                              IsReadOnly="True"
-                             Style="{StaticResource TitleTbxStyle}" />
+                             Style="{StaticResource TitleTbxStyle}"
+                             Text="{Binding DownYAxis, Mode=OneWay}" />
                 </hc:UniformSpacingPanel>
             </hc:UniformSpacingPanel>
 
@@ -102,13 +115,13 @@
                 <UniformGrid Margin="0,0,0,20" Columns="3">
                     <RadioButton Command="{Binding SetRunWayCommand}"
                                  CommandParameter="0"
-                                 Content="{Binding RunWay1}"
+                                 Content="{Binding RunWay1, Mode=OneWay}"
                                  GroupName="RunWay"
                                  IsChecked="True"
                                  Style="{StaticResource SingleStepRbtnStyle}" />
                     <RadioButton Command="{Binding SetRunWayCommand}"
                                  CommandParameter="1"
-                                 Content="{Binding RunWay2}"
+                                 Content="{Binding RunWay2, Mode=OneWay}"
                                  GroupName="RunWay"
                                  Style="{StaticResource SingleStepRbtnStyle}" />
                 </UniformGrid>

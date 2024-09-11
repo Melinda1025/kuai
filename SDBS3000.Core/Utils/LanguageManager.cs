@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System.ComponentModel;
+using System.Diagnostics;
 using System.Globalization;
-using System.Linq;
 using System.Resources;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SDBS3000.Core.Utils
 {
@@ -40,7 +36,18 @@ namespace SDBS3000.Core.Utils
             {
                 if (!isInit) return string.Empty;
                 if (string.IsNullOrEmpty(name)) return string.Empty;
-                return resourceManager.GetString(name);
+
+                string str;
+                try
+                {
+                    str = resourceManager.GetString(name);
+                }
+                catch (Exception)
+                {
+                    str = name;
+                    Debug.WriteLine($"字符串资源: {name} 未找到");                    
+                }          
+                return str;
             }
         }
 

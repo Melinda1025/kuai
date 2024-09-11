@@ -30,20 +30,24 @@
                          VerticalAlignment="Center"
                          hc:TitleElement.Title="测量次数"
                          FontSize="20"
-                         Style="{StaticResource TitleTbxStyle}" />
+                         Style="{StaticResource TitleTbxStyle}"
+                         Text="{Binding MeasureTimes, UpdateSourceTrigger=LostFocus}" />
                 <TextBox Width="220"
                          VerticalAlignment="Center"
                          hc:TitleElement.Title="转差范围"
                          FontSize="20"
-                         Style="{StaticResource TitleTbxStyle}" />
+                         Style="{StaticResource TitleTbxStyle}"
+                         Text="{Binding SlipRange, UpdateSourceTrigger=LostFocus}" />
                 <TextBox Width="220"
                          VerticalAlignment="Center"
                          hc:TitleElement.Title="刷新频率"
                          FontSize="20"
-                         Style="{StaticResource TitleTbxStyle}" />
+                         Style="{StaticResource TitleTbxStyle}"
+                         Text="{Binding RefreshRate, UpdateSourceTrigger=LostFocus}" />
                 <ComboBox Width="220"
                           VerticalAlignment="Center"
                           hc:TitleElement.Title="显示位数"
+                          SelectedIndex="{Binding Digits, UpdateSourceTrigger=LostFocus}"
                           Style="{StaticResource SciComboBoxStyle}">
                     <ComboBoxItem Content="0" />
                     <ComboBoxItem Content="1" />
@@ -53,6 +57,7 @@
                 <ComboBox Width="220"
                           VerticalAlignment="Center"
                           hc:TitleElement.Title="工作范围"
+                          SelectedIndex="{Binding WorkMode, UpdateSourceTrigger=LostFocus}"
                           Style="{StaticResource SciComboBoxStyle}">
                     <ComboBoxItem Content="连续普通测量" />
                     <ComboBoxItem Content="普通测量停止" />
@@ -61,6 +66,7 @@
                 <ComboBox Width="220"
                           VerticalAlignment="Center"
                           hc:TitleElement.Title="定位模式"
+                          SelectedIndex="{Binding PositioningMode, UpdateSourceTrigger=LostFocus}"
                           Style="{StaticResource SciComboBoxStyle}">
                     <ComboBoxItem Content="先左后右" />
                     <ComboBoxItem Content="只左面" />
@@ -68,14 +74,8 @@
                 </ComboBox>
                 <ComboBox Width="220"
                           VerticalAlignment="Center"
-                          hc:TitleElement.Title="矢量图方向"
-                          Style="{StaticResource SciComboBoxStyle}">
-                    <ComboBoxItem Content="顺时针" />
-                    <ComboBoxItem Content="逆时针" />
-                </ComboBox>
-                <ComboBox Width="220"
-                          VerticalAlignment="Center"
                           hc:TitleElement.Title="光针模式"
+                          SelectedIndex="{Binding NeedleMode, UpdateSourceTrigger=LostFocus}"
                           Style="{StaticResource SciComboBoxStyle}">
                     <ComboBoxItem Content="不适用" />
                     <ComboBoxItem Content="使用手动检测每秒脉冲数" />
@@ -84,6 +84,7 @@
                 <ComboBox Width="220"
                           VerticalAlignment="Center"
                           hc:TitleElement.Title="安全门模式"
+                          SelectedIndex="{Binding SafetyMode, UpdateSourceTrigger=LostFocus}"
                           Style="{StaticResource SciComboBoxStyle}">
                     <ComboBoxItem Content="不使用" />
                     <ComboBoxItem Content="使用" />
@@ -96,6 +97,7 @@
                     hc:BorderElement.CornerRadius="0"
                     Background="{StaticResource 蓝色模块上圆角}"
                     BorderThickness="0"
+                    Command="{Binding SaveCommand}"
                     Content="保存"
                     FontSize="22"
                     Style="{StaticResource LightToolButtonStyle}"

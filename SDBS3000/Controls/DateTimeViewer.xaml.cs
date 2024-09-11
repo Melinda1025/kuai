@@ -16,7 +16,8 @@ namespace SDBS3000.Controls
             updateTimer = new DispatcherTimer();
             updateTimer.Interval = new TimeSpan(0, 0, 1);
             updateTimer.Tick += (s, e) => UpdateDisplayTime();
-            updateTimer.Start();
+            Loaded += (s, e) => updateTimer.Start();
+            Unloaded += (s, e) => updateTimer.Stop();
         }
 
         private void UpdateDisplayTime()

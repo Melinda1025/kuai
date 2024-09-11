@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SDBS3000.Core", "SDBS3000.C
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SDBS3000.Simulation", "SDBS3000.Simulation\SDBS3000.Simulation.csproj", "{DA37F88C-E74A-4D4A-A66A-C97B08A3A048}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SDBS3000.ConsoleTest", "SDBS3000.ConsoleTest\SDBS3000.ConsoleTest.csproj", "{5E89ADE6-242E-4F51-9DC7-056555D72467}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,12 +29,16 @@ Global
 		{DA37F88C-E74A-4D4A-A66A-C97B08A3A048}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DA37F88C-E74A-4D4A-A66A-C97B08A3A048}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DA37F88C-E74A-4D4A-A66A-C97B08A3A048}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5E89ADE6-242E-4F51-9DC7-056555D72467}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5E89ADE6-242E-4F51-9DC7-056555D72467}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5E89ADE6-242E-4F51-9DC7-056555D72467}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5E89ADE6-242E-4F51-9DC7-056555D72467}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {5C11DD87-73B5-44A7-AB33-A4A8D0682E1C}
 		RESX_NeutralResourcesLanguage = zh-CN
+		SolutionGuid = {5C11DD87-73B5-44A7-AB33-A4A8D0682E1C}
 	EndGlobalSection
 EndGlobal

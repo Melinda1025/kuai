@@ -11,7 +11,8 @@
              Width="1720"
              Height="732"
              Margin="75"
-             d:DataContext="{d:DesignInstance vm:CalViewModel}"
+             d:DataContext="{d:DesignInstance vm:CalViewModel,
+                                              IsDesignTimeCreatable=True}"
              mc:Ignorable="d">
     <Border Background="{StaticResource 主体模块背景}" CornerRadius="20">
         <Grid>

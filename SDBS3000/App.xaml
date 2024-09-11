@@ -12,6 +12,7 @@
                 <ResourceDictionary Source="Dictionary/Converter.xaml" />
                 <ResourceDictionary Source="Dictionary/ImageBrushes.xaml" />
                 <ResourceDictionary Source="Dictionary/Button.xaml" />
+                <ResourceDictionary Source="Dictionary/ToggleButton.xaml" />
                 <ResourceDictionary Source="Dictionary/DataGrid.xaml" />
                 <ResourceDictionary Source="Dictionary/RadioButton.xaml" />
                 <ResourceDictionary Source="Dictionary/ComboBox.xaml" />

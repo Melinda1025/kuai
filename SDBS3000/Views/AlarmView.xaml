@@ -11,7 +11,8 @@
              Width="1720"
              Height="732"
              Margin="75"
-             d:DataContext="{d:DesignInstance vm:AlarmViewModel}"
+             d:DataContext="{d:DesignInstance vm:AlarmViewModel,
+                                              IsDesignTimeCreatable=True}"
              mc:Ignorable="d">
     <DataGrid ItemsSource="{Binding Alarms}">
         <DataGrid.Resources>

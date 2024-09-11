@@ -15,7 +15,6 @@
     <UserControl.Background>
         <ImageBrush ImageSource="../Assets/Images/背景.png" />
     </UserControl.Background>
-    <UserControl.Resources />
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="80" />

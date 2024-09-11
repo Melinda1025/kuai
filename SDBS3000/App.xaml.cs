@@ -4,6 +4,8 @@ using NLog;
 using NLog.Config;
 using NLog.Targets;
 using NLog.Targets.Wrappers;
+using S7.Net;
+using SDBS3000.Core.Models;
 using SDBS3000.Core.Utils;
 using SDBS3000.ViewModels;
 using SDBS3000.ViewModels.Dialogs;
@@ -23,14 +25,16 @@ namespace SDBS3000
     public partial class App : Application
     {
         public static Container Container { get; } = new Container();
-        private readonly ILogger logger;
+        private readonly Logger logger;
         public App()
         {
-            //if(!CheckIsSingleInstance())
-            //{
-            //    Current.Shutdown();
-            //    return;
-            //}
+#if !DEBUG
+            if (!CheckIsSingleInstance())
+            {
+                Current.Shutdown();
+                return;
+            }
+#endif
             ConfigureLogging();
             RegisterTypes();
             InitializeLanguage();
@@ -39,7 +43,9 @@ namespace SDBS3000
 
         protected override void OnStartup(StartupEventArgs e)
         {
-            //RegisterErrorHandlers();
+#if !DEBUG
+            RegisterErrorHandlers();
+#endif
             base.OnStartup(e);
             MemoryHelper.Instance.FreeMemoryAuto();
             var window = Container.Resolve<MainWindow>();
@@ -48,8 +54,9 @@ namespace SDBS3000
 
         protected override void OnExit(ExitEventArgs e)
         {
-            base.OnExit(e);
             MemoryHelper.Instance.StopAutoFree();
+            AppSetting.Default.Save();
+            base.OnExit(e);            
         }
         /// <summary>
         /// 检测是否只有一个实例程序
@@ -101,13 +108,16 @@ namespace SDBS3000
         /// 注册IOC类型
         /// </summary>
         private static void RegisterTypes()
-        {
-            Container.Register<MainViewModel>(Reuse.Singleton);
-            Container.Register<MainWindow>(Reuse.Singleton);
+        {            
             Container.Register<LoginViewModel>(Reuse.Transient);
             Container.Register<LoginView>(Reuse.Transient);
+
+            Container.Register<MainViewModel>(Reuse.Singleton);
+            Container.Register<MainWindow>(Reuse.Singleton);            
             Container.Register<IndexViewModel>(Reuse.Singleton);
             Container.Register<IndexView>(Reuse.Singleton);
+            Container.Register<MeasureViewModel>(Reuse.Singleton);
+            Container.Register<MeasureView>(Reuse.Singleton);
             Container.Register<CalViewModel>(Reuse.Singleton);
             Container.Register<CalView>(Reuse.Singleton);
             Container.Register<RotorViewModel>(Reuse.Singleton);
@@ -126,6 +136,19 @@ namespace SDBS3000
             Container.Register<UserView>(Reuse.Singleton);
             Container.Register<AlarmViewModel>(Reuse.Singleton);
             Container.Register<AlarmView>(Reuse.Singleton);
+            Container.Register<AuthorisationViewModel>(Reuse.Singleton);
+            Container.Register<AuthorisationDialog>(Reuse.Singleton);
+
+            Container.Register<AddOrRemoveInfo>(Reuse.Singleton);
+
+
+            Container.RegisterDelegate(() =>
+            {
+                string ip = AppSetting.Default.PlcIP;
+                var plc = new ExtendedPlc(ip);
+                return plc;
+            }, Reuse.Singleton);
+            Container.RegisterDelegate(LogManager.GetCurrentClassLogger, Reuse.Transient);
         }
 
         private static void InitializeLanguage()

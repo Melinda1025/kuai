@@ -5,4 +5,5 @@
     <cvt:ToStringEqualConverter x:Key="ToStringEqualConverter" />
     <BorderGapMaskConverter x:Key="BorderGapMaskConverter" />
     <cvt:TextToNullableDoubleConverter x:Key="TextToNullableDoubleConverter" />
+    <cvt:Boolean2IntConverter x:Key="Boolean2IntConverter" />
 </ResourceDictionary>
