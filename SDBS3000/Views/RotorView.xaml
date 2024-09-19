@@ -14,7 +14,14 @@
              Margin="75"
              d:DataContext="{d:DesignInstance vm:RotorViewModel}"
              mc:Ignorable="d">
-    <UserControl.Resources />
+    <hc:Interaction.Triggers>
+        <hc:EventTrigger EventName="Loaded">
+            <hc:InvokeCommandAction Command="{Binding LoadedCommand}" />
+        </hc:EventTrigger>
+        <hc:EventTrigger EventName="Unloaded">
+            <hc:InvokeCommandAction Command="{Binding UnloadCommand}" />
+        </hc:EventTrigger>
+    </hc:Interaction.Triggers>
     <Border Background="{StaticResource 主体模块背景}" CornerRadius="20">
         <Grid>
             <Grid.ColumnDefinitions>
@@ -38,12 +45,12 @@
                          hc:TitleElement.Title="转子名称"
                          FontSize="20"
                          Style="{StaticResource TitleTbxStyle}"
-                         Text="{Binding RotorName}" />
+                         Text="{Binding CurrentRotor.Name, UpdateSourceTrigger=LostFocus}" />
                 <ComboBox Width="220"
                           VerticalAlignment="Center"
                           hc:TitleElement.Title="解算模式"
                           IsEnabled="False"
-                          SelectedIndex="{Binding SimulationMode}"
+                          SelectedIndex="1"
                           Style="{StaticResource SciComboBoxStyle}">
                     <ComboBoxItem Content="硬支持" />
                     <ComboBoxItem Content="软支持" />
@@ -51,7 +58,7 @@
                 <ComboBox Width="220"
                           VerticalAlignment="Center"
                           hc:TitleElement.Title="尺寸单位"
-                          SelectedIndex="{Binding SizeUnit}"
+                          SelectedIndex="{Binding CurrentRotor.SizeUnit, UpdateSourceTrigger=PropertyChanged}"
                           Style="{StaticResource SciComboBoxStyle}">
                     <ComboBoxItem Content="mm" />
                     <ComboBoxItem Content="cm" />
@@ -63,7 +70,7 @@
                           VerticalAlignment="Center"
                           hc:TitleElement.Title="测量模式"
                           IsEnabled="False"
-                          SelectedIndex="{Binding MeasurementMode}"
+                          SelectedIndex="3"
                           Style="{StaticResource SciComboBoxStyle}">
                     <ComboBoxItem Content="双面动平衡" />
                     <ComboBoxItem Content="静平衡" />
@@ -74,7 +81,7 @@
                 <ComboBox Width="220"
                           VerticalAlignment="Center"
                           hc:TitleElement.Title="允许量单位"
-                          SelectedIndex="{Binding BalenceUnit}"
+                          SelectedIndex="{Binding CurrentRotor.BalenceUnit, UpdateSourceTrigger=PropertyChanged}"
                           Style="{StaticResource SciComboBoxStyle}">
                     <ComboBoxItem Content="g" />
                     <ComboBoxItem Content="mg" />
@@ -86,19 +93,19 @@
                          hc:TitleElement.Title="平面1允许量"
                          FontSize="20"
                          Style="{StaticResource TitleTbxStyle}"
-                         Text="{Binding Panel1MaxValue}" />
+                         Text="{Binding CurrentRotor.Panel1MaxValue, UpdateSourceTrigger=LostFocus, FallbackValue={x:Null}}" />
                 <TextBox Width="220"
                          VerticalAlignment="Center"
                          hc:TitleElement.Title="静允许量"
                          FontSize="20"
                          Style="{StaticResource TitleTbxStyle}"
-                         Text="{Binding StaticMaxValue}" />
+                         Text="{Binding CurrentRotor.StaticMaxValue, UpdateSourceTrigger=LostFocus, FallbackValue={x:Null}}" />
                 <TextBox Width="220"
                          VerticalAlignment="Center"
                          hc:TitleElement.Title="平面2允许量"
                          FontSize="20"
                          Style="{StaticResource TitleTbxStyle}"
-                         Text="{Binding Panel2MaxValue}" />
+                         Text="{Binding CurrentRotor.Panel2MaxValue, UpdateSourceTrigger=LostFocus, FallbackValue={x:Null}}" />
             </UniformGrid>
 
             <Grid Grid.RowSpan="4" Grid.Column="1">
@@ -120,8 +127,11 @@
                     <ComboBox Width="250"
                               HorizontalAlignment="Left"
                               VerticalAlignment="Center"
+                              DisplayMemberPath="Name"
                               FontSize="22"
                               Foreground="White"
+                              ItemsSource="{Binding RotorInfos}"
+                              SelectedValue="{Binding CurrentRotor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                               Style="{StaticResource SciComboBoxStyle}" />
                 </hc:SimpleStackPanel>
 
@@ -132,7 +142,6 @@
                         Background="{StaticResource 支撑图形框}"
                         BorderBrush="Red"
                         BorderThickness="0"
-                        Command="{Binding SelectSupportModeCommand}"
                         Content="支撑方式"
                         FontSize="22"
                         Foreground="White">
@@ -161,13 +170,13 @@
 
                 <controls:SupportModeEditor Grid.Row="1"
                                             Grid.ColumnSpan="2"
-                                            A="{Binding A, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
-                                            B="{Binding B, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
-                                            C="{Binding C, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
-                                            R1="{Binding R1, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
-                                            R2="{Binding R2, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
-                                            Speed="{Binding Speed, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
-                                            SupportMode="{Binding SupportMode, Mode=OneWay}" />
+                                            A="{Binding CurrentRotor.A, Mode=TwoWay, UpdateSourceTrigger=LostFocus, FallbackValue={x:Null}}"
+                                            B="{Binding CurrentRotor.B, Mode=TwoWay, UpdateSourceTrigger=LostFocus, FallbackValue={x:Null}}"
+                                            C="{Binding CurrentRotor.C, Mode=TwoWay, UpdateSourceTrigger=LostFocus, FallbackValue={x:Null}}"
+                                            R1="{Binding CurrentRotor.R1, Mode=TwoWay, UpdateSourceTrigger=LostFocus, FallbackValue={x:Null}}"
+                                            R2="{Binding CurrentRotor.R2, Mode=TwoWay, UpdateSourceTrigger=LostFocus, FallbackValue={x:Null}}"
+                                            Speed="{Binding CurrentRotor.Speed, Mode=TwoWay, UpdateSourceTrigger=LostFocus, FallbackValue={x:Null}}"
+                                            SupportMode="11" />
             </Grid>
 
 
@@ -176,8 +185,10 @@
                     hc:BorderElement.CornerRadius="0"
                     Background="{StaticResource 蓝色模块上圆角}"
                     BorderThickness="0"
+                    Command="{Binding AddRotorCommand}"
                     Content="新增"
                     FontSize="22"
+                    IsEnabled="{Binding IsEditing, Mode=OneWay, Converter={StaticResource Boolean2BooleanReConverter}}"
                     Style="{StaticResource LightToolButtonStyle}"
                     Tag="&#xe634;" />
             <Button Grid.Row="1"
@@ -197,6 +208,7 @@
                     hc:BorderElement.CornerRadius="0"
                     Background="{StaticResource 蓝色模块}"
                     BorderThickness="0"
+                    Command="{Binding SaveCommand}"
                     Content="保存"
                     FontSize="22"
                     Style="{StaticResource LightToolButtonStyle}"
@@ -207,8 +219,10 @@
                     hc:BorderElement.CornerRadius="0"
                     Background="{StaticResource 红色模块}"
                     BorderThickness="0"
+                    Command="{Binding DeleteCommand}"
                     Content="删除"
                     FontSize="22"
+                    IsEnabled="{Binding IsEditing, Mode=OneWay, Converter={StaticResource Boolean2BooleanReConverter}}"
                     Style="{StaticResource RedToolButtonStyle}"
                     Tag="&#xe624;" />
         </Grid>

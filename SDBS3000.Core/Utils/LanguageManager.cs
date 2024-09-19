@@ -38,15 +38,12 @@ namespace SDBS3000.Core.Utils
                 if (string.IsNullOrEmpty(name)) return string.Empty;
 
                 string str;
-                try
-                {
-                    str = resourceManager.GetString(name);
-                }
-                catch (Exception)
+                str = resourceManager.GetString(name);
+                if (string.IsNullOrWhiteSpace(str))
                 {
                     str = name;
-                    Debug.WriteLine($"字符串资源: {name} 未找到");                    
-                }          
+                    Debug.WriteLine($"字符串资源: {name} 未找到");
+                }
                 return str;
             }
         }

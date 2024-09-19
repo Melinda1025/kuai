@@ -65,16 +65,23 @@ namespace SDBS3000.ViewModels
         /// <exception cref="NotImplementedException"></exception>
         private async void OnUpdateData(object state)
         {
-            if(plc.IsConnected)
+            if(!plc.IsConnected) return;
+            try
             {
                 XAxis = (float)await plc.ReadAsync(DataType.DataBlock, 21, 122, VarType.Real, 1);
                 UpYAxis = (float)await plc.ReadAsync(DataType.DataBlock, 21, 126, VarType.Real, 1);
                 DownYAxis = (float)await plc.ReadAsync(DataType.DataBlock, 21, 130, VarType.Real, 1);
             }
-
-            if(isUpdating)
+            catch (Exception)
             {
-                updateTimer.Change(UPDATE_INTERVAL, Timeout.Infinite);
+                throw;
+            }
+            finally
+            {
+                if (isUpdating)
+                {
+                    updateTimer.Change(UPDATE_INTERVAL, Timeout.Infinite);
+                }
             }
         }
 

@@ -41,7 +41,7 @@
                          HorizontalAlignment="Left"
                          VerticalAlignment="Center"
                          Style="{StaticResource EmptyTextBox}"
-                         Text="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:SupportModeEditor}, Path=R1, Mode=TwoWay, Converter={StaticResource TextToNullableDoubleConverter}, UpdateSourceTrigger=LostFocus}" />
+                         Text="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:SupportModeEditor}, Path=R1, Mode=TwoWay, Converter={StaticResource TextToNullableFloatConverter}, UpdateSourceTrigger=LostFocus}" />
                 <TextBox x:Name="R2Tbx"
                          Canvas.Left="870"
                          Canvas.Top="226"
@@ -49,28 +49,28 @@
                          HorizontalAlignment="Left"
                          VerticalAlignment="Center"
                          Style="{StaticResource EmptyTextBox}"
-                         Text="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:SupportModeEditor}, Path=R2, Mode=TwoWay, UpdateSourceTrigger=LostFocus, Converter={StaticResource TextToNullableDoubleConverter}}" />
+                         Text="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:SupportModeEditor}, Path=R2, Mode=TwoWay, UpdateSourceTrigger=LostFocus, Converter={StaticResource TextToNullableFloatConverter}}" />
                 <TextBox x:Name="ATbx"
                          Canvas.Left="216"
                          Canvas.Top="73"
                          HorizontalAlignment="Left"
                          VerticalAlignment="Center"
                          Style="{StaticResource EmptyTextBox}"
-                         Text="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:SupportModeEditor}, Path=A, Mode=TwoWay, UpdateSourceTrigger=LostFocus, Converter={StaticResource TextToNullableDoubleConverter}}" />
+                         Text="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:SupportModeEditor}, Path=A, Mode=TwoWay, UpdateSourceTrigger=LostFocus, Converter={StaticResource TextToNullableFloatConverter}}" />
                 <TextBox x:Name="BTbx"
                          Canvas.Left="460"
                          Canvas.Top="73"
                          HorizontalAlignment="Left"
                          VerticalAlignment="Center"
                          Style="{StaticResource EmptyTextBox}"
-                         Text="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:SupportModeEditor}, Path=B, Mode=TwoWay, UpdateSourceTrigger=LostFocus, Converter={StaticResource TextToNullableDoubleConverter}}" />
+                         Text="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:SupportModeEditor}, Path=B, Mode=TwoWay, UpdateSourceTrigger=LostFocus, Converter={StaticResource TextToNullableFloatConverter}}" />
                 <TextBox x:Name="CTbx"
                          Canvas.Left="697"
                          Canvas.Top="73"
                          HorizontalAlignment="Left"
                          VerticalAlignment="Center"
                          Style="{StaticResource EmptyTextBox}"
-                         Text="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:SupportModeEditor}, Path=C, Mode=TwoWay, UpdateSourceTrigger=LostFocus, Converter={StaticResource TextToNullableDoubleConverter}}" />
+                         Text="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:SupportModeEditor}, Path=C, Mode=TwoWay, UpdateSourceTrigger=LostFocus, Converter={StaticResource TextToNullableFloatConverter}}" />
                 <TextBox x:Name="SpeedTbx"
                          Canvas.Left="344"
                          Canvas.Top="261"
@@ -80,7 +80,7 @@
                          VerticalAlignment="Center"
                          FontSize="32"
                          Style="{StaticResource EmptyTextBox}"
-                         Text="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:SupportModeEditor}, Path=Speed, Mode=TwoWay, UpdateSourceTrigger=LostFocus, Converter={StaticResource TextToNullableDoubleConverter}}" />
+                         Text="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:SupportModeEditor}, Path=Speed, Mode=TwoWay, UpdateSourceTrigger=LostFocus, Converter={StaticResource TextToNullableFloatConverter}}" />
             </Canvas>
         </Border>
     </Viewbox>

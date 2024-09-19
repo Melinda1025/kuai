@@ -4,6 +4,8 @@
                     xmlns:cvt="clr-namespace:SDBS3000.Converters">
     <cvt:ToStringEqualConverter x:Key="ToStringEqualConverter" />
     <BorderGapMaskConverter x:Key="BorderGapMaskConverter" />
-    <cvt:TextToNullableDoubleConverter x:Key="TextToNullableDoubleConverter" />
+    <cvt:TextToNullableFloatConverter x:Key="TextToNullableFloatConverter" />
     <cvt:Boolean2IntConverter x:Key="Boolean2IntConverter" />
+    <cvt:PermissionToStringConverter x:Key="PermissionToStringConverter" />
+    <cvt:FloatDigitConverter x:Key="FloatDigitConverter" />
 </ResourceDictionary>

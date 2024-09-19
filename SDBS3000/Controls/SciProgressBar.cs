@@ -49,11 +49,11 @@ namespace SDBS3000.Controls
             set { SetValue(LightFillBrushProperty, value); }
         }
 
-        public Brush DarkFillBrush
-        {
-            get { return (Brush)GetValue(DarkFillBrushProperty); }
-            set { SetValue(DarkFillBrushProperty, value); }
-        }
+        //public Brush DarkFillBrush
+        //{
+        //    get { return (Brush)GetValue(DarkFillBrushProperty); }
+        //    set { SetValue(DarkFillBrushProperty, value); }
+        //}
 
         public double BorderSize
         {
@@ -68,16 +68,16 @@ namespace SDBS3000.Controls
             new PropertyMetadata(1.0, new PropertyChangedCallback(OnBarChanged))
         );
 
-        public static readonly DependencyProperty DarkFillBrushProperty =
-            DependencyProperty.Register(
-                "DarkFillBrush",
-                typeof(Brush),
-                typeof(SciProgressBar),
-                new PropertyMetadata(
-                    new SolidColorBrush(Color.FromRgb(7, 82, 67)),
-                    new PropertyChangedCallback(OnBarChanged)
-                )
-            );
+        //public static readonly DependencyProperty DarkFillBrushProperty =
+        //    DependencyProperty.Register(
+        //        "DarkFillBrush",
+        //        typeof(Brush),
+        //        typeof(SciProgressBar),
+        //        new PropertyMetadata(
+        //            new SolidColorBrush(Color.FromRgb(7, 82, 67)),
+        //            new PropertyChangedCallback(OnBarChanged)
+        //        )
+        //    );
 
         public static readonly DependencyProperty LightFillBrushProperty =
             DependencyProperty.Register(
@@ -85,7 +85,7 @@ namespace SDBS3000.Controls
                 typeof(Brush),
                 typeof(SciProgressBar),
                 new PropertyMetadata(
-                    new SolidColorBrush(Color.FromRgb(0, 255, 72)),
+                    new SolidColorBrush(Color.FromRgb(0, 201, 255)),
                     new PropertyChangedCallback(OnBarChanged)
                 )
             );
@@ -95,7 +95,7 @@ namespace SDBS3000.Controls
             typeof(Brush),
             typeof(SciProgressBar),
             new PropertyMetadata(
-                new SolidColorBrush(Color.FromRgb(0, 255, 72)),
+                new SolidColorBrush(Color.FromRgb(0, 201, 255)),
                 new PropertyChangedCallback(OnBorderBrushChanged)
             )
         );
@@ -105,7 +105,7 @@ namespace SDBS3000.Controls
             typeof(Brush),
             typeof(SciProgressBar),
             new PropertyMetadata(
-                new SolidColorBrush(Color.FromRgb(6, 37, 65)),
+                Brushes.Transparent,
                 new PropertyChangedCallback(OnBarChanged)
             )
         );
@@ -169,12 +169,13 @@ namespace SDBS3000.Controls
         {
             if (this.ActualHeight <= 0 || this.ActualWidth <= 0)
                 return;
-            using var dc = layer.RenderOpen();
+            using var dc = layer.RenderOpen();            
             //边框
-            dc.DrawRectangle(
+            dc.DrawRoundedRectangle(
                 Background,
                 borderPen,
-                new Rect(0, 0, this.ActualWidth, this.ActualHeight)
+                new Rect(0, 0, this.ActualWidth, this.ActualHeight),
+                                5,5
             );
             var size = BorderSize;
             var rate = Value / MaxValue;
@@ -192,20 +193,23 @@ namespace SDBS3000.Controls
                     {
                         if (i < RectCount * rate)
                         {
-                            dc.DrawRectangle(
+                            dc.DrawRoundedRectangle(
                                 BorderBrush,
                                 null,
-                                new Rect(startX, 1 * size + 0.4 * width, width, height)
+                                new Rect(startX, 1 * size + 0.4 * width, width, height),
+                                3, 3
                             );
                         }
-                        else
-                        {
-                            dc.DrawRectangle(
-                                DarkFillBrush,
-                                null,
-                                new Rect(startX, 1 * size + 0.4 * width, width, height)
-                            );
-                        }
+                        else break;
+                        //else
+                        //{
+                        //    dc.DrawRoundedRectangle(
+                        //        DarkFillBrush,
+                        //        null,
+                        //        new Rect(startX, 1 * size + 0.4 * width, width, height),
+                        //        2, 2
+                        //    );
+                        //}
                         startX += 1.4 * width;
                     }
                     break;
@@ -224,20 +228,23 @@ namespace SDBS3000.Controls
                     {
                         if (i < RectCount * rate)
                         {
-                            dc.DrawRectangle(
+                            dc.DrawRoundedRectangle(
                                 BorderBrush,
                                 null,
-                                new Rect(1 * size + 0.4 * height, startY, width, height)
+                                new Rect(1 * size + 0.4 * height, startY, width, height),
+                                3, 3
                             );
                         }
-                        else
-                        {
-                            dc.DrawRectangle(
-                                DarkFillBrush,
-                                null,
-                                new Rect(1 * size + 0.4 * height, startY, width, height)
-                            );
-                        }
+                        else break;
+                        //else
+                        //{
+                        //    dc.DrawRoundedRectangle(
+                        //        DarkFillBrush,
+                        //        null,
+                        //        new Rect(1 * size + 0.4 * height, startY, width, height),
+                        //        2, 2
+                        //    );
+                        //}
                         startY -= 1.4 * height;
                     }
                     break;

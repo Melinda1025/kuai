@@ -112,6 +112,7 @@
                     hc:BorderElement.CornerRadius="0"
                     Background="{StaticResource 蓝色模块}"
                     BorderThickness="0"
+                    Command="{Binding SaveCommand}"
                     Content="保存"
                     FontSize="22"
                     Style="{StaticResource LightToolButtonStyle}"

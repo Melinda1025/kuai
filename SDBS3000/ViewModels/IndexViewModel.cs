@@ -1,10 +1,12 @@
 ﻿using System.Diagnostics;
+using System.Windows;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DryIoc;
 using HandyControl.Controls;
 using SDBS3000.Core.Models;
 using SDBS3000.Core.Utils;
+using SDBS3000.ViewModels.Interface;
 using SDBS3000.Views;
 using SDBS3000.Views.Dialogs;
 
@@ -71,15 +73,26 @@ namespace SDBS3000.ViewModels
         };
         #endregion
         [ObservableProperty]
-        private object page;
-        public AddOrRemoveInfo AddOrRemoveInfo { get; init; }
+        private FrameworkElement page;
+        [ObservableProperty]
+        private AddOrRemoveInfo addOrRemoveInfo;
+        /// <summary>
+        /// 0-100%
+        /// </summary>
+        [ObservableProperty]
+        private float progress;
+        [ObservableProperty]
+        private float speed;
+
 
         private readonly ExtendedPlc plc;
-
         public IndexViewModel(ExtendedPlc plc, AddOrRemoveInfo info)
-        {
+        {            
             SimpleEventBus<Type>.Instance.Subscribe("NavigatePage", (s, t) => NavigatePage(t));
             SimpleEventBus<int>.Instance.Subscribe("ErrorReceived", OnErrorReceived);
+            //注册跨页面访问属性
+            PropertyAccessor<IndexViewModel, float>.Instance.Register("Progress", this, vm => vm.Progress);
+            PropertyAccessor<IndexViewModel, float>.Instance.Register("Speed", this, vm => vm.Speed);
 
             this.AddOrRemoveInfo = info;
             this.plc = plc;
@@ -146,16 +159,43 @@ namespace SDBS3000.ViewModels
 
         #region 命令
         [RelayCommand]
+        public void ChangeMeasureStatus(string status)
+        {
+            if(Page is not MeasureView)
+            {
+                NavigatePage(typeof(MeasureView));
+                return;
+            }
+
+            switch(status)
+            {
+                case "start":
+                    SimpleEventBus<bool>.Instance.Publish("MeasureStatusChanged", null, true);
+                    break;
+                case "stop":
+                    SimpleEventBus<bool>.Instance.Publish("MeasureStatusChanged", null, false);
+                    break;
+            }
+        }
+
+        [RelayCommand]
         public void NavigatePage(Type type)
         {
             if (Page?.GetType() == type)
                 return;
+
+            if(Page?.DataContext is ISaveChanged changeSaver && changeSaver.HasChanges)
+            {
+                //需要停止导航保存内容
+                if (changeSaver.AskToSave() == true) return;
+            }
+
             var view = App.Container.Resolve(type, IfUnresolved.Throw);
-            Page = view;
-        }
+            Page = view as FrameworkElement;
+        }             
 
         [RelayCommand]
-        public void Print()
+        public static void Print()
         {
             var dialog = new PrintingDialog();
             Dialog.Show(dialog);
@@ -164,6 +204,11 @@ namespace SDBS3000.ViewModels
         [RelayCommand]
         public void Exit()
         {
+            if (Page?.DataContext is ISaveChanged changeSaver && changeSaver.HasChanges)
+            {
+                //需要停止导航保存内容
+                if (changeSaver.AskToSave() == true) return;
+            }
             App.Current.Shutdown();
         }
         #endregion

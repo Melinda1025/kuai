@@ -161,6 +161,7 @@
         <Setter Property="CanUserAddRows" Value="False" />
         <Setter Property="CanUserDeleteRows" Value="False" />
         <Setter Property="CanUserReorderColumns" Value="False" />
+        <Setter Property="CanUserSortColumns" Value="False" />
         <Setter Property="CanUserResizeRows" Value="False" />
         <Setter Property="Padding" Value="6" />
         <Setter Property="RowHeight" Value="70" />

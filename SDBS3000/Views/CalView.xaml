@@ -11,8 +11,7 @@
              Width="1720"
              Height="732"
              Margin="75"
-             d:DataContext="{d:DesignInstance vm:CalViewModel,
-                                              IsDesignTimeCreatable=True}"
+             d:DataContext="{d:DesignInstance vm:CalViewModel}"
              mc:Ignorable="d">
     <Border Background="{StaticResource 主体模块背景}" CornerRadius="20">
         <Grid>
@@ -187,7 +186,7 @@
                                Text="平面2相位加" />
                     <TextBox Width="180"
                              Margin="0,0,10,0"
-                             IsEnabled="{Binding ElementName=CalRbtn1, Path=IsChecked}"
+                             IsEnabled="{Binding ElementName=CalRbtn2, Path=IsChecked}"
                              Style="{StaticResource SciTbxStyle}" />
                     <TextBlock Margin="0,0,10,0" VerticalAlignment="Center">
                         <Run Text="°, " />
@@ -195,7 +194,7 @@
                     </TextBlock>
                     <TextBox Width="180"
                              Margin="0,0,10,0"
-                             IsEnabled="{Binding ElementName=CalRbtn1, Path=IsChecked}"
+                             IsEnabled="{Binding ElementName=CalRbtn2, Path=IsChecked}"
                              Style="{StaticResource SciTbxStyle}" />
                     <TextBlock VerticalAlignment="Center" Text="°相位" />
 

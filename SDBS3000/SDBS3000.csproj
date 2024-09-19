@@ -10,18 +10,85 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Assets\Fonts\iconfont.ttf" />
+    <None Remove="Assets\Images\check.png" />
+    <None Remove="Assets\Images\clamp.png" />
+    <None Remove="Assets\Images\ISO.png" />
+    <None Remove="Assets\Images\key1.png" />
+    <None Remove="Assets\Images\key2.png" />
+    <None Remove="Assets\Images\Login\登录按钮.png" />
+    <None Remove="Assets\Images\Login\背景.png" />
+    <None Remove="Assets\Images\Login\输入框.png" />
+    <None Remove="Assets\Images\Measure\下拉选择框.png" />
+    <None Remove="Assets\Images\Measure\加重.png" />
+    <None Remove="Assets\Images\Measure\去重.png" />
+    <None Remove="Assets\Images\Measure\底部栏.png" />
+    <None Remove="Assets\Images\Measure\按钮选中背景.png" />
+    <None Remove="Assets\Images\Measure\数据框背景.png" />
+    <None Remove="Assets\Images\Measure\数据盘.png" />
+    <None Remove="Assets\Images\Measure\校正图标.png" />
+    <None Remove="Assets\Images\Measure\清除按钮.png" />
+    <None Remove="Assets\Images\Measure\顶部框.png" />
+    <None Remove="Assets\Images\SupMet1.png" />
+    <None Remove="Assets\Images\Support\s1.png" />
+    <None Remove="Assets\Images\Support\s10.png" />
+    <None Remove="Assets\Images\Support\s11.png" />
+    <None Remove="Assets\Images\Support\s2.png" />
+    <None Remove="Assets\Images\Support\s3.png" />
+    <None Remove="Assets\Images\Support\s4.png" />
+    <None Remove="Assets\Images\Support\s5.png" />
+    <None Remove="Assets\Images\Support\s6.png" />
+    <None Remove="Assets\Images\Support\s7.png" />
+    <None Remove="Assets\Images\Support\s8.png" />
+    <None Remove="Assets\Images\Support\s9.png" />
+    <None Remove="Assets\Images\Support\stm1.png" />
+    <None Remove="Assets\Images\Support\stm10.png" />
+    <None Remove="Assets\Images\Support\stm11.png" />
+    <None Remove="Assets\Images\Support\stm2.png" />
+    <None Remove="Assets\Images\Support\stm3.png" />
+    <None Remove="Assets\Images\Support\stm4.png" />
+    <None Remove="Assets\Images\Support\stm5.png" />
+    <None Remove="Assets\Images\Support\stm6.png" />
+    <None Remove="Assets\Images\Support\stm7.png" />
+    <None Remove="Assets\Images\Support\stm8.png" />
+    <None Remove="Assets\Images\Support\stm9.png" />
+    <None Remove="Assets\Images\Support\支撑未选中框.png" />
+    <None Remove="Assets\Images\Support\支撑选中框.png" />
+    <None Remove="Assets\Images\uncheck.png" />
+    <None Remove="Assets\Images\User\下拉框.png" />
+    <None Remove="Assets\Images\User\下拉框yh.png" />
+    <None Remove="Assets\Images\User\主体模块背景.png" />
+    <None Remove="Assets\Images\User\信息框.png" />
+    <None Remove="Assets\Images\User\分割线.png" />
     <None Remove="Assets\Images\User\单选框1.png" />
+    <None Remove="Assets\Images\User\红色模块.png" />
+    <None Remove="Assets\Images\User\蓝色模块.png" />
+    <None Remove="Assets\Images\User\蓝色模块上圆角.png" />
+    <None Remove="Assets\Images\User\输入框1.png" />
+    <None Remove="Assets\Images\User\输入框2.png" />
+    <None Remove="Assets\Images\User\输入框3.png" />
+    <None Remove="Assets\Images\User\选中框.png" />
+    <None Remove="Assets\Images\停止图标.png" />
+    <None Remove="Assets\Images\停止图标1.png" />
+    <None Remove="Assets\Images\剑平logo.png" />
     <None Remove="Assets\Images\剑平logo反色.png" />
+    <None Remove="Assets\Images\单选框.png" />
+    <None Remove="Assets\Images\单选框选中.png" />
+    <None Remove="Assets\Images\报警背景.png" />
+    <None Remove="Assets\Images\报警背景2.png" />
     <None Remove="Assets\Images\支撑图形框.png" />
+    <None Remove="Assets\Images\标定文本框.png" />
+    <None Remove="Assets\Images\标定步骤背景.png" />
+    <None Remove="Assets\Images\测量图标.png" />
+    <None Remove="Assets\Images\测量图标1.png" />
+    <None Remove="Assets\Images\箭头.png" />
+    <None Remove="Assets\Images\背景.png" />
+    <None Remove="Assets\Images\转子图片.png" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Page Remove="Views\Printing\PrintDocument.xaml" />
-  </ItemGroup>  
 
   <ItemGroup>
     <PackageReference Include="HandyControl" Version="3.5.1" />
+    <PackageReference Include="OxyPlot.SkiaSharp.Wpf" Version="2.2.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -33,15 +100,19 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Assets\Fonts\CKTKingkong.ttf" />
     <Resource Include="Assets\Fonts\iconfont.ttf" />
+    <Resource Include="Assets\Images\Background\LoginBg.png" />
+    <Resource Include="Assets\Images\Background\MainBg.png" />
     <Resource Include="Assets\Images\check.png" />
     <Resource Include="Assets\Images\clamp.png" />
     <Resource Include="Assets\Images\ISO.png" />
     <Resource Include="Assets\Images\key1.png" />
     <Resource Include="Assets\Images\key2.png" />
-    <Resource Include="Assets\Images\Login\登录按钮.png" />    
+    <Resource Include="Assets\Images\Login\登录按钮.png" />
     <Resource Include="Assets\Images\Login\背景.png" />
     <Resource Include="Assets\Images\Login\输入框.png" />
+    <Resource Include="Assets\Images\Logo\LogoDark.png" />
     <Resource Include="Assets\Images\Measure\下拉选择框.png" />
     <Resource Include="Assets\Images\Measure\加重.png" />
     <Resource Include="Assets\Images\Measure\去重.png" />
@@ -53,7 +124,6 @@
     <Resource Include="Assets\Images\Measure\清除按钮.png" />
     <Resource Include="Assets\Images\Measure\顶部框.png" />
     <Resource Include="Assets\Images\SupMet1.png" />
-    <Resource Include="Assets\Images\Support\支撑选中框.png" />
     <Resource Include="Assets\Images\Support\s1.png" />
     <Resource Include="Assets\Images\Support\s10.png" />
     <Resource Include="Assets\Images\Support\s11.png" />
@@ -77,6 +147,7 @@
     <Resource Include="Assets\Images\Support\stm8.png" />
     <Resource Include="Assets\Images\Support\stm9.png" />
     <Resource Include="Assets\Images\Support\支撑未选中框.png" />
+    <Resource Include="Assets\Images\Support\支撑选中框.png" />
     <Resource Include="Assets\Images\uncheck.png" />
     <Resource Include="Assets\Images\User\下拉框.png" />
     <Resource Include="Assets\Images\User\下拉框yh.png" />
@@ -85,8 +156,8 @@
     <Resource Include="Assets\Images\User\分割线.png" />
     <Resource Include="Assets\Images\User\单选框1.png" />
     <Resource Include="Assets\Images\User\红色模块.png" />
-    <Resource Include="Assets\Images\User\蓝色模块上圆角.png" />
     <Resource Include="Assets\Images\User\蓝色模块.png" />
+    <Resource Include="Assets\Images\User\蓝色模块上圆角.png" />
     <Resource Include="Assets\Images\User\输入框1.png" />
     <Resource Include="Assets\Images\User\输入框2.png" />
     <Resource Include="Assets\Images\User\输入框3.png" />
@@ -96,7 +167,7 @@
     <Resource Include="Assets\Images\剑平logo.png" />
     <Resource Include="Assets\Images\剑平logo反色.png" />
     <Resource Include="Assets\Images\单选框.png" />
-    <Resource Include="Assets\Images\单选框选中.png" />    
+    <Resource Include="Assets\Images\单选框选中.png" />
     <Resource Include="Assets\Images\报警背景.png" />
     <Resource Include="Assets\Images\报警背景2.png" />
     <Resource Include="Assets\Images\支撑图形框.png" />
@@ -107,6 +178,7 @@
     <Resource Include="Assets\Images\箭头.png" />
     <Resource Include="Assets\Images\背景.png" />
     <Resource Include="Assets\Images\转子图片.png" />
+    <Resource Include="Assets\Shaders\GrowEffect.ps" />
     <Resource Include="Views\Printing\PrintDocument.xaml" />    
   </ItemGroup>
 

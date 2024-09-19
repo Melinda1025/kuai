@@ -117,7 +117,7 @@
                                        Height="{TemplateBinding hc:IconElement.Height}"
                                        Margin="0,0,0,10"
                                        HorizontalAlignment="Center"
-                                       FontFamily="../Assets/Fonts/#iconfont"
+                                       FontFamily="../../Assets/Fonts/#iconfont"
                                        FontSize="{TemplateBinding hc:IconElement.Height}"
                                        Foreground="{StaticResource UnselectedBrush}"
                                        Text="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Tag}"
@@ -155,7 +155,7 @@
                                        Height="{TemplateBinding hc:IconElement.Height}"
                                        Margin="0,0,0,10"
                                        HorizontalAlignment="Center"
-                                       FontFamily="../Assets/Fonts/#iconfont"
+                                       FontFamily="../../Assets/Fonts/#iconfont"
                                        FontSize="{TemplateBinding hc:IconElement.Height}"
                                        Foreground="{StaticResource LightUnselectedBrush}"
                                        Text="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Tag}"
@@ -193,7 +193,7 @@
                                        Height="{TemplateBinding hc:IconElement.Height}"
                                        Margin="0,0,0,10"
                                        HorizontalAlignment="Center"
-                                       FontFamily="../Assets/Fonts/#iconfont"
+                                       FontFamily="../../Assets/Fonts/#iconfont"
                                        FontSize="{TemplateBinding hc:IconElement.Height}"
                                        Foreground="{StaticResource RedUnselectedBrush}"
                                        Text="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Tag}"
@@ -216,7 +216,7 @@
     </Style>
 
     <Style x:Key="IconFontButton" TargetType="Button">
-        <Setter Property="FontFamily" Value="../Assets/Fonts/#iconfont" />
+        <Setter Property="FontFamily" Value="../../Assets/Fonts/#iconfont" />
         <Setter Property="Foreground" Value="White" />
         <Setter Property="FontSize" Value="35" />
         <Setter Property="Template">

@@ -13,6 +13,11 @@
              Height="1080"
              d:DataContext="{d:DesignInstance vm:LoginViewModel}"
              mc:Ignorable="d">
+    <hc:Interaction.Triggers>
+        <hc:EventTrigger EventName="Loaded">
+            <hc:InvokeCommandAction Command="{Binding LoadedCommand}" />
+        </hc:EventTrigger>
+    </hc:Interaction.Triggers>
     <UserControl.Background>
         <ImageBrush ImageSource="../Assets/Images/Login/背景.png" />
     </UserControl.Background>
@@ -39,7 +44,7 @@
 
                 <TextBlock Margin="25,5,15,5"
                            VerticalAlignment="Center"
-                           FontFamily="../Assets/Fonts/#iconfont"
+                           FontFamily="../../Assets/Fonts/#iconfont"
                            FontSize="30"
                            Foreground="#3baaff"
                            Text="{TemplateBinding Tag}" />
@@ -86,6 +91,7 @@
                                 ToggleGesture="LeftClick" />
                 <TextBox x:Name="PART_EditableTextBox"
                          Grid.Column="1"
+                         Margin="0,0,50,0"
                          Padding="{TemplateBinding Padding}"
                          HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
                          VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
@@ -171,7 +177,7 @@
 
                             <TextBlock Margin="25,5,15,5"
                                        VerticalAlignment="Center"
-                                       FontFamily="../Assets/Fonts/#iconfont"
+                                       FontFamily="../../Assets/Fonts/#iconfont"
                                        FontSize="30"
                                        Foreground="#3baaff"
                                        Text="{TemplateBinding Tag}" />
@@ -257,12 +263,16 @@
                   Width="475"
                   Height="70"
                   Padding="10,0,5,0"
+                  DisplayMemberPath="Name"
                   FontSize="24"
                   IsEditable="True"
                   IsTabStop="False"
+                  ItemsSource="{Binding Users}"
+                  SelectedValue="{Binding User, UpdateSourceTrigger=PropertyChanged}"
                   Style="{StaticResource SciComboBoxStyle}"
                   Tag="&#xe601;"
-                  Template="{StaticResource IconSciComboBoxTemplate}" />
+                  Template="{StaticResource IconSciComboBoxTemplate}"
+                  Text="{Binding User.Name}" />
         <hc:PasswordBox Grid.Row="2"
                         Width="475"
                         Height="70"
@@ -273,7 +283,8 @@
                         IsSafeEnabled="False"
                         ShowEyeButton="True"
                         Style="{StaticResource IconSciTbxStyle}"
-                        Tag="&#xe62b;" />
+                        Tag="&#xe62b;"
+                        UnsafePassword="{Binding User.Password}" />
 
         <Button Grid.Row="3"
                 Width="475"

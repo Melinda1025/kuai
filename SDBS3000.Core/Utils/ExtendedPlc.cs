@@ -7,8 +7,7 @@ namespace SDBS3000.Core.Utils
         private readonly Timer autoCheckTimer;
         public ExtendedPlc(string ip) : base(CpuType.S71200, ip, 0, 1)
         {
-            autoCheckTimer = new Timer(new TimerCallback(OnCheck));
-            autoCheckTimer.Change(0, Timeout.Infinite);
+            autoCheckTimer = new Timer(new TimerCallback(OnCheck), null, 0, Timeout.Infinite);            
         }
 
         private async void OnCheck(object state)

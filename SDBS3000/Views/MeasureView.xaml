@@ -1,6 +1,7 @@
 ﻿<UserControl x:Class="SDBS3000.Views.MeasureView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="clr-namespace:SDBS3000.Controls"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:hc="https://handyorg.github.io/handycontrol"
              xmlns:local="clr-namespace:SDBS3000.Views"
@@ -10,5 +11,225 @@
              Height="880"
              d:DataContext="{d:DesignInstance vm:MeasureViewModel}"
              mc:Ignorable="d">
-    <Grid />
+    <hc:Interaction.Triggers>
+        <hc:EventTrigger EventName="Loaded">
+            <hc:InvokeCommandAction Command="{Binding LoadedCommand}" />
+        </hc:EventTrigger>
+    </hc:Interaction.Triggers>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="100" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+
+        <!--  动平衡  -->
+        <GroupBox Margin="20"
+                  BorderThickness="0"
+                  Foreground="White"
+                  Header="动平衡"
+                  Style="{x:Null}">
+            <Grid Margin="0,50,0,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+
+                <controls:SciProgressBar Width="40"
+                                         Margin="20,0,0,0"
+                                         HorizontalAlignment="Left"
+                                         Orientation="Vertical"
+                                         RectCount="20"
+                                         Value="{Binding Panel1Item.Signal, FallbackValue=0}" />
+                <controls:SciProgressBar Grid.Column="1"
+                                         Width="40"
+                                         Margin="0,0,20,0"
+                                         HorizontalAlignment="Right"
+                                         Orientation="Vertical"
+                                         RectCount="20"
+                                         Value="{Binding Panel2Item.Signal, FallbackValue=0}" />
+                <controls:BalanceCircle Width="330"
+                                        Height="310"
+                                        Margin="0,0,40,0"
+                                        HorizontalAlignment="Right"
+                                        VerticalAlignment="Bottom"
+                                        FontSize="16" />
+                <controls:BalanceCircle Grid.Column="1"
+                                        Width="330"
+                                        Height="310"
+                                        Margin="40,0,0,0"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Bottom"
+                                        FontSize="16" />
+
+                <Border Grid.Row="1"
+                        Height="250"
+                        Margin="0,30,20,0"
+                        VerticalAlignment="Top"
+                        Background="#0a305b">
+                    <Grid Margin="30">
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock VerticalAlignment="Center"
+                                   FontSize="16"
+                                   FontWeight="Bold"
+                                   Text="平面1" />
+                        <TextBlock Grid.Column="1"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"
+                                   FontSize="16"
+                                   Foreground="#00c9ff">
+                            <Run Text="量值" />
+                            <Run Text="{Binding Rotor.BalenceUnit, FallbackValue=[g], StringFormat={}[{0}]}" />
+                        </TextBlock>
+                        <TextBlock Grid.Column="2"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"
+                                   FontSize="16"
+                                   Foreground="#00c9ff">
+                            <Run Text="角度" />
+                            <Run Text="[°]" />
+                        </TextBlock>
+
+                        <Border Grid.Row="1"
+                                Grid.ColumnSpan="3"
+                                Margin="0,5"
+                                Background="#3300c9ff" />
+                        <TextBlock Grid.Row="1"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"
+                                   Text="当前值" />
+                        <TextBlock Grid.Row="1"
+                                   Grid.Column="1"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"
+                                   Text="{Binding Panel1Item.Value, Converter={StaticResource FloatDigitConverter}}" />
+                        <TextBlock Grid.Row="1"
+                                   Grid.Column="2"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"
+                                   Text="{Binding Panel1Item.Angle, Converter={StaticResource FloatDigitConverter}}" />
+                        <Border Grid.Row="2"
+                                Grid.ColumnSpan="3"
+                                Margin="0,5"
+                                Background="#3300c9ff" />
+                        <TextBlock Grid.Row="2"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"
+                                   Text="上一次" />
+                        <TextBlock Grid.Row="2"
+                                   Grid.Column="1"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"
+                                   Text="{Binding Panel2Item.Value, Converter={StaticResource FloatDigitConverter}}" />
+                        <TextBlock Grid.Row="2"
+                                   Grid.Column="2"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"
+                                   Text="{Binding Panel2Item.Angle, Converter={StaticResource FloatDigitConverter}}" />
+                    </Grid>
+                </Border>
+                <Border Grid.Row="1"
+                        Grid.Column="1"
+                        Height="250"
+                        Margin="20,30,0,0"
+                        VerticalAlignment="Top"
+                        Background="#0a305b">
+                    <Grid Margin="30">
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock VerticalAlignment="Center"
+                                   FontSize="16"
+                                   FontWeight="Bold"
+                                   Text="平面2" />
+                        <TextBlock Grid.Column="1"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"
+                                   FontSize="16"
+                                   Foreground="#00c9ff"
+                                   Text="量程[g]" />
+                        <TextBlock Grid.Column="2"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"
+                                   FontSize="16"
+                                   Foreground="#00c9ff"
+                                   Text="角度[°]" />
+
+                        <Border Grid.Row="1"
+                                Grid.ColumnSpan="3"
+                                Margin="0,5"
+                                Background="#3300c9ff" />
+                        <Border Grid.Row="2"
+                                Grid.ColumnSpan="3"
+                                Margin="0,5"
+                                Background="#3300c9ff" />
+                    </Grid>
+                </Border>
+            </Grid>
+        </GroupBox>
+        <!--  端径跳  -->
+        <GroupBox Grid.Column="1"
+                  Margin="20"
+                  BorderThickness="0"
+                  Foreground="White"
+                  Header="端径跳"
+                  Style="{x:Null}">
+            <UniformGrid Margin="10,30,10,10"
+                         Columns="2"
+                         Rows="2">
+                <Border Margin="10" />
+                <Border Margin="10" />
+                <Border Margin="10" />
+                <Border Margin="10" />
+            </UniformGrid>
+        </GroupBox>
+
+        <hc:UniformSpacingPanel Grid.Row="2"
+                                Grid.ColumnSpan="2"
+                                Margin="20,10"
+                                VerticalAlignment="Center"
+                                Spacing="20">
+            <Border>
+                <hc:UniformSpacingPanel Margin="20,0" Spacing="40">
+                    <TextBlock Foreground="White">
+                        <Run Text="转子名称" />
+                        <Run FontWeight="Bold" Text="{Binding Rotor.Name}" />
+                    </TextBlock>
+                    <TextBlock Foreground="White">
+                        <Run Text="测量转速" />
+                        <Run FontWeight="Bold" Text="{Binding Rotor.Speed}" />
+                    </TextBlock>
+                    <TextBlock Foreground="White">
+                        <Run Text="PLC状态" />
+                        <Run FontWeight="Bold" Text="{Binding PlcStatus}" />
+                    </TextBlock>
+                </hc:UniformSpacingPanel>
+            </Border>
+        </hc:UniformSpacingPanel>
+    </Grid>
 </UserControl>

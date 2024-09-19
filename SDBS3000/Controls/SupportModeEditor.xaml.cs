@@ -14,34 +14,34 @@ namespace SDBS3000.Controls
             get { return (int)GetValue(SupportModeProperty); }
             set { SetValue(SupportModeProperty, value); }
         }
-        public double? R1
+        public float? R1
         {
-            get { return (double?)GetValue(R1Property); }
+            get { return (float?)GetValue(R1Property); }
             set { SetValue(R1Property, value); }
         }
-        public double? R2
+        public float? R2
         {
-            get { return (double?)GetValue(R2Property); }
+            get { return (float?)GetValue(R2Property); }
             set { SetValue(R2Property, value); }
         }
-        public double? A
+        public float? A
         {
-            get { return (double?)GetValue(AProperty); }
+            get { return (float?)GetValue(AProperty); }
             set { SetValue(AProperty, value); }
         }
-        public double? B
+        public float? B
         {
-            get { return (double?)GetValue(BProperty); }
+            get { return (float?)GetValue(BProperty); }
             set { SetValue(BProperty, value); }
         }
-        public double? C
+        public float? C
         {
-            get { return (double?)GetValue(CProperty); }
+            get { return (float?)GetValue(CProperty); }
             set { SetValue(CProperty, value); }
         }
-        public double? Speed
+        public float? Speed
         {
-            get { return (double?)GetValue(SpeedProperty); }
+            get { return (float?)GetValue(SpeedProperty); }
             set { SetValue(SpeedProperty, value); }
         }
 
@@ -61,39 +61,39 @@ namespace SDBS3000.Controls
         );
         public static readonly DependencyProperty R1Property = DependencyProperty.Register(
             "R1",
-            typeof(double?),
+            typeof(float?),
             typeof(SupportModeEditor),
             new PropertyMetadata(null)
         );
 
         public static readonly DependencyProperty R2Property = DependencyProperty.Register(
             "R2",
-            typeof(double?),
+            typeof(float?),
             typeof(SupportModeEditor),
             new PropertyMetadata(null)
         );
 
         public static readonly DependencyProperty AProperty = DependencyProperty.Register(
             "A",
-            typeof(double?),
+            typeof(float?),
             typeof(SupportModeEditor),
             new PropertyMetadata(null)
         );
         public static readonly DependencyProperty BProperty = DependencyProperty.Register(
             "B",
-            typeof(double?),
+            typeof(float?),
             typeof(SupportModeEditor),
             new PropertyMetadata(null)
         );
         public static readonly DependencyProperty CProperty = DependencyProperty.Register(
             "C",
-            typeof(double?),
+            typeof(float?),
             typeof(SupportModeEditor),
             new PropertyMetadata(null)
         );
         public static readonly DependencyProperty SpeedProperty = DependencyProperty.Register(
             "Speed",
-            typeof(double?),
+            typeof(float?),
             typeof(SupportModeEditor),
             new PropertyMetadata(null)
         );

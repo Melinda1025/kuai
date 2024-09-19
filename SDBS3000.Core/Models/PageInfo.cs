@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -9,6 +10,7 @@ namespace SDBS3000.Core.Models
     /// <summary>
     /// 切换页面信息
     /// </summary>
+    [StructLayout(LayoutKind.Sequential)]
     public struct PageInfo
     {
         /// <summary>
@@ -18,7 +20,7 @@ namespace SDBS3000.Core.Models
         /// <summary>
         /// 双面动平衡
         /// </summary>
-        public bool P2 { get; set; }
+        public bool Measure { get; set; }
         /// <summary>
         /// 静平衡
         /// </summary>
@@ -36,9 +38,9 @@ namespace SDBS3000.Core.Models
         /// </summary>
         public bool Positioning { get; set; }
         /// <summary>
-        /// 夹具
+        /// 补偿
         /// </summary>
-        public bool P7 { get; set; }
+        public bool Compensation { get; set; }
         /// <summary>
         /// 标定
         /// </summary>

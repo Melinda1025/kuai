@@ -47,8 +47,8 @@
                 <ComboBox Width="220"
                           VerticalAlignment="Center"
                           hc:TitleElement.Title="显示位数"
-                          SelectedIndex="{Binding Digits, UpdateSourceTrigger=LostFocus}"
-                          Style="{StaticResource SciComboBoxStyle}">
+                          Style="{StaticResource SciComboBoxStyle}"
+                          Text="{Binding Digits, UpdateSourceTrigger=LostFocus}">
                     <ComboBoxItem Content="0" />
                     <ComboBoxItem Content="1" />
                     <ComboBoxItem Content="2" />

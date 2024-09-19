@@ -19,7 +19,7 @@
                                        Height="{TemplateBinding hc:IconElement.Height}"
                                        Margin="0,0,0,10"
                                        HorizontalAlignment="Center"
-                                       FontFamily="../Assets/Fonts/#iconfont"
+                                       FontFamily="../../Assets/Fonts/#iconfont"
                                        FontSize="{TemplateBinding hc:IconElement.Height}"
                                        Foreground="{StaticResource LightUnselectedBrush}"
                                        Text="{Binding RelativeSource={RelativeSource AncestorType=ToggleButton}, Path=Tag}"

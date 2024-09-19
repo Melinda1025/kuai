@@ -17,7 +17,7 @@
     </UserControl.Background>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="80" />
+            <RowDefinition Height="90" />
             <RowDefinition />
             <RowDefinition Height="120" />
         </Grid.RowDefinitions>
@@ -30,9 +30,20 @@
                 <ColumnDefinition Width="auto" />
             </Grid.ColumnDefinitions>
 
-            <Border Width="220"
-                    Margin="20,10"
-                    Background="{StaticResource 剑平logo}" />
+            <Border Width="229"
+                    Height="33"
+                    Margin="44,23"
+                    Background="{StaticResource Logo}" />
+            <TextBlock Grid.ColumnSpan="3"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       FontFamily="{StaticResource CKTKingkong}"
+                       FontSize="34"
+                       FontWeight="Bold"
+                       Foreground="White">
+                <Run Text="{Binding Speed, FallbackValue=0, StringFormat=f0}" />
+                <Run Text="r/min" />
+            </TextBlock>
 
 
             <controls:DateTimeViewer Grid.Column="2"
@@ -47,57 +58,57 @@
             <UniformGrid.Background>
                 <ImageBrush ImageSource="../Assets/Images/Measure/底部栏.png" />
             </UniformGrid.Background>
-            <Button Content="开始"
+            <Button Command="{Binding ChangeMeasureStatusCommand}"
+                    CommandParameter="start"
+                    Content="开始"
                     Style="{StaticResource ToolButtonStyle}"
-                    Tag="&#xe622;" />
-            <Button Content="停止"
+                    Tag="&#xe60b;" />
+            <Button Command="{Binding ChangeMeasureStatusCommand}"
+                    CommandParameter="stop"
+                    Content="停止"
                     Style="{StaticResource ToolButtonStyle}"
-                    Tag="&#xe62a;" />
+                    Tag="&#xe60c;" />
             <Button Command="{Binding NavigatePageCommand}"
                     CommandParameter="{x:Type local:CalView}"
                     Content="标定"
                     Style="{StaticResource ToolButtonStyle}"
-                    Tag="&#xe630;" />
+                    Tag="&#xe60f;" />
             <Button Command="{Binding NavigatePageCommand}"
                     CommandParameter="{x:Type local:RotorView}"
                     Content="转子设置"
                     Style="{StaticResource ToolButtonStyle}"
-                    Tag="&#xe6d7;" />
+                    Tag="&#xe608;" />
             <Button Command="{Binding NavigatePageCommand}"
                     CommandParameter="{x:Type local:SettingView}"
                     Content="机器设置"
                     Style="{StaticResource ToolButtonStyle}"
-                    Tag="&#xe637;" />
+                    Tag="&#xe607;" />
             <Button Content="夹具补偿"
                     Style="{StaticResource ToolButtonStyle}"
-                    Tag="&#xe6f0;" />
+                    Tag="&#xe604;" />
             <Button Command="{Binding NavigatePageCommand}"
-                    CommandParameter="{x:Type local:KeyCompensationView}"
+                    CommandParameter="{x:Type local:KeyView}"
                     Content="键补偿"
                     Style="{StaticResource ToolButtonStyle}"
-                    Tag="&#xe642;" />
+                    Tag="&#xe603;" />
             <Button Command="{Binding NavigatePageCommand}"
                     CommandParameter="{x:Type local:PositionView}"
                     Content="定位"
                     Style="{StaticResource ToolButtonStyle}"
-                    Tag="&#xe8c4;" />
+                    Tag="&#xe610;" />
             <Button Command="{Binding NavigatePageCommand}"
                     CommandParameter="{x:Type local:SingleStepView}"
                     Content="单步"
                     Style="{StaticResource ToolButtonStyle}"
-                    Tag="&#xe60a;" />
+                    Tag="&#xe612;" />
             <Button Command="{Binding NavigatePageCommand}"
                     CommandParameter="{x:Type local:UserView}"
                     Content="用户管理"
                     Style="{StaticResource ToolButtonStyle}"
-                    Tag="&#xe6ab;" />
-            <Button Command="{Binding PrintCommand}"
-                    Content="打印"
-                    Style="{StaticResource ToolButtonStyle}"
-                    Tag="&#xe9c3;" />
+                    Tag="&#xe602;" />
             <Button Content="记录"
                     Style="{StaticResource ToolButtonStyle}"
-                    Tag="&#xe69e;" />
+                    Tag="&#xe605;" />
             <Button Command="{Binding NavigatePageCommand}"
                     CommandParameter="{x:Type local:AlarmView}"
                     Content="报警"
@@ -106,7 +117,7 @@
             <Button Command="{Binding ExitCommand}"
                     Content="退出"
                     Style="{StaticResource ToolButtonStyle}"
-                    Tag="&#xe647;" />
+                    Tag="&#xe60e;" />
         </UniformGrid>
     </Grid>
 </UserControl>

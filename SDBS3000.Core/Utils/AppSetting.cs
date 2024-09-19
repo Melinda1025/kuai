@@ -1,7 +1,9 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using Kdbndp.KingbaseTypes;
+using SqlSugar;
 using System.Text.Encodings.Web;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace SDBS3000.Core.Utils
 {
@@ -11,13 +13,20 @@ namespace SDBS3000.Core.Utils
         {
             Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
             WriteIndented = true,
+            Converters = { new JsonStringEnumConverter() },
+            ReadCommentHandling = JsonCommentHandling.Skip,
+            AllowTrailingCommas = true,
+            NumberHandling = JsonNumberHandling.AllowReadingFromString,
         };
         public const string SettingPath = "App.settings";
         public static AppSetting Default { get; private set; }
 
 
-        #region 配置属性
-        
+        #region 配置属性        
+        public string UserName { get; set; } = "admin";
+        public string Password { get; set; } = "123456";
+        public DbType DbType { get; set; } = DbType.Sqlite;
+        public string ConnectionString { get; set; } = "Data Source = data.db";
         public string PlcIP { get; set; } = "127.0.0.1";
         /// <summary>
         /// 测量次数
@@ -42,7 +51,7 @@ namespace SDBS3000.Core.Utils
         /// <summary>
         /// 保留位数 可选0到3位
         /// </summary>
-        public int Digits {  get; set; } = 3;
+        public string Digits {  get; set; } = "3";
         /// <summary>
         /// 定位转速
         /// </summary>
@@ -67,6 +76,10 @@ namespace SDBS3000.Core.Utils
         /// 转差补偿
         /// </summary>
         public float SlipCompensation { get; set; } = 0f;
+        /// <summary>
+        /// 转子名称
+        /// </summary>
+        public string RotorName {  get; set; } = string.Empty;
         /// <summary>
         /// 转子槽数
         /// </summary>
@@ -98,7 +111,6 @@ namespace SDBS3000.Core.Utils
         {
             if (!File.Exists(SettingPath))
             {
-                File.Create(SettingPath);
                 Default = new();
                 Default.Save();
             }

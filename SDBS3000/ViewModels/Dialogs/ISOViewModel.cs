@@ -6,12 +6,12 @@ namespace SDBS3000.ViewModels.Dialogs
 {
     public partial class ISOViewModel : ObservableObject
     {
-        private double r1 = 0, r2 = 0;
+        private float r1 = 0, r2 = 0;
         [ObservableProperty]
-        private double balanceLevel = 1;
+        private float balanceLevel = 1;
 
-        private double speed = 1000;
-        public double Speed
+        private float speed = 1000;
+        public float Speed
         {
             get => speed;
             set
@@ -32,7 +32,7 @@ namespace SDBS3000.ViewModels.Dialogs
             }
         }
 
-        public void InitRadius(double r1, double r2)
+        public void InitRadius(float r1, float r2)
         {
             this.r1 = r1;
             this.r2 = r2;
@@ -41,11 +41,11 @@ namespace SDBS3000.ViewModels.Dialogs
         [RelayCommand]
         public void CaculateISO()
         {
-            var panel1MaxUnbalence = r1 == 0 ? 0 : Math.Round(BalanceLevel * 1000 * 10 / Speed * Weight / 2 / r1, 3);
-            var panel2MaxUnbalence = r2 == 0 ? 0 : Math.Round(BalanceLevel * 1000 * 10 / Speed * Weight / 2 / r2, 3);
+            var panel1MaxUnbalence = r1 == 0 ? 0 : (float)Math.Round(BalanceLevel * 1000 * 10 / Speed * Weight / 2 / r1, 3);
+            var panel2MaxUnbalence = r2 == 0 ? 0 : (float)Math.Round(BalanceLevel * 1000 * 10 / Speed * Weight / 2 / r2, 3);
             var staticMaxUnbalence = panel1MaxUnbalence + panel2MaxUnbalence;
 
-            SimpleEventBus<(double, double, double)>.Instance.Publish("CaculateISO_Complete", null, (panel1MaxUnbalence, panel2MaxUnbalence, staticMaxUnbalence));
+            SimpleEventBus<(float, float, float)>.Instance.Publish("CaculateISO_Complete", null, (panel1MaxUnbalence, panel2MaxUnbalence, staticMaxUnbalence));
         }
     }
 }

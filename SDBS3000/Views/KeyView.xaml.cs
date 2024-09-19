@@ -4,11 +4,11 @@ using System.Windows.Controls;
 namespace SDBS3000.Views
 {
     /// <summary>
-    /// KeyCompensationView.xaml 的交互逻辑
+    /// KeyView.xaml 的交互逻辑
     /// </summary>
-    public partial class KeyCompensationView : UserControl
+    public partial class KeyView : UserControl
     {
-        public KeyCompensationView(KeyCompensationViewModel model)
+        public KeyView(KeyViewModel model)
         {
             InitializeComponent();
             DataContext = model;

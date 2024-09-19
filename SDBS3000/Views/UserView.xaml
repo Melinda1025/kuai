@@ -13,6 +13,11 @@
              Margin="75"
              d:DataContext="{d:DesignInstance vm:UserViewModel}"
              mc:Ignorable="d">
+    <hc:Interaction.Triggers>
+        <hc:EventTrigger EventName="Loaded">
+            <hc:InvokeCommandAction Command="{Binding LoadedCommand}" />
+        </hc:EventTrigger>
+    </hc:Interaction.Triggers>
     <Border Background="{StaticResource 主体模块背景}" CornerRadius="20">
         <Grid>
             <Grid.RowDefinitions>
@@ -32,14 +37,15 @@
                       Margin="50,50,0,0"
                       VerticalAlignment="Top"
                       ItemsSource="{Binding Users}"
+                      SelectedValue="{Binding SelectedUser, Mode=TwoWay}"
                       Style="{StaticResource UserDataGrid}">
                 <DataGrid.Columns>
                     <DataGridTextColumn Width="*"
-                                        Binding="{Binding Name}"
+                                        Binding="{Binding Name, Mode=OneWay}"
                                         Header="用户名"
                                         IsReadOnly="True" />
                     <DataGridTextColumn Width="*"
-                                        Binding="{Binding Access}"
+                                        Binding="{Binding Permission, Mode=OneWay, Converter={StaticResource PermissionToStringConverter}}"
                                         Header="用户权限"
                                         IsReadOnly="True" />
                 </DataGrid.Columns>
@@ -47,7 +53,8 @@
 
             <Grid Grid.RowSpan="4"
                   Grid.Column="1"
-                  Margin="40,57.5,40,40">
+                  Margin="40,57.5,40,40"
+                  IsEnabled="{Binding IsEditing, Mode=OneWay}">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto" />
                     <RowDefinition />
@@ -63,16 +70,20 @@
                 <TextBox Margin="15,0"
                          hc:TitleElement.Title="用户名"
                          FontSize="20"
-                         Style="{StaticResource TitleTbxStyle}" />
+                         Style="{StaticResource TitleTbxStyle}"
+                         Text="{Binding SelectedUser.Name, UpdateSourceTrigger=LostFocus}" />
                 <TextBox Grid.Column="1"
                          Grid.ColumnSpan="2"
                          Margin="15,0"
                          hc:TitleElement.Title="密码"
                          FontSize="20"
-                         Style="{StaticResource TitleTbxStyle}" />
+                         Style="{StaticResource TitleTbxStyle}"
+                         Text="{Binding SelectedUser.Password, UpdateSourceTrigger=LostFocus}" />
                 <ComboBox Grid.Column="3"
-                          Margin="15,0" 
+                          Margin="15,0"
                           hc:TitleElement.Title="用户权限"
+                          IsEnabled="{Binding IsAddNew, Mode=OneWay}"
+                          SelectedIndex="{Binding SelectedUser.Permission, UpdateSourceTrigger=LostFocus}"
                           Style="{StaticResource SciComboBoxStyle}">
                     <ComboBoxItem Content="管理员" />
                     <ComboBoxItem Content="调试员" />
@@ -88,7 +99,8 @@
                          hc:TitleElement.Title="备注"
                          Background="{StaticResource 输入框2}"
                          FontSize="20"
-                         Style="{StaticResource TitleTbxStyle}" />
+                         Style="{StaticResource TitleTbxStyle}"
+                         Text="{Binding SelectedUser.Remark, UpdateSourceTrigger=LostFocus}" />
                 <hc:Divider Grid.Row="1"
                             Grid.ColumnSpan="4"
                             Margin="100,30"
@@ -102,7 +114,8 @@
                          hc:TitleElement.Title="MES用户名"
                          Background="{StaticResource 输入框3}"
                          FontSize="20"
-                         Style="{StaticResource TitleTbxStyle}" />
+                         Style="{StaticResource TitleTbxStyle}"
+                         Text="{Binding SelectedUser.MES_UserName, UpdateSourceTrigger=LostFocus}" />
                 <TextBox Grid.Row="2"
                          Grid.Column="2"
                          Grid.ColumnSpan="2"
@@ -110,7 +123,8 @@
                          hc:TitleElement.Title="MES用户密码"
                          Background="{StaticResource 输入框3}"
                          FontSize="20"
-                         Style="{StaticResource TitleTbxStyle}" />
+                         Style="{StaticResource TitleTbxStyle}"
+                         Text="{Binding SelectedUser.MES_Password, UpdateSourceTrigger=LostFocus}" />
             </Grid>
 
             <Button Grid.Column="2"
@@ -118,6 +132,7 @@
                     hc:BorderElement.CornerRadius="0"
                     Background="{StaticResource 蓝色模块上圆角}"
                     BorderThickness="0"
+                    Command="{Binding AddCommand}"
                     Content="新增"
                     FontSize="22"
                     Style="{StaticResource LightToolButtonStyle}"
@@ -128,8 +143,10 @@
                     hc:BorderElement.CornerRadius="0"
                     Background="{StaticResource 蓝色模块}"
                     BorderThickness="0"
+                    Command="{Binding EditCommand}"
                     Content="修改"
                     FontSize="22"
+                    IsEnabled="{Binding IsEditing, Converter={StaticResource Boolean2BooleanReConverter}, Mode=OneWay}"
                     Style="{StaticResource LightToolButtonStyle}"
                     Tag="&#xe69e;" />
             <Button Grid.Row="2"
@@ -138,8 +155,10 @@
                     hc:BorderElement.CornerRadius="0"
                     Background="{StaticResource 蓝色模块}"
                     BorderThickness="0"
+                    Command="{Binding SaveCommand}"
                     Content="保存"
                     FontSize="22"
+                    IsEnabled="{Binding IsEditing, Mode=OneWay}"
                     Style="{StaticResource LightToolButtonStyle}"
                     Tag="&#xe638;" />
             <Button Grid.Row="3"
@@ -148,6 +167,7 @@
                     hc:BorderElement.CornerRadius="0"
                     Background="{StaticResource 红色模块}"
                     BorderThickness="0"
+                    Command="{Binding DeleteCommand}"
                     Content="删除"
                     FontSize="22"
                     Style="{StaticResource RedToolButtonStyle}"
