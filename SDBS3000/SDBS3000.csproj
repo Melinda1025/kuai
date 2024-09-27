@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <None Remove="Assets\Images\Border\NavigateBd.png" />
+    <None Remove="Assets\Images\Border\NavigateBd.Selected.png" />
     <None Remove="Assets\Images\Border\RegionBd.png" />
     <None Remove="Assets\Images\Border\RegionBd.Small.png" />
     <None Remove="Assets\Images\Border\TitleBd.png" />
@@ -33,6 +34,7 @@
     <Resource Include="Assets\Images\Background\LoginBg.png" />
     <Resource Include="Assets\Images\Background\MainBg.png" />
     <Resource Include="Assets\Images\Border\NavigateBd.png" />
+    <Resource Include="Assets\Images\Border\NavigateBd.Selected.png" />
     <Resource Include="Assets\Images\Border\RegionBd.png" />
     <Resource Include="Assets\Images\Border\RegionBd.Small.png" />
     <Resource Include="Assets\Images\Border\TitleBd.png" />

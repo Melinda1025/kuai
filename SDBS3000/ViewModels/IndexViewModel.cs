@@ -134,7 +134,7 @@ namespace SDBS3000.ViewModels
         private async void OnUpdateSpeed(object state)
         {
             if (!plc.IsConnected) return;
-            var buffer = ArrayPool<byte>.Shared.Rent(4);
+            var buffer = new byte[4];
             try
             {
                 await plc.ReadBytesAsync(buffer, DataType.DataBlock, 20, 400);
@@ -142,8 +142,7 @@ namespace SDBS3000.ViewModels
                 Speed = BitConverter.ToSingle(buffer, 0);
             }
             finally
-            {
-                ArrayPool<byte>.Shared.Return(buffer);
+            {                
                 updateSpeedTimer.Change(UPDATE_INTERVAL, Timeout.Infinite);
             }
         }

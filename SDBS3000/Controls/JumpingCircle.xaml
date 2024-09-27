@@ -6,28 +6,59 @@
              xmlns:local="clr-namespace:SDBS3000.Controls"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:oxy="http://oxyplot.org/skiawpf"
-             MinWidth="200"
-             MinHeight="200"
-             d:DesignHeight="100"
-             d:DesignWidth="100"
+             d:DesignHeight="500"
+             d:DesignWidth="500"
+             FontSize="14"
+             Foreground="White"
              mc:Ignorable="d">
-    <Viewbox>
-        <hc:SimplePanel Width="200" Height="200">
-            <Ellipse Name="OuterEllipse"
-                     Margin="-2"
-                     Effect="{StaticResource BlurEffect}"
-                     Fill="#3300b4ff" />
-            <oxy:PlotView Name="PlotView"
-                          Margin="-20"
-                          Background="Transparent" />
-            <Ellipse Name="StdEllipse"
-                     Fill="#3300b4ff"
-                     Stroke="#00b4ff"
-                     StrokeThickness="1.5" />
-            <Ellipse Name="InnerEllipse"
-                     Margin="3"
-                     Stroke="#00b4ff"
-                     StrokeDashArray="3" />
-        </hc:SimplePanel>
-    </Viewbox>
+    <hc:SimplePanel>
+        <TextBlock Name="UpTbx"
+                   Margin="0,0,0,0"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Top"
+                   Text="90°" />
+        <TextBlock Name="DownTbx"
+                   Margin="0,0,0,0"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Bottom"
+                   Text="270°" />
+        <TextBlock Name="LeftTbx"
+                   Margin="-15,0,0,0"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Center"
+                   Text="180°" />
+        <TextBlock Name="RightTbx"
+                   Margin="0,0,0,0"
+                   HorizontalAlignment="Right"
+                   VerticalAlignment="Center"
+                   Text="0°" />
+
+        <Viewbox HorizontalAlignment="Stretch"
+                 VerticalAlignment="Stretch"
+                 Stretch="Uniform">
+            <hc:SimplePanel Width="140" Height="140">
+                <Border Margin="18" Effect="{StaticResource GrowEffect}">
+                    <Border BorderBrush="{StaticResource SubBrush}"
+                            BorderThickness="2"
+                            CornerRadius="75"
+                            Effect="{StaticResource BlurEffect}" />
+                </Border>
+
+                <oxy:PlotView Name="PlotView" Background="Transparent" />
+
+                <Border Width="100"
+                        Height="100"
+                        Background="{StaticResource JumpingCircleBg}"
+                        BorderBrush="{StaticResource SubBrush}"
+                        BorderThickness="1"
+                        CornerRadius="50">
+
+                    <Ellipse Margin="2"
+                             Stroke="{StaticResource SubBrush}"
+                             StrokeDashArray="5"
+                             StrokeThickness="0.5" />
+                </Border>
+            </hc:SimplePanel>
+        </Viewbox>
+    </hc:SimplePanel>
 </UserControl>

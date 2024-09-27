@@ -12,8 +12,9 @@ namespace SDBS3000.Views.Model
 {
     public class JumpItemExtend : JumpItem
     {
-        public DataPointList Points { get; set; } = new();
-        public List<double> Buffer { get; set; } = new();
+        public DataPointList Points { get; private set; } = new();
+        public List<double> Buffer { get; private set; } = new();
+        public bool? IsQualified { get; set; } = null;
 
         public void ConvertCurrentDatas(ReadOnlySpan<double> currentDatas)
         {
@@ -31,20 +32,19 @@ namespace SDBS3000.Views.Model
             FirstHarmonic = first;
             SecondHarmonic = second;
             var (max, min) = Algorithm.FindMaxAndMin(Buffer);
-            HighAngle = 360D / Buffer.Count * max;
-            LowAngle = 360D / Buffer.Count * min;
-
-            //绘制曲线
+            HighAngle = 360.0 / Buffer.Count * max;
+            LowAngle = 360.0 / Buffer.Count * min;
 
             //计算显示跳动的圆的半径
             //1、计算最大值与最小值的差值
             var delta = Buffer[max] - Buffer[min];
             Jumping = delta;
             //2、计算圆的半径
+            Points.Clear();
             const double minRadius = 2.5;
             var radius = Math.Max(minRadius, delta * 2.5);
 
-            var step = 360D / Buffer.Count;
+            var step = 360.0 / Buffer.Count;
             for (int i = 0; i < Buffer.Count; i++)
             {
                 Points.Add(new DataPoint(Buffer[i] + radius, step * i));
@@ -52,11 +52,18 @@ namespace SDBS3000.Views.Model
             Points.NotifyChanged();
         }
 
+        public void Calculate(double maxBalenceValue)
+        {
+            Calculate();
+            IsQualified = Jumping <= maxBalenceValue;
+        }
+
         public void Reset()
         {
             Points.Clear();
             Buffer.Clear();
             Jumping = HighAngle = LowAngle = FirstHarmonic = SecondHarmonic = 0.0;
+            IsQualified = null;
         }
 
         public string TraceInfo()

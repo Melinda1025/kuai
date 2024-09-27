@@ -27,10 +27,16 @@ namespace SDBS3000.Core.Utils
             {
                 samples[i] = new Complex32((float)span[i], 0);
             }
-            Fourier.Forward(samples, FourierOptions.Matlab);
-            var (fidx, sidx) = GetTwoMax(span);
-            var first = samples[fidx].Magnitude / span.Length * 2;
-            var second = samples[sidx].Magnitude / span.Length * 2;
+            Fourier.Forward(samples, FourierOptions.Matlab);            
+            var magnitudes = new float[samples.Length / 2];
+            for (int i = 0; i < magnitudes.Length; i++)
+            {
+                magnitudes[i] = samples[i].Magnitude;
+            }
+
+            var (fidx, sidx) = GetTwoMax(magnitudes);
+            var first = magnitudes[fidx] / span.Length * 2;
+            var second = magnitudes[sidx] / span.Length * 2;
             return (first, second);
         }
 
@@ -67,7 +73,7 @@ namespace SDBS3000.Core.Utils
             return (max, min);
         }
 
-        public static (int first, int second) GetTwoMax(Span<double> values)
+        public static (int first, int second) GetTwoMax(Span<float> values)
         {
             int first, second;
             if (values[0] > values[1])

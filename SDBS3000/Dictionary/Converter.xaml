@@ -9,4 +9,5 @@
     <cvt:PermissionToStringConverter x:Key="PermissionToStringConverter" />
     <cvt:FloatDigitConverter x:Key="FloatDigitConverter" />
     <cvt:DoubleDigitConverter x:Key="DoubleDigitConverter" />
+    <cvt:Boolean2AddRemoveIconConverter x:Key="Boolean2AddRemoveIconConverter" />
 </ResourceDictionary>

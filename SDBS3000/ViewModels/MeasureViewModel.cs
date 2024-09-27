@@ -150,44 +150,110 @@ namespace SDBS3000.ViewModels
             if (isMeasure)
             {
                 balenceMeasureTimer.Change(BALENCE_MEASURE_INTERVAL, Timeout.Infinite);
-                Task.Run(StartMeasureJumpingAsync);
+                //Task.Run(StartMeasureJumpingAsync);
                 //var arr = new List<double>();
-                //Task.Run(async () =>
-                //{
-                //    double angle = 0;
-                //    while (PropertyAccessor<IndexViewModel, bool>.Instance.GetValue("IsMeasuring"))
-                //    {
-                //        if (angle >= 360)
-                //        {
-                //            angle = 0;
-                //            UpDiametricItem.Reset();
-                //            arr.Clear();
-                //        }
-                //        angle += 1;
-                //        arr.Add(Random.Shared.NextDouble() * 3);
-                //        UpDiametricItem.Jumping = arr[^1];
-                //        OnPropertyChanged(nameof(UpDiametricItem));
+                Task.Run(async () =>
+                {
+                    double angle = 0;
+                    UpDiametricItem.Reset();
+                    DownDiametricItem.Reset();
+                    UpEndItem.Reset();
+                    DownEndItem.Reset();
+                    while (PropertyAccessor<IndexViewModel, bool>.Instance.GetValue("IsMeasuring"))
+                    {
+                        if (angle >= 360)
+                        {
+                            angle = 0;
+                            UpDiametricItem.Calculate(1);
+                            DownDiametricItem.Calculate(2);
+                            DownEndItem.Calculate(3);
+                            UpEndItem.Calculate(4);
+                            OnPropertyChanged(nameof(UpDiametricItem));
+                            OnPropertyChanged(nameof(DownDiametricItem));
+                            OnPropertyChanged(nameof(UpEndItem));
+                            OnPropertyChanged(nameof(DownEndItem));
+                            //UpDiametricItem.Points.Clear();
+                            //UpDiametricItem.Reset();
+                            //UpDiametricItem.Buffer.Clear();
+                            StopMeasureJumping();
+                            return;
+                        }
+                        angle += 1;
+                        UpDiametricItem.Buffer.Add(Random.Shared.NextDouble() * 2 + 1);
+                        DownDiametricItem.Buffer.Add(Random.Shared.NextDouble() * 2 + 1);
+                        UpEndItem.Buffer.Add(Random.Shared.NextDouble() * 2 + 1);
+                        DownEndItem.Buffer.Add(Random.Shared.NextDouble() * 2 + 1);
+                        //UpDiametricItem.Jumping = UpDiametricItem.Buffer[^1];
+                        //OnPropertyChanged(nameof(UpDiametricItem));
 
-                //        double add = 0;
-                //        if (arr.Count > 0)
-                //        {
-                //            var max = arr.Max();
-                //            var min = arr.Min();
-                //            var delta = max - min;
-                //            var radius = Math.Max(2.5, delta * 2.5);
-                //            add = radius;
-                //        }
-                //        UpDiametricItem.Points.Clear();
-                //        for(int i = 1; i < arr.Count; i++)
-                //        {
-                //            UpDiametricItem.Points.Add(new DataPoint(add + arr[i], i + 1));
-                //        }
+                        double add = 0;
+                        if (UpDiametricItem.Buffer.Count > 0)
+                        {
+                            var max = UpDiametricItem.Buffer.Max();
+                            var min = UpDiametricItem.Buffer.Min();
+                            var delta = max - min;
+                            var radius = Math.Max(2.5, delta * 2.5);
+                            add = radius;
+                        }
+                        UpDiametricItem.Points.Clear();
+                        for (int i = 0; i < UpDiametricItem.Buffer.Count; i++)
+                        {
+                            UpDiametricItem.Points.Add(new DataPoint(add + UpDiametricItem.Buffer[i], i + 1));
+                        }
 
-                //        UpDiametricItem.Points.NotifyChanged();
-                //        //OnPropertyChanged(nameof(UpDiametricItem));
-                //        await Task.Delay(50);
-                //    }
-                //});
+                        add = 0;
+                        if (DownDiametricItem.Buffer.Count > 0)
+                        {
+                            var max = DownDiametricItem.Buffer.Max();
+                            var min = DownDiametricItem.Buffer.Min();
+                            var delta = max - min;
+                            var radius = Math.Max(2.5, delta * 2.5);
+                            add = radius;
+                        }
+                        DownDiametricItem.Points.Clear();
+                        for (int i = 0; i < DownDiametricItem.Buffer.Count; i++)
+                        {
+                            DownDiametricItem.Points.Add(new DataPoint(add + DownDiametricItem.Buffer[i], i + 1));
+                        }
+
+                        add = 0;
+                        if (UpEndItem.Buffer.Count > 0)
+                        {
+                            var max = UpEndItem.Buffer.Max();
+                            var min = UpEndItem.Buffer.Min();
+                            var delta = max - min;
+                            var radius = Math.Max(2.5, delta * 2.5);
+                            add = radius;
+                        }
+                        UpEndItem.Points.Clear();
+                        for (int i = 0; i < UpEndItem.Buffer.Count; i++)
+                        {
+                            UpEndItem.Points.Add(new DataPoint(add + UpEndItem.Buffer[i], i + 1));
+                        }
+
+                        add = 0;
+                        if (DownEndItem.Buffer.Count > 0)
+                        {
+                            var max = DownEndItem.Buffer.Max();
+                            var min = DownEndItem.Buffer.Min();
+                            var delta = max - min;
+                            var radius = Math.Max(2.5, delta * 2.5);
+                            add = radius;
+                        }
+                        DownEndItem.Points.Clear();
+                        for (int i = 0; i < DownEndItem.Buffer.Count; i++)
+                        {
+                            DownEndItem.Points.Add(new DataPoint(add + DownEndItem.Buffer[i], i + 1));
+                        }
+
+                        UpDiametricItem.Points.NotifyChanged();
+                        DownDiametricItem.Points.NotifyChanged();
+                        UpEndItem.Points.NotifyChanged();
+                        DownEndItem.Points.NotifyChanged();
+                        //OnPropertyChanged(nameof(UpDiametricItem));
+                        await Task.Delay(10);
+                    }
+                });
             }
             else
             {
@@ -404,10 +470,10 @@ namespace SDBS3000.ViewModels
         public void StopMeasureJumping()
         {
             PropertyAccessor<IndexViewModel, bool>.Instance.SetValue("IsMeasuring", false);
-            UpDiametricItem.Points.Clear();
-            DownDiametricItem.Points.Clear();
-            UpEndItem.Points.Clear();
-            DownEndItem.Points.Clear();
+            //UpDiametricItem.Points.Clear();
+            //DownDiametricItem.Points.Clear();
+            //UpEndItem.Points.Clear();
+            //DownEndItem.Points.Clear();
             if (DAQHandle == IntPtr.Zero)
                 return;
             _ = ArtDAQ.ArtDAQ_StopTask(DAQHandle);
@@ -417,7 +483,7 @@ namespace SDBS3000.ViewModels
 
         private void HandleDAQError()
         {
-            var buffer = ArrayPool<byte>.Shared.Rent(2048);
+            var buffer = new byte[2048];
             try
             {
                 ArtDAQ.ArtDAQ_GetExtendedErrorInfo(buffer, 2048);
@@ -426,9 +492,11 @@ namespace SDBS3000.ViewModels
                 Growl.Error(message);
             }
             finally
-            {
-                ArrayPool<byte>.Shared.Return(buffer);
-                StopMeasureJumping();
+            {                
+                if(PropertyAccessor<IndexViewModel, bool>.Instance.GetValue("IsMeasuring"))
+                {
+                    StopMeasureJumping();
+                }                
             }
         }
     }

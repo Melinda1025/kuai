@@ -13,12 +13,11 @@
              d:DataContext="{d:DesignInstance vm:IndexViewModel}"
              Background="{StaticResource MainBg}"
              mc:Ignorable="d">
-
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="90" />
             <RowDefinition />
-            <RowDefinition Height="170" />
+            <RowDefinition Height="120" />
         </Grid.RowDefinitions>
 
         <!--  标题栏  -->
@@ -49,6 +48,11 @@
                                             Value="{Binding Progress, Mode=OneWay, FallbackValue=0.5}" />
             </hc:SimplePanel>
 
+            <controls:DateTimeViewer Grid.Column="1"
+                                     MinWidth="280"
+                                     HorizontalAlignment="Right"
+                                     VerticalAlignment="Center" />
+
             <hc:SimpleStackPanel Grid.Column="2"
                                  Margin="10,0"
                                  HorizontalAlignment="Right"
@@ -67,9 +71,7 @@
         <ContentControl Grid.Row="1" Content="{Binding Page}" />
 
         <!--  导航栏  -->
-        <UniformGrid Grid.Row="2"
-                     Margin="50,0"
-                     Rows="1">
+        <UniformGrid Grid.Row="2" Rows="1">
             <Button Command="{Binding ChangeMeasureStatusCommand}"
                     CommandParameter="start"
                     Content="开始"
@@ -82,6 +84,16 @@
                     IsEnabled="{Binding IsMeasuring, Mode=OneWay}"
                     Style="{StaticResource NavigateButtonStyle}"
                     Tag="&#xe60c;" />
+            <Button CommandParameter="stop"
+                    Content="加去重"
+                    IsEnabled="{Binding IsMeasuring, Mode=OneWay}"
+                    Style="{StaticResource NavigateButtonStyle}"
+                    Tag="&#xe613;" />
+            <Button CommandParameter="stop"
+                    Content="电补偿"
+                    IsEnabled="{Binding IsMeasuring, Mode=OneWay}"
+                    Style="{StaticResource NavigateButtonStyle}"
+                    Tag="&#xe616;" />
             <Button Command="{Binding NavigatePageCommand}"
                     CommandParameter="{x:Type local:CalView}"
                     Content="标定"

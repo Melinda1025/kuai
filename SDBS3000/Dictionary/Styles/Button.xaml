@@ -3,11 +3,12 @@
                     xmlns:hc="https://handyorg.github.io/handycontrol"
                     xmlns:o="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options">
     <Style x:Key="NavigateButtonStyle" TargetType="Button">
+        <Setter Property="Margin" Value="10,0" />
         <Setter Property="Foreground" Value="{DynamicResource MainTextBrush}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
-                    <Border Width="103"
+                    <Border Name="border"
                             Height="94"
                             Background="{StaticResource NavigateBd}">
                         <hc:SimpleStackPanel HorizontalAlignment="Center"
@@ -27,7 +28,7 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Opacity" Value="0.8" />
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource NavigateBd.Selected}" />
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
                             <Setter Property="Opacity" Value="0.5" />
@@ -69,7 +70,7 @@
     </Style>
 
 
-    
+
     <LinearGradientBrush x:Key="UnselectedBrush" o:Freeze="True" StartPoint="0,0" EndPoint="0,1">
         <GradientStop Offset="0.0" Color="#02bbff" />
         <GradientStop Offset="1.0" Color="#0843c1" />
@@ -137,7 +138,7 @@
             </Setter.Value>
         </Setter>
     </Style>
-    
+
     <Style x:Key="LightToolButtonStyle" TargetType="Button">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Foreground" Value="White" />

@@ -8,7 +8,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="clr-namespace:SDBS3000.ViewModels"
              Width="1820"
-             Height="880"
+             Height="870"
              Margin="50,0"
              d:DataContext="{d:DesignInstance vm:MeasureViewModel}"
              mc:Ignorable="d">
@@ -50,15 +50,28 @@
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
 
-            <controls:SciProgressBar Width="40"
-                                     Margin="20,0,0,0"
+            <controls:GrowText Margin="16.3,5,0,0"
+                               HorizontalAlignment="Left"
+                               VerticalAlignment="Top"
+                               FontFamily="{StaticResource IconFont}"
+                               FontSize="30"
+                               Text="{Binding AddOrRemoveInfo.LeftAddOrRemove, Converter={StaticResource Boolean2AddRemoveIconConverter}, Mode=OneWay}" />
+            <controls:GrowText Grid.Column="1"
+                               Margin="0,5,16.3,0"
+                               HorizontalAlignment="Right"
+                               VerticalAlignment="Top"
+                               FontFamily="{StaticResource IconFont}"
+                               FontSize="30"
+                               Text="{Binding AddOrRemoveInfo.RightAddOrRemove, Converter={StaticResource Boolean2AddRemoveIconConverter}, Mode=OneWay}" />
+            <controls:SciProgressBar Width="30"
+                                     Margin="20,40,0,0"
                                      HorizontalAlignment="Left"
                                      Orientation="Vertical"
                                      RectCount="20"
                                      Value="{Binding Panel1Item.Signal, FallbackValue=0}" />
             <controls:SciProgressBar Grid.Column="1"
-                                     Width="40"
-                                     Margin="0,0,20,0"
+                                     Width="30"
+                                     Margin="0,40,20,0"
                                      HorizontalAlignment="Right"
                                      Orientation="Vertical"
                                      RectCount="20"
@@ -271,7 +284,7 @@
                        Text="端径跳" />
         </Border>
         <UniformGrid Grid.Column="1"
-                     Margin="30,90,30,30"
+                     Margin="30,90,30,15"
                      Columns="2"
                      Rows="2">
             <Border Margin="10" Background="{StaticResource RegionBd}">
@@ -284,7 +297,7 @@
                         <ColumnDefinition Width="auto" />
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="auto" />
-                        <ColumnDefinition Width="110" />
+                        <ColumnDefinition Width="120" />
                     </Grid.ColumnDefinitions>
                     <controls:GrowText Margin="15,0,10,0"
                                        HorizontalAlignment="Left"
@@ -293,7 +306,7 @@
                                        Text="上径面" />
                     <controls:QualifiedBox Grid.Column="1"
                                            HorizontalAlignment="Left"
-                                           IsQualified="False" />
+                                           IsQualified="{Binding UpDiametricItem.IsQualified, Mode=OneWay}" />
                     <TextBlock Grid.Column="2"
                                Margin="20,0,15,0"
                                VerticalAlignment="Center"
@@ -310,7 +323,13 @@
                              Text="{Binding Rotor.BalenceUnit, FallbackValue=(μm), Mode=OneWay}" />
                     </TextBlock>
 
-                    <controls:JumpingCircle Grid.Row="1" Grid.ColumnSpan="3" />
+                    <controls:JumpingCircle Grid.RowSpan="2"
+                                            Grid.ColumnSpan="3"
+                                            Margin="10,60,0,10"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            LineStroke="{StaticResource JumpingStrokeColor}"
+                                            Points="{Binding UpDiametricItem.Points, Mode=OneWay, IsAsync=True}" />
 
                     <hc:Divider Grid.RowSpan="2"
                                 Grid.Column="3"
@@ -326,7 +345,7 @@
                         <TextBlock VerticalAlignment="Center" TextAlignment="Center">
                             <Run FontSize="14"
                                  Foreground="White"
-                                 Text="高点角度(°)" />
+                                 Text="高点角度[°]" />
                             <LineBreak />
                             <Run FontSize="18"
                                  Foreground="{StaticResource SubTextBrush}"
@@ -335,7 +354,7 @@
                         <TextBlock VerticalAlignment="Center" TextAlignment="Center">
                             <Run FontSize="14"
                                  Foreground="White"
-                                 Text="低点角度(°)" />
+                                 Text="低点角度[°]" />
                             <LineBreak />
                             <Run FontSize="18"
                                  Foreground="{StaticResource SubTextBrush}"
@@ -362,9 +381,288 @@
                     </UniformGrid>
                 </Grid>
             </Border>
-            <Border Margin="10" Background="{StaticResource RegionBd}" />
-            <Border Margin="10" Background="{StaticResource RegionBd}" />
-            <Border Margin="10" Background="{StaticResource RegionBd}" />
+            <Border Margin="10" Background="{StaticResource RegionBd}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition Height="3*" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition Width="120" />
+                    </Grid.ColumnDefinitions>
+                    <controls:GrowText Margin="15,0,10,0"
+                                       HorizontalAlignment="Left"
+                                       VerticalAlignment="Center"
+                                       FontSize="25"
+                                       Text="上端面" />
+                    <controls:QualifiedBox Grid.Column="1"
+                                           HorizontalAlignment="Left"
+                                           IsQualified="{Binding UpEndItem.IsQualified, Mode=OneWay}" />
+                    <TextBlock Grid.Column="2"
+                               Margin="20,0,15,0"
+                               VerticalAlignment="Center"
+                               TextAlignment="Center">
+                        <Run FontSize="20"
+                             Foreground="{StaticResource SubTextBrush}"
+                             Text="{Binding UpEndItem.Jumping, FallbackValue=0.000, Mode=OneWay, Converter={StaticResource DoubleDigitConverter}}" />
+                        <LineBreak />
+                        <Run FontSize="15"
+                             Foreground="White"
+                             Text="跳动值" />
+                        <Run FontSize="15"
+                             Foreground="White"
+                             Text="{Binding Rotor.BalenceUnit, FallbackValue=(μm), Mode=OneWay}" />
+                    </TextBlock>
+
+                    <controls:JumpingCircle Grid.RowSpan="2"
+                                            Grid.ColumnSpan="3"
+                                            Margin="10,60,0,10"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            LineStroke="{StaticResource JumpingStrokeColor}"
+                                            Points="{Binding UpEndItem.Points, Mode=OneWay, IsAsync=True}" />
+
+                    <hc:Divider Grid.RowSpan="2"
+                                Grid.Column="3"
+                                Margin="5,20,0,20"
+                                HorizontalAlignment="Left"
+                                LineStroke="#334795FF"
+                                Orientation="Vertical" />
+
+                    <UniformGrid Grid.RowSpan="2"
+                                 Grid.Column="3"
+                                 Margin="0,10"
+                                 Rows="4">
+                        <TextBlock VerticalAlignment="Center" TextAlignment="Center">
+                            <Run FontSize="14"
+                                 Foreground="White"
+                                 Text="高点角度[°]" />
+                            <LineBreak />
+                            <Run FontSize="18"
+                                 Foreground="{StaticResource SubTextBrush}"
+                                 Text="{Binding UpEndItem.HighAngle, FallbackValue=0.000, Mode=OneWay, Converter={StaticResource DoubleDigitConverter}}" />
+                        </TextBlock>
+                        <TextBlock VerticalAlignment="Center" TextAlignment="Center">
+                            <Run FontSize="14"
+                                 Foreground="White"
+                                 Text="低点角度[°]" />
+                            <LineBreak />
+                            <Run FontSize="18"
+                                 Foreground="{StaticResource SubTextBrush}"
+                                 Text="{Binding UpEndItem.LowAngle, FallbackValue=0.000, Mode=OneWay, Converter={StaticResource DoubleDigitConverter}}" />
+                        </TextBlock>
+                        <TextBlock VerticalAlignment="Center" TextAlignment="Center">
+                            <Run FontSize="14"
+                                 Foreground="White"
+                                 Text="一次谐波" />
+                            <LineBreak />
+                            <Run FontSize="18"
+                                 Foreground="{StaticResource SubTextBrush}"
+                                 Text="{Binding UpEndItem.FirstHarmonic, FallbackValue=0.000, Mode=OneWay, Converter={StaticResource DoubleDigitConverter}}" />
+                        </TextBlock>
+                        <TextBlock VerticalAlignment="Center" TextAlignment="Center">
+                            <Run FontSize="14"
+                                 Foreground="White"
+                                 Text="二次谐波" />
+                            <LineBreak />
+                            <Run FontSize="18"
+                                 Foreground="{StaticResource SubTextBrush}"
+                                 Text="{Binding UpEndItem.SecondHarmonic, FallbackValue=0.000, Mode=OneWay, Converter={StaticResource DoubleDigitConverter}}" />
+                        </TextBlock>
+                    </UniformGrid>
+                </Grid>
+            </Border>
+            <Border Margin="10" Background="{StaticResource RegionBd}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition Height="3*" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition Width="120" />
+                    </Grid.ColumnDefinitions>
+                    <controls:GrowText Margin="15,0,10,0"
+                                       HorizontalAlignment="Left"
+                                       VerticalAlignment="Center"
+                                       FontSize="25"
+                                       Text="下径面" />
+                    <controls:QualifiedBox Grid.Column="1"
+                                           HorizontalAlignment="Left"
+                                           IsQualified="{Binding DownDiametricItem.IsQualified, Mode=OneWay}" />
+                    <TextBlock Grid.Column="2"
+                               Margin="20,0,15,0"
+                               VerticalAlignment="Center"
+                               TextAlignment="Center">
+                        <Run FontSize="20"
+                             Foreground="{StaticResource SubTextBrush}"
+                             Text="{Binding DownDiametricItem.Jumping, FallbackValue=0.000, Mode=OneWay, Converter={StaticResource DoubleDigitConverter}}" />
+                        <LineBreak />
+                        <Run FontSize="15"
+                             Foreground="White"
+                             Text="跳动值" />
+                        <Run FontSize="15"
+                             Foreground="White"
+                             Text="{Binding Rotor.BalenceUnit, FallbackValue=(μm), Mode=OneWay}" />
+                    </TextBlock>
+
+                    <controls:JumpingCircle Grid.RowSpan="2"
+                                            Grid.ColumnSpan="3"
+                                            Margin="10,60,0,10"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            LineStroke="{StaticResource JumpingStrokeColor}"
+                                            Points="{Binding DownDiametricItem.Points, Mode=OneWay, IsAsync=True}" />
+
+                    <hc:Divider Grid.RowSpan="2"
+                                Grid.Column="3"
+                                Margin="5,20,0,20"
+                                HorizontalAlignment="Left"
+                                LineStroke="#334795FF"
+                                Orientation="Vertical" />
+
+                    <UniformGrid Grid.RowSpan="2"
+                                 Grid.Column="3"
+                                 Margin="0,10"
+                                 Rows="4">
+                        <TextBlock VerticalAlignment="Center" TextAlignment="Center">
+                            <Run FontSize="14"
+                                 Foreground="White"
+                                 Text="高点角度[°]" />
+                            <LineBreak />
+                            <Run FontSize="18"
+                                 Foreground="{StaticResource SubTextBrush}"
+                                 Text="{Binding DownDiametricItem.HighAngle, FallbackValue=0.000, Mode=OneWay, Converter={StaticResource DoubleDigitConverter}}" />
+                        </TextBlock>
+                        <TextBlock VerticalAlignment="Center" TextAlignment="Center">
+                            <Run FontSize="14"
+                                 Foreground="White"
+                                 Text="低点角度[°]" />
+                            <LineBreak />
+                            <Run FontSize="18"
+                                 Foreground="{StaticResource SubTextBrush}"
+                                 Text="{Binding DownDiametricItem.LowAngle, FallbackValue=0.000, Mode=OneWay, Converter={StaticResource DoubleDigitConverter}}" />
+                        </TextBlock>
+                        <TextBlock VerticalAlignment="Center" TextAlignment="Center">
+                            <Run FontSize="14"
+                                 Foreground="White"
+                                 Text="一次谐波" />
+                            <LineBreak />
+                            <Run FontSize="18"
+                                 Foreground="{StaticResource SubTextBrush}"
+                                 Text="{Binding DownDiametricItem.FirstHarmonic, FallbackValue=0.000, Mode=OneWay, Converter={StaticResource DoubleDigitConverter}}" />
+                        </TextBlock>
+                        <TextBlock VerticalAlignment="Center" TextAlignment="Center">
+                            <Run FontSize="14"
+                                 Foreground="White"
+                                 Text="二次谐波" />
+                            <LineBreak />
+                            <Run FontSize="18"
+                                 Foreground="{StaticResource SubTextBrush}"
+                                 Text="{Binding DownDiametricItem.SecondHarmonic, FallbackValue=0.000, Mode=OneWay, Converter={StaticResource DoubleDigitConverter}}" />
+                        </TextBlock>
+                    </UniformGrid>
+                </Grid>
+            </Border>
+            <Border Margin="10" Background="{StaticResource RegionBd}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition Height="3*" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition Width="120" />
+                    </Grid.ColumnDefinitions>
+                    <controls:GrowText Margin="15,0,10,0"
+                                       HorizontalAlignment="Left"
+                                       VerticalAlignment="Center"
+                                       FontSize="25"
+                                       Text="下端面" />
+                    <controls:QualifiedBox Grid.Column="1"
+                                           HorizontalAlignment="Left"
+                                           IsQualified="{Binding DownEndItem.IsQualified, Mode=OneWay}" />
+                    <TextBlock Grid.Column="2"
+                               Margin="20,0,15,0"
+                               VerticalAlignment="Center"
+                               TextAlignment="Center">
+                        <Run FontSize="20"
+                             Foreground="{StaticResource SubTextBrush}"
+                             Text="{Binding DownEndItem.Jumping, FallbackValue=0.000, Mode=OneWay, Converter={StaticResource DoubleDigitConverter}}" />
+                        <LineBreak />
+                        <Run FontSize="15"
+                             Foreground="White"
+                             Text="跳动值" />
+                        <Run FontSize="15"
+                             Foreground="White"
+                             Text="{Binding Rotor.BalenceUnit, FallbackValue=(μm), Mode=OneWay}" />
+                    </TextBlock>
+
+                    <controls:JumpingCircle Grid.RowSpan="2"
+                                            Grid.ColumnSpan="3"
+                                            Margin="10,60,0,10"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            LineStroke="{StaticResource JumpingStrokeColor}"
+                                            Points="{Binding DownEndItem.Points, Mode=OneWay, IsAsync=True}" />
+
+                    <hc:Divider Grid.RowSpan="2"
+                                Grid.Column="3"
+                                Margin="5,20,0,20"
+                                HorizontalAlignment="Left"
+                                LineStroke="#334795FF"
+                                Orientation="Vertical" />
+
+                    <UniformGrid Grid.RowSpan="2"
+                                 Grid.Column="3"
+                                 Margin="0,10"
+                                 Rows="4">
+                        <TextBlock VerticalAlignment="Center" TextAlignment="Center">
+                            <Run FontSize="14"
+                                 Foreground="White"
+                                 Text="高点角度[°]" />
+                            <LineBreak />
+                            <Run FontSize="18"
+                                 Foreground="{StaticResource SubTextBrush}"
+                                 Text="{Binding DownEndItem.HighAngle, FallbackValue=0.000, Mode=OneWay, Converter={StaticResource DoubleDigitConverter}}" />
+                        </TextBlock>
+                        <TextBlock VerticalAlignment="Center" TextAlignment="Center">
+                            <Run FontSize="14"
+                                 Foreground="White"
+                                 Text="低点角度[°]" />
+                            <LineBreak />
+                            <Run FontSize="18"
+                                 Foreground="{StaticResource SubTextBrush}"
+                                 Text="{Binding DownEndItem.LowAngle, FallbackValue=0.000, Mode=OneWay, Converter={StaticResource DoubleDigitConverter}}" />
+                        </TextBlock>
+                        <TextBlock VerticalAlignment="Center" TextAlignment="Center">
+                            <Run FontSize="14"
+                                 Foreground="White"
+                                 Text="一次谐波" />
+                            <LineBreak />
+                            <Run FontSize="18"
+                                 Foreground="{StaticResource SubTextBrush}"
+                                 Text="{Binding DownEndItem.FirstHarmonic, FallbackValue=0.000, Mode=OneWay, Converter={StaticResource DoubleDigitConverter}}" />
+                        </TextBlock>
+                        <TextBlock VerticalAlignment="Center" TextAlignment="Center">
+                            <Run FontSize="14"
+                                 Foreground="White"
+                                 Text="二次谐波" />
+                            <LineBreak />
+                            <Run FontSize="18"
+                                 Foreground="{StaticResource SubTextBrush}"
+                                 Text="{Binding DownEndItem.SecondHarmonic, FallbackValue=0.000, Mode=OneWay, Converter={StaticResource DoubleDigitConverter}}" />
+                        </TextBlock>
+                    </UniformGrid>
+                </Grid>
+            </Border>
         </UniformGrid>
 
         <hc:UniformSpacingPanel Grid.Row="2"

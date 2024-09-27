@@ -1,16 +1,17 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:o="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options">
+                    xmlns:o="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options"
+                    xmlns:oxy="http://oxyplot.org/skiawpf">
     <ImageBrush x:Key="Logo"
                 o:Freeze="True"
                 ImageSource="../../Assets/Images/Logo/LogoDark.png"
                 Stretch="None" />
 
 
-    <Color x:Key="MainColor" o:Freeze="True">#00B0FF</Color>
-    <Color x:Key="SubColor" o:Freeze="True">#4795FF</Color>
+    <Color x:Key="MainColor">#00B0FF</Color>
+    <Color x:Key="SubColor">#4795FF</Color>
 
-    <Color x:Key="QualifiedColor" o:Freeze="True">#00E6CE</Color>
+    <Color x:Key="QualifiedColor">#00E6CE</Color>
 
 
     <SolidColorBrush x:Key="MainBrush"
@@ -56,33 +57,36 @@
 
 
     <!--  动平衡圆  -->
-    <Color x:Key="BalenceCircleColor1" o:Freeze="True">#4696ff</Color>
-    <Color x:Key="BalenceCircleColor2" o:Freeze="True">#334696ff</Color>
-    <Color x:Key="BalenceCircleColor3" o:Freeze="True">#804696ff</Color>
-    <Color x:Key="BalenceCircleColor4" o:Freeze="True">#0000655b</Color>
-
-    <SolidColorBrush x:Key="BalenceCircleBrush1"
+    <SolidColorBrush x:Key="BalenceCircleBorder"
                      o:Freeze="True"
-                     Color="{StaticResource BalenceCircleColor1}" />
-    <SolidColorBrush x:Key="BalenceCircleBrush2"
-                     o:Freeze="True"
-                     Color="{StaticResource BalenceCircleColor2}" />
+                     Color="#334696ff" />
     <RadialGradientBrush x:Key="BalenceCircleBg1" o:Freeze="True" GradientOrigin="0.5,0.5">
-        <GradientStop Offset="0" Color="{StaticResource BalenceCircleColor2}" />
-        <GradientStop Offset="0.3" Color="{StaticResource BalenceCircleColor2}" />
-        <GradientStop Offset="0.3" Color="{StaticResource BalenceCircleColor3}" />
-        <GradientStop Offset="0.475" Color="{StaticResource BalenceCircleColor3}" />
-        <GradientStop Offset="0.475" Color="{StaticResource BalenceCircleColor2}" />
-        <GradientStop Offset="0.65" Color="{StaticResource BalenceCircleColor2}" />
-        <GradientStop Offset="0.65" Color="{StaticResource BalenceCircleColor3}" />
-        <GradientStop Offset="0.825" Color="{StaticResource BalenceCircleColor3}" />
-        <GradientStop Offset="0.825" Color="{StaticResource BalenceCircleColor2}" />
-        <GradientStop Offset="1" Color="{StaticResource BalenceCircleColor2}" />
+        <GradientStop Offset="0" Color="#334696ff" />
+        <GradientStop Offset="0.3" Color="#334696ff" />
+        <GradientStop Offset="0.3" Color="#804696ff" />
+        <GradientStop Offset="0.475" Color="#804696ff" />
+        <GradientStop Offset="0.475" Color="#334696ff" />
+        <GradientStop Offset="0.65" Color="#334696ff" />
+        <GradientStop Offset="0.65" Color="#804696ff" />
+        <GradientStop Offset="0.825" Color="#804696ff" />
+        <GradientStop Offset="0.825" Color="#334696ff" />
+        <GradientStop Offset="1" Color="#334696ff" />
     </RadialGradientBrush>
     <RadialGradientBrush x:Key="BalenceCircleBg2" o:Freeze="True" GradientOrigin="0.5,0.5">
-        <GradientStop Offset="0" Color="{StaticResource BalenceCircleColor4}" />
-        <GradientStop Offset="0.8" Color="{StaticResource BalenceCircleColor4}" />
+        <GradientStop Offset="0" Color="#0000655b" />
+        <GradientStop Offset="0.8" Color="#0000655b" />
         <GradientStop Offset="1" Color="{StaticResource QualifiedColor}" />
     </RadialGradientBrush>
+
+    <!--  端径跳圆  -->
+    <RadialGradientBrush x:Key="JumpingCircleBg" o:Freeze="True" GradientOrigin="0.5,0.5">
+        <GradientStop Offset="0" Color="#4d4696ff" />
+        <GradientStop Offset="0.28" Color="#4d4696ff" />
+        <GradientStop Offset="0.28" Color="#1a4696ff" />
+        <GradientStop Offset="0.56" Color="#1a4696ff" />
+        <GradientStop Offset="0.56" Color="#334696ff" />
+        <GradientStop Offset="1" Color="#334696ff" />
+    </RadialGradientBrush>
+    <Color x:Key="JumpingStrokeColor">#00E6CE</Color>
 
 </ResourceDictionary>

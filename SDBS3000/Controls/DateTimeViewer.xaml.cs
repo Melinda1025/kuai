@@ -1,4 +1,5 @@
-﻿using System.Windows.Controls;
+﻿using HandyControl.Controls;
+using System.Windows.Controls;
 using System.Windows.Threading;
 
 namespace SDBS3000.Controls
@@ -22,8 +23,7 @@ namespace SDBS3000.Controls
 
         private void UpdateDisplayTime()
         {
-            TimeTextBlock.Text = DateTime.Now.ToString("HH:mm:ss");
-            DateTextBlock.Text = DateTime.Now.ToString("yyyy/MM/dd dddd");
+            this.Text = DateTime.Now.ToString("yyyy/MM/dd dddd  HH:mm:ss");            
         }
     }
 }

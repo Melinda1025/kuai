@@ -14,14 +14,14 @@
                     <Border Name="border"
                             Height="30"
                             Background="{StaticResource QualifiedBrush.2}"
-                            CornerRadius="10">
-                        <hc:SimpleStackPanel Margin="10,0"
-                                             HorizontalAlignment="Center"
+                            CornerRadius="5">
+                        <hc:SimpleStackPanel HorizontalAlignment="Center"
                                              VerticalAlignment="Center"
                                              Orientation="Horizontal">
                             <Border Name="outer"
                                     Width="12"
                                     Height="12"
+                                    Margin="15,0,0,0"
                                     VerticalAlignment="Center"
                                     Background="{StaticResource QualifiedBrush.5}"
                                     CornerRadius="6">
@@ -32,7 +32,7 @@
                                         CornerRadius="4" />
                             </Border>
                             <TextBlock Name="tb"
-                                       Margin="5,0,0,0"
+                                       Margin="5,0,15,0"
                                        VerticalAlignment="Center"
                                        FontSize="14"
                                        Foreground="{StaticResource QualifiedBrush}" />

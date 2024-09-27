@@ -32,6 +32,27 @@ namespace SDBS3000.Controls
             set { SetValue(PointsProperty, value); }
         }
 
+        public Color LineStroke
+        {
+            get { return (Color)GetValue(LineStrokeProperty); }
+            set { SetValue(LineStrokeProperty, value); }
+        }
+
+        public static readonly DependencyProperty LineStrokeProperty = DependencyProperty.Register(
+            "LineStroke",
+            typeof(Color),
+            typeof(JumpingCircle),
+            new PropertyMetadata(
+                Color.FromRgb(0, 230, 206),
+                (d, e) =>
+                {
+                    var circle = (JumpingCircle)d;
+                    var color = (OxyColor)e.NewValue;                    
+                    circle.lineSeries.Color = OxyColor.FromRgb(color.R, color.G, color.B);
+                }
+            )
+        );
+
         public static readonly DependencyProperty PointsProperty = DependencyProperty.Register(
             "Points",
             typeof(DataPointList),
@@ -84,6 +105,8 @@ namespace SDBS3000.Controls
             angleAxis.MajorGridlineStyle = LineStyle.None;
             angleAxis.MinorGridlineStyle = LineStyle.None;
             angleAxis.LabelFormatter = v => string.Empty;
+            //angleAxis.LabelFormatter = v => $"{v}°";
+
             magnitudeAxis.Minimum = 0;
             magnitudeAxis.Maximum = 1;
             magnitudeAxis.MajorGridlineStyle = LineStyle.None;
@@ -92,10 +115,10 @@ namespace SDBS3000.Controls
             model.Axes.Add(angleAxis);
             model.Axes.Add(magnitudeAxis);
             model.Series.Add(lineSeries);
-            lineSeries.Color = OxyColor.FromRgb(0, 255, 0);
-            lineSeries.LineJoin = LineJoin.Round;
+            lineSeries.Color = OxyColor.FromRgb(0, 230, 206);
+            //lineSeries.LineJoin = LineJoin.Round;
             //lineSeries.BrokenLineColor = OxyColor.FromRgb(255, 0, 0);
-            lineSeries.StrokeThickness = 1.5;            
+            lineSeries.StrokeThickness = 1;
             //lineSeries.BrokenLineThickness = 1.5;
             lineSeries.MarkerType = MarkerType.None;
 
@@ -221,11 +244,18 @@ namespace SDBS3000.Controls
         #endregion
         private void MapPoints(List<DataPoint> datas)
         {
+            const double rate = 140.0 / 100;
+
             lineSeries.Points.Clear();
             if (datas == null || datas.Count == 0)
                 return;
-                        
-            magnitudeAxis.Maximum = datas[0].X * 1.2;            
+
+            //magnitudeAxis.Maximum = datas[0].X * rate;
+
+            var arr = datas.ToArray();
+            Array.Sort(arr, (p1, p2) => p1.X.CompareTo(p2.X));
+            magnitudeAxis.Maximum = arr[arr.Length / 2].X * rate;
+
             lineSeries.Points.AddRange(datas);
             model.InvalidatePlot(true);
         }
@@ -234,14 +264,16 @@ namespace SDBS3000.Controls
     public class DataPointList : List<DataPoint>
     {
         public event EventHandler ListChanged;
+
         public void NotifyChanged()
         {
             ListChanged?.Invoke(this, EventArgs.Empty);
         }
+
         public new void Clear()
         {
             base.Clear();
             NotifyChanged();
         }
-    }    
+    }
 }

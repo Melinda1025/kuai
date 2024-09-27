@@ -9,7 +9,12 @@
                 ImageSource="../Assets/Images/Background/MainBg.png" />
     <ImageBrush x:Key="NavigateBd"
                 o:Freeze="true"
-                ImageSource="../Assets/Images/Border/NavigateBd.png" />
+                ImageSource="../Assets/Images/Border/NavigateBd.png"
+                Stretch="Fill" />
+    <ImageBrush x:Key="NavigateBd.Selected"
+                o:Freeze="true"
+                ImageSource="../Assets/Images/Border/NavigateBd.Selected.png"
+                Stretch="Fill" />
     <ImageBrush x:Key="TitleBd"
                 o:Freeze="true"
                 ImageSource="../Assets/Images/Border/TitleBd.png"

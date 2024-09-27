@@ -22,16 +22,39 @@ using SDBS3000.Core.Utils;
 //var t = new PoolTest();
 //t.Init();
 //t.Pool();
-var arr = ArrayPool<float>.Shared.Rent(1000);
-await Task.Run(async () => 
+//var arr = ArrayPool<float>.Shared.Rent(1000);
+//await Task.Run(async () => 
+//{
+//    for (int i = 0; i < arr.Length; i++)
+//    {
+//        arr[i] = i;
+//    }
+//    await Task.Delay(1000).ConfigureAwait(false);
+//}).ConfigureAwait(false);
+//Console.WriteLine(arr.Length);
+
+int[] numbers = { 3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5 };
+
+// 创建一个Span<int>对象，引用numbers数组中的元素
+Span<int> span = new Span<int>(numbers);
+
+// 对Span<int>进行排序
+span.Sort();
+
+// 打印排序后的Span<int>
+foreach (int number in span)
 {
-    for (int i = 0; i < arr.Length; i++)
-    {
-        arr[i] = i;
-    }
-    await Task.Delay(1000).ConfigureAwait(false);
-}).ConfigureAwait(false);
-Console.WriteLine(arr.Length);
+    Console.Write(number + " ");
+}
+Console.WriteLine();
+
+// 打印原始数组numbers
+foreach (int number in numbers)
+{
+    Console.Write(number + " ");
+}
+Console.WriteLine();
+
 Console.ReadLine();
 
 public class SimulationSignal

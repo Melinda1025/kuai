@@ -96,7 +96,9 @@
                                        Text="{TemplateBinding hc:TitleElement.Title}" />
                         </hc:SimpleStackPanel>
 
-                        <hc:SimplePanel Name="content_panel" Grid.Row="1" Background="Transparent">
+                        <hc:SimplePanel Name="content_panel"
+                                        Grid.Row="1"
+                                        Background="Transparent">
                             <Border Name="border"
                                     MinWidth="{TemplateBinding MinWidth}"
                                     MinHeight="70"
