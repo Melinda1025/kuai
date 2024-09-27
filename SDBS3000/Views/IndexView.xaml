@@ -11,15 +11,14 @@
              Width="1920"
              Height="1080"
              d:DataContext="{d:DesignInstance vm:IndexViewModel}"
+             Background="{StaticResource MainBg}"
              mc:Ignorable="d">
-    <UserControl.Background>
-        <ImageBrush ImageSource="../Assets/Images/背景.png" />
-    </UserControl.Background>
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="90" />
             <RowDefinition />
-            <RowDefinition Height="120" />
+            <RowDefinition Height="170" />
         </Grid.RowDefinitions>
 
         <!--  标题栏  -->
@@ -33,90 +32,116 @@
             <Border Width="229"
                     Height="33"
                     Margin="44,23"
-                    Background="{StaticResource Logo}" />
-            <TextBlock Grid.ColumnSpan="3"
-                       HorizontalAlignment="Center"
-                       VerticalAlignment="Center"
-                       FontFamily="{StaticResource CKTKingkong}"
-                       FontSize="34"
-                       FontWeight="Bold"
-                       Foreground="White">
-                <Run Text="{Binding Speed, FallbackValue=0, StringFormat=f0}" />
-                <Run Text="r/min" />
-            </TextBlock>
+                    Background="{DynamicResource Logo}" />
 
+            <hc:SimplePanel Grid.ColumnSpan="3"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Stretch">
+                <controls:GrowText Margin="0,0,0,5"
+                                   VerticalAlignment="Center"
+                                   FontFamily="{StaticResource CKTKingkong}"
+                                   FontSize="32"
+                                   Text="{Binding Speed, FallbackValue='0 r/min', StringFormat={}{0:f0} r/min}"
+                                   TextBlock.TextAlignment="Center" />
+                <controls:SimpleProgressBar Margin="0,0,0,5"
+                                            VerticalAlignment="Bottom"
+                                            MaxValue="1"
+                                            Value="{Binding Progress, Mode=OneWay, FallbackValue=0.5}" />
+            </hc:SimplePanel>
 
-            <controls:DateTimeViewer Grid.Column="2"
-                                     Margin="30,0"
-                                     VerticalAlignment="Center" />
+            <hc:SimpleStackPanel Grid.Column="2"
+                                 Margin="10,0"
+                                 HorizontalAlignment="Right"
+                                 VerticalAlignment="Center"
+                                 Orientation="Horizontal">
+                <Button Name="MinimizeBtn"
+                        Click="MinimizeBtn_Click"
+                        Content="&#xe60a;"
+                        Style="{StaticResource IconButton}" />
+                <Button Command="{Binding ExitCommand}"
+                        Content="&#xe672;"
+                        Style="{StaticResource IconButton}" />
+            </hc:SimpleStackPanel>
         </Grid>
         <!--  子页面  -->
         <ContentControl Grid.Row="1" Content="{Binding Page}" />
 
         <!--  导航栏  -->
-        <UniformGrid Grid.Row="2" Rows="1">
-            <UniformGrid.Background>
-                <ImageBrush ImageSource="../Assets/Images/Measure/底部栏.png" />
-            </UniformGrid.Background>
+        <UniformGrid Grid.Row="2"
+                     Margin="50,0"
+                     Rows="1">
             <Button Command="{Binding ChangeMeasureStatusCommand}"
                     CommandParameter="start"
                     Content="开始"
-                    Style="{StaticResource ToolButtonStyle}"
+                    IsEnabled="{Binding IsMeasuring, Mode=OneWay, Converter={StaticResource Boolean2BooleanReConverter}}"
+                    Style="{StaticResource NavigateButtonStyle}"
                     Tag="&#xe60b;" />
             <Button Command="{Binding ChangeMeasureStatusCommand}"
                     CommandParameter="stop"
                     Content="停止"
-                    Style="{StaticResource ToolButtonStyle}"
+                    IsEnabled="{Binding IsMeasuring, Mode=OneWay}"
+                    Style="{StaticResource NavigateButtonStyle}"
                     Tag="&#xe60c;" />
             <Button Command="{Binding NavigatePageCommand}"
                     CommandParameter="{x:Type local:CalView}"
                     Content="标定"
-                    Style="{StaticResource ToolButtonStyle}"
+                    IsEnabled="{Binding IsMeasuring, Mode=OneWay, Converter={StaticResource Boolean2BooleanReConverter}}"
+                    Style="{StaticResource NavigateButtonStyle}"
                     Tag="&#xe60f;" />
             <Button Command="{Binding NavigatePageCommand}"
                     CommandParameter="{x:Type local:RotorView}"
                     Content="转子设置"
-                    Style="{StaticResource ToolButtonStyle}"
+                    IsEnabled="{Binding IsMeasuring, Mode=OneWay, Converter={StaticResource Boolean2BooleanReConverter}}"
+                    Style="{StaticResource NavigateButtonStyle}"
                     Tag="&#xe608;" />
             <Button Command="{Binding NavigatePageCommand}"
                     CommandParameter="{x:Type local:SettingView}"
                     Content="机器设置"
-                    Style="{StaticResource ToolButtonStyle}"
+                    IsEnabled="{Binding IsMeasuring, Mode=OneWay, Converter={StaticResource Boolean2BooleanReConverter}}"
+                    Style="{StaticResource NavigateButtonStyle}"
                     Tag="&#xe607;" />
             <Button Content="夹具补偿"
-                    Style="{StaticResource ToolButtonStyle}"
+                    IsEnabled="{Binding IsMeasuring, Mode=OneWay, Converter={StaticResource Boolean2BooleanReConverter}}"
+                    Style="{StaticResource NavigateButtonStyle}"
                     Tag="&#xe604;" />
             <Button Command="{Binding NavigatePageCommand}"
                     CommandParameter="{x:Type local:KeyView}"
                     Content="键补偿"
-                    Style="{StaticResource ToolButtonStyle}"
+                    IsEnabled="{Binding IsMeasuring, Mode=OneWay, Converter={StaticResource Boolean2BooleanReConverter}}"
+                    Style="{StaticResource NavigateButtonStyle}"
                     Tag="&#xe603;" />
             <Button Command="{Binding NavigatePageCommand}"
                     CommandParameter="{x:Type local:PositionView}"
                     Content="定位"
-                    Style="{StaticResource ToolButtonStyle}"
+                    IsEnabled="{Binding IsMeasuring, Mode=OneWay, Converter={StaticResource Boolean2BooleanReConverter}}"
+                    Style="{StaticResource NavigateButtonStyle}"
                     Tag="&#xe610;" />
             <Button Command="{Binding NavigatePageCommand}"
                     CommandParameter="{x:Type local:SingleStepView}"
                     Content="单步"
-                    Style="{StaticResource ToolButtonStyle}"
+                    IsEnabled="{Binding IsMeasuring, Mode=OneWay, Converter={StaticResource Boolean2BooleanReConverter}}"
+                    Style="{StaticResource NavigateButtonStyle}"
                     Tag="&#xe612;" />
             <Button Command="{Binding NavigatePageCommand}"
                     CommandParameter="{x:Type local:UserView}"
                     Content="用户管理"
-                    Style="{StaticResource ToolButtonStyle}"
+                    IsEnabled="{Binding IsMeasuring, Mode=OneWay, Converter={StaticResource Boolean2BooleanReConverter}}"
+                    Style="{StaticResource NavigateButtonStyle}"
                     Tag="&#xe602;" />
             <Button Content="记录"
-                    Style="{StaticResource ToolButtonStyle}"
+                    IsEnabled="{Binding IsMeasuring, Mode=OneWay, Converter={StaticResource Boolean2BooleanReConverter}}"
+                    Style="{StaticResource NavigateButtonStyle}"
                     Tag="&#xe605;" />
             <Button Command="{Binding NavigatePageCommand}"
                     CommandParameter="{x:Type local:AlarmView}"
                     Content="报警"
-                    Style="{StaticResource ToolButtonStyle}"
+                    IsEnabled="{Binding IsMeasuring, Mode=OneWay, Converter={StaticResource Boolean2BooleanReConverter}}"
+                    Style="{StaticResource NavigateButtonStyle}"
                     Tag="&#xe6b8;" />
             <Button Command="{Binding ExitCommand}"
                     Content="退出"
-                    Style="{StaticResource ToolButtonStyle}"
+                    IsEnabled="{Binding IsMeasuring, Mode=OneWay, Converter={StaticResource Boolean2BooleanReConverter}}"
+                    Style="{StaticResource NavigateButtonStyle}"
                     Tag="&#xe60e;" />
         </UniformGrid>
     </Grid>

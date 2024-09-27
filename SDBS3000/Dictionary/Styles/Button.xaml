@@ -2,36 +2,74 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:hc="https://handyorg.github.io/handycontrol"
                     xmlns:o="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options">
-    <Style x:Key="CommonBtnStyle" TargetType="Button">
-        <Setter Property="FontSize" Value="24" />
-        <Setter Property="HorizontalContentAlignment" Value="Center" />
-        <Setter Property="VerticalContentAlignment" Value="Center" />
-        <Setter Property="Padding" Value="0" />
-        <Setter Property="hc:BackgroundSwitchElement.MouseHoverBackground" Value="{StaticResource 按钮选中背景}" />
+    <Style x:Key="NavigateButtonStyle" TargetType="Button">
+        <Setter Property="Foreground" Value="{DynamicResource MainTextBrush}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
-                    <Border Name="border"
-                            Margin="{TemplateBinding Padding}"
-                            Background="{TemplateBinding Background}">
-                        <ContentPresenter Margin="{TemplateBinding Padding}"
-                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                    <Border Width="103"
+                            Height="94"
+                            Background="{StaticResource NavigateBd}">
+                        <hc:SimpleStackPanel HorizontalAlignment="Center"
+                                             VerticalAlignment="Center"
+                                             Orientation="Vertical">
+                            <TextBlock Margin="0,0,0,5"
+                                       FontFamily="{StaticResource IconFont}"
+                                       FontSize="38"
+                                       Text="{TemplateBinding Tag}"
+                                       TextAlignment="Center" />
+                            <TextBlock HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       FontSize="16"
+                                       Text="{TemplateBinding Content}"
+                                       TextAlignment="Center" />
+                        </hc:SimpleStackPanel>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="border" Property="Background" Value="{Binding RelativeSource={RelativeSource Mode=Self}, Path=(hc:BackgroundSwitchElement.MouseHoverBackground)}" />
-                            <Setter Property="Margin" Value="-2" />
+                            <Setter Property="Opacity" Value="0.8" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Opacity" Value="0.5" />
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
-                            <Setter Property="Opacity" Value="0.5" />
-                            <Setter Property="Foreground" Value="Gray" />
+                            <Setter Property="Opacity" Value="0.2" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
+
+    <Style x:Key="IconButton" TargetType="Button">
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Margin" Value="10,0" />
+        <Setter Property="Effect" Value="{StaticResource MainEffect}" />
+        <Setter Property="MinWidth" Value="35" />
+        <Setter Property="FontSize" Value="30" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <TextBlock FontFamily="{StaticResource IconFont}"
+                               Foreground="White"
+                               Text="{TemplateBinding Content}"
+                               TextAlignment="Center" />
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="FontSize" Value="35" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="FontSize" Value="35" />
+                            <Setter Property="Opacity" Value="0.5" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+    
     <LinearGradientBrush x:Key="UnselectedBrush" o:Freeze="True" StartPoint="0,0" EndPoint="0,1">
         <GradientStop Offset="0.0" Color="#02bbff" />
         <GradientStop Offset="1.0" Color="#0843c1" />
@@ -99,45 +137,7 @@
             </Setter.Value>
         </Setter>
     </Style>
-
-    <Style x:Key="ToolButtonStyle" TargetType="Button">
-        <Setter Property="Background" Value="Transparent" />
-        <Setter Property="Foreground" Value="White" />
-        <Setter Property="FontSize" Value="18" />
-        <Setter Property="hc:IconElement.Height" Value="50" />
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="Button">
-                    <Border Background="{TemplateBinding Background}">
-                        <hc:SimpleStackPanel Margin="0,10,0,0"
-                                             HorizontalAlignment="Center"
-                                             VerticalAlignment="Center"
-                                             Orientation="Vertical">
-                            <TextBlock Name="IconText"
-                                       Height="{TemplateBinding hc:IconElement.Height}"
-                                       Margin="0,0,0,10"
-                                       HorizontalAlignment="Center"
-                                       FontFamily="../../Assets/Fonts/#iconfont"
-                                       FontSize="{TemplateBinding hc:IconElement.Height}"
-                                       Foreground="{StaticResource UnselectedBrush}"
-                                       Text="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Tag}"
-                                       TextAlignment="Center" />
-                            <ContentPresenter HorizontalAlignment="Center" />
-                        </hc:SimpleStackPanel>
-                    </Border>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" Value="{StaticResource 按钮选中背景}" />
-                            <Setter TargetName="IconText" Property="Foreground" Value="{StaticResource SelectedBrush}" />
-                        </Trigger>
-                        <Trigger Property="IsEnabled" Value="False">
-                            <Setter Property="Opacity" Value="0.5" />
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
+    
     <Style x:Key="LightToolButtonStyle" TargetType="Button">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Foreground" Value="White" />
@@ -208,31 +208,6 @@
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter Property="Opacity" Value="0.5" />
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
-    <Style x:Key="IconFontButton" TargetType="Button">
-        <Setter Property="FontFamily" Value="../../Assets/Fonts/#iconfont" />
-        <Setter Property="Foreground" Value="White" />
-        <Setter Property="FontSize" Value="35" />
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="Button">
-                    <Border Name="border" Background="Transparent">
-                        <ContentPresenter Margin="{TemplateBinding Padding}"
-                                          HorizontalAlignment="Center"
-                                          VerticalAlignment="Center" />
-                    </Border>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Foreground" Value="#80ffffff" />
-                        </Trigger>
-                        <Trigger Property="IsPressed" Value="True">
-                            <Setter Property="Foreground" Value="#33ffffff" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

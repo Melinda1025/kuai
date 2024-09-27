@@ -29,7 +29,7 @@
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
                                 CornerRadius="5">
-                            <Grid Name="bg" Background="{StaticResource 支撑未选中框}">
+                            <Grid Name="bg" Background="Transparent">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="auto" />
                                     <RowDefinition />

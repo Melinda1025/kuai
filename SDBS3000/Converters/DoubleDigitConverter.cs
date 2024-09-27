@@ -9,7 +9,7 @@ using System.Windows.Data;
 
 namespace SDBS3000.Converters
 {
-    public class FloatDigitConverter : IValueConverter
+    public class DoubleDigitConverter : IValueConverter
     {
         private static string[] Fmts = new[]
         {
@@ -17,8 +17,8 @@ namespace SDBS3000.Converters
         };
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if(value == null) return 0f.ToString(Fmts[AppSetting.Default.Digits]);
-            return ((float)value).ToString(Fmts[AppSetting.Default.Digits]);
+            if (value == null) return 0f.ToString(Fmts[AppSetting.Default.Digits]);
+            return ((double)value).ToString(Fmts[AppSetting.Default.Digits]);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

@@ -8,15 +8,81 @@
 
 
     <Color x:Key="MainColor" o:Freeze="True">#00B0FF</Color>
+    <Color x:Key="SubColor" o:Freeze="True">#4795FF</Color>
+
+    <Color x:Key="QualifiedColor" o:Freeze="True">#00E6CE</Color>
+
+
     <SolidColorBrush x:Key="MainBrush"
                      o:Freeze="True"
                      Color="{StaticResource MainColor}" />
+    <SolidColorBrush x:Key="SubBrush"
+                     o:Freeze="True"
+                     Color="#4795FF" />
+    <SolidColorBrush x:Key="DataRowBd"
+                     o:Freeze="True"
+                     Color="#4c0072C2" />
+
+    <SolidColorBrush x:Key="MainTextBrush"
+                     o:Freeze="True"
+                     Color="White" />
+    <LinearGradientBrush x:Key="SubTextBrush" o:Freeze="True" StartPoint="0 0" EndPoint="0 1">
+        <GradientStop Offset="0" Color="#4795FF" />
+        <GradientStop Offset="1" Color="White" />
+    </LinearGradientBrush>
+    <SolidColorBrush x:Key="BackgroundBrush"
+                     o:Freeze="True"
+                     Color="Black" />
 
 
-    <DropShadowEffect x:Key="MainEffect"
-                      o:Freeze="True"
-                      BlurRadius="100"
-                      RenderingBias="Performance"
-                      ShadowDepth="100"
-                      Color="{StaticResource MainColor}" />
+    <SolidColorBrush x:Key="QualifiedBrush"
+                     o:Freeze="True"
+                     Color="{StaticResource QualifiedColor}" />
+    <SolidColorBrush x:Key="QualifiedBrush.5"
+                     o:Freeze="True"
+                     Color="#8000E6CE" />
+    <SolidColorBrush x:Key="QualifiedBrush.2"
+                     o:Freeze="True"
+                     Color="#3300E6CE" />
+    <SolidColorBrush x:Key="UnqualifiedBrush"
+                     o:Freeze="True"
+                     Color="#E03838" />
+    <SolidColorBrush x:Key="UnqualifiedBrush.5"
+                     o:Freeze="True"
+                     Color="#80E03838" />
+    <SolidColorBrush x:Key="UnqualifiedBrush.2"
+                     o:Freeze="True"
+                     Color="#33E03838" />
+
+
+    <!--  动平衡圆  -->
+    <Color x:Key="BalenceCircleColor1" o:Freeze="True">#4696ff</Color>
+    <Color x:Key="BalenceCircleColor2" o:Freeze="True">#334696ff</Color>
+    <Color x:Key="BalenceCircleColor3" o:Freeze="True">#804696ff</Color>
+    <Color x:Key="BalenceCircleColor4" o:Freeze="True">#0000655b</Color>
+
+    <SolidColorBrush x:Key="BalenceCircleBrush1"
+                     o:Freeze="True"
+                     Color="{StaticResource BalenceCircleColor1}" />
+    <SolidColorBrush x:Key="BalenceCircleBrush2"
+                     o:Freeze="True"
+                     Color="{StaticResource BalenceCircleColor2}" />
+    <RadialGradientBrush x:Key="BalenceCircleBg1" o:Freeze="True" GradientOrigin="0.5,0.5">
+        <GradientStop Offset="0" Color="{StaticResource BalenceCircleColor2}" />
+        <GradientStop Offset="0.3" Color="{StaticResource BalenceCircleColor2}" />
+        <GradientStop Offset="0.3" Color="{StaticResource BalenceCircleColor3}" />
+        <GradientStop Offset="0.475" Color="{StaticResource BalenceCircleColor3}" />
+        <GradientStop Offset="0.475" Color="{StaticResource BalenceCircleColor2}" />
+        <GradientStop Offset="0.65" Color="{StaticResource BalenceCircleColor2}" />
+        <GradientStop Offset="0.65" Color="{StaticResource BalenceCircleColor3}" />
+        <GradientStop Offset="0.825" Color="{StaticResource BalenceCircleColor3}" />
+        <GradientStop Offset="0.825" Color="{StaticResource BalenceCircleColor2}" />
+        <GradientStop Offset="1" Color="{StaticResource BalenceCircleColor2}" />
+    </RadialGradientBrush>
+    <RadialGradientBrush x:Key="BalenceCircleBg2" o:Freeze="True" GradientOrigin="0.5,0.5">
+        <GradientStop Offset="0" Color="{StaticResource BalenceCircleColor4}" />
+        <GradientStop Offset="0.8" Color="{StaticResource BalenceCircleColor4}" />
+        <GradientStop Offset="1" Color="{StaticResource QualifiedColor}" />
+    </RadialGradientBrush>
+
 </ResourceDictionary>

@@ -33,7 +33,7 @@
         <Border Name="BackgroundBorder"
                 Width="1000"
                 Height="500"
-                Background="{StaticResource 支撑编辑1}">
+                Background="Transparent">
             <Canvas>
                 <TextBox x:Name="R1Tbx"
                          Canvas.Left="40"

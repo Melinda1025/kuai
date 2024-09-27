@@ -1,82 +1,105 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using OxyPlot;
-using OxyPlot.Axes;
-using SDBS3000.Simulation.Data;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Threading;
+using CommunityToolkit.Mvvm.ComponentModel;
+using MathNet.Numerics;
+using MathNet.Numerics.IntegralTransforms;
+using OxyPlot;
+using OxyPlot.Axes;
+using OxyPlot.Legends;
+using OxyPlot.Series;
+using SDBS3000.Core.Models;
+using SDBS3000.Simulation.Data;
 
 namespace SDBS3000.Simulation
 {
     public partial class MainViewModel : ObservableObject
     {
         [ObservableProperty]
-        private PlotModel model;        
-        public LinearAxis XAxis, YAxis;
+        private PlotModel model;
+        public LinearAxis XAxis,
+            YAxis;
 
-        public List<CircleSeries> CircleSeries { get; set; } = new();
-
-        private int currentAngle = 0;
-        private DispatcherTimer renderTimer;
+        public LineSeries OriginSeries;
+        private double[] errorData,
+            expectData,
+            actualData;
+        private const int SAMPLE_COUNT = 720;
 
         public MainViewModel()
         {
             Model = new PlotModel();
-            //Model.PlotMargins = new OxyThickness(50);
-            //Model.PlotAreaBorderThickness = new OxyThickness(0);
+            Model.DefaultFont = "Microsoft YaHei";
             Model.PlotType = PlotType.XY;
-            XAxis = new LinearAxis() { Minimum = -2, Maximum = 2, Position = AxisPosition.Bottom };
-            YAxis = new LinearAxis() { Minimum = -2, Maximum = 2, Position = AxisPosition.Left };
+            XAxis = new LinearAxis() { Position = AxisPosition.Bottom };
+            YAxis = new LinearAxis()
+            {
+                Position = AxisPosition.Left,
+                Minimum = -20,
+                Maximum = 20,
+            };
             Model.Axes.Add(XAxis);
             Model.Axes.Add(YAxis);
-            Model.ResetAllAxes();
-
-            InitCircles();
-
-            renderTimer = new DispatcherTimer()
-            {
-                Interval = TimeSpan.FromSeconds(1.0 / 60)
-            };
-            renderTimer.Tick += OnRender;
-            renderTimer.Start();
-        }
-
-        public void InitCircles()
-        {
-            //var stdCircle = new CircleSeries(new Circle());
-            //CircleSeries.Add(stdCircle);
-
-            var unBalenceCircle = new CircleSeries(new Circle()
-            {
-                UnBalenceDict = new Dictionary<int, double>()
+            Model.Legends.Add(
+                new Legend
                 {
-                    {0, 0.1},
-                    {30, -0.2},                    
-                },
-                Center = new DataPoint(0.1, 0.1)
-            });
-            CircleSeries.Add(unBalenceCircle);
+                    LegendPosition = LegendPosition.RightTop,
+                    LegendOrientation = LegendOrientation.Vertical,
+                }
+            );
+            Init();
+            AddProcessSeries();
+            Model.InvalidatePlot(true);
+        }
 
-            foreach (var series in CircleSeries)
+        public void Init()
+        {
+            errorData = new double[SAMPLE_COUNT];
+            expectData = new double[SAMPLE_COUNT];
+            actualData = new double[SAMPLE_COUNT];
+            for (int i = 0; i < SAMPLE_COUNT; i++)
             {
-                Model.Series.Add(series);
+                errorData[i] = 0.6 * Math.Cos(i * 0.1) + 0.5 * Math.Sin(i * 0.3);
+            }
+
+            var expectSeries = new LineSeries { Title = "理想曲线(无误差)" };
+            var actualSeries = new LineSeries { Title = "实际曲线(有误差)" };
+
+            for (int i = 0; i < SAMPLE_COUNT; i++)
+            {
+                expectData[i] = 0 ;
+                actualData[i] = 0  + errorData[i];
+                expectSeries.Points.Add(new DataPoint(i, expectData[i]));
+                actualSeries.Points.Add(new DataPoint(i, actualData[i]));
+            }
+            Model.Series.Add(expectSeries);
+            Model.Series.Add(actualSeries);
+
+            errorData = new double[SAMPLE_COUNT / 2];
+            for (int i = 0; i < SAMPLE_COUNT / 2; i++)
+            {
+                errorData[i] = 0.6 * Math.Cos(i * 2 * 0.1) + 0.5 * Math.Sin(i * 2 * 0.3);
             }
         }
 
-        private void OnRender(object sender, EventArgs e)
-        {         
-            renderTimer.Stop();
-            foreach(var series in CircleSeries)
+        public void AddProcessSeries()
+        {
+            var cp = new ClampCompensatingItem(errorData);
+            var datas = new double[SAMPLE_COUNT];
+            Array.Copy(actualData, datas, actualData.Length);
+            cp.Compensate(datas);            
+
+            var processSeries = new LineSeries { };
+            for (int i = 0; i < datas.Length; i++)
             {
-                series.Update(currentAngle);
+                processSeries.Points.Add(new DataPoint(i, datas[i]));
             }
-            Model.InvalidatePlot(true);
-            currentAngle += 5;
-            if (currentAngle > 360) currentAngle -= 360;
-            renderTimer.Start();
+            var r = GoodnessOfFit.R(datas, expectData);
+            processSeries.Title = $"处理后的曲线 R = {r}";
+            Model.Series.Add(processSeries);
         }
     }
 }

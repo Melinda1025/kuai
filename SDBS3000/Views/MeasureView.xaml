@@ -7,8 +7,9 @@
              xmlns:local="clr-namespace:SDBS3000.Views"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="clr-namespace:SDBS3000.ViewModels"
-             Width="1920"
+             Width="1820"
              Height="880"
+             Margin="50,0"
              d:DataContext="{d:DesignInstance vm:MeasureViewModel}"
              mc:Ignorable="d">
     <hc:Interaction.Triggers>
@@ -27,194 +28,351 @@
         </Grid.ColumnDefinitions>
 
         <!--  动平衡  -->
-        <GroupBox Margin="20"
-                  BorderThickness="0"
-                  Foreground="White"
-                  Header="动平衡"
-                  Style="{x:Null}">
-            <Grid Margin="0,50,0,0">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition />
-                    <ColumnDefinition />
-                </Grid.ColumnDefinitions>
+        <Border Height="60"
+                Margin="20"
+                VerticalAlignment="Top"
+                Background="{StaticResource TitleBd}"
+                BorderThickness="0"
+                Style="{x:Null}">
+            <TextBlock Margin="27,2"
+                       FontSize="20"
+                       FontWeight="Bold"
+                       Foreground="White"
+                       Text="动平衡" />
+        </Border>
+        <Grid Margin="20,100,20,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1.2*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
 
-                <controls:SciProgressBar Width="40"
-                                         Margin="20,0,0,0"
-                                         HorizontalAlignment="Left"
-                                         Orientation="Vertical"
-                                         RectCount="20"
-                                         Value="{Binding Panel1Item.Signal, FallbackValue=0}" />
-                <controls:SciProgressBar Grid.Column="1"
-                                         Width="40"
-                                         Margin="0,0,20,0"
-                                         HorizontalAlignment="Right"
-                                         Orientation="Vertical"
-                                         RectCount="20"
-                                         Value="{Binding Panel2Item.Signal, FallbackValue=0}" />
-                <controls:BalanceCircle Width="330"
-                                        Height="310"
-                                        Margin="0,0,40,0"
-                                        HorizontalAlignment="Right"
-                                        VerticalAlignment="Bottom"
-                                        FontSize="16" />
-                <controls:BalanceCircle Grid.Column="1"
-                                        Width="330"
-                                        Height="310"
-                                        Margin="40,0,0,0"
-                                        HorizontalAlignment="Left"
-                                        VerticalAlignment="Bottom"
-                                        FontSize="16" />
+            <controls:SciProgressBar Width="40"
+                                     Margin="20,0,0,0"
+                                     HorizontalAlignment="Left"
+                                     Orientation="Vertical"
+                                     RectCount="20"
+                                     Value="{Binding Panel1Item.Signal, FallbackValue=0}" />
+            <controls:SciProgressBar Grid.Column="1"
+                                     Width="40"
+                                     Margin="0,0,20,0"
+                                     HorizontalAlignment="Right"
+                                     Orientation="Vertical"
+                                     RectCount="20"
+                                     Value="{Binding Panel2Item.Signal, FallbackValue=0}" />
+            <controls:BalanceCircle Width="330"
+                                    Height="310"
+                                    Margin="0,0,40,0"
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Bottom"
+                                    FontSize="16"
+                                    MaxQualifiedRadius="{Binding Rotor.Panel1MaxValue, Mode=OneWay, FallbackValue=30}"
+                                    PolarAngle="{Binding Panel1Item.Angle, Mode=OneWay, FallbackValue=0}"
+                                    PolarRadius="{Binding Panel1Item.Value, Mode=OneWay, FallbackValue=0}" />
+            <controls:BalanceCircle Grid.Column="1"
+                                    Width="330"
+                                    Height="310"
+                                    Margin="40,0,0,0"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Bottom"
+                                    FontSize="16"
+                                    MaxQualifiedRadius="{Binding Rotor.Panel2MaxValue, Mode=OneWay, FallbackValue=30}"
+                                    PolarAngle="{Binding Panel2Item.Angle, Mode=OneWay, FallbackValue=0}"
+                                    PolarRadius="{Binding Panel2Item.Value, Mode=OneWay, FallbackValue=0}" />
 
-                <Border Grid.Row="1"
-                        Height="250"
-                        Margin="0,30,20,0"
-                        VerticalAlignment="Top"
-                        Background="#0a305b">
-                    <Grid Margin="30">
-                        <Grid.RowDefinitions>
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                        </Grid.ColumnDefinitions>
+            <Border Grid.Row="1"
+                    Height="250"
+                    Margin="0,30,20,0"
+                    VerticalAlignment="Top"
+                    Background="{StaticResource RegionBd}">
+                <Grid Margin="30,20">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="0.5*" />
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.7*" />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
 
-                        <TextBlock VerticalAlignment="Center"
-                                   FontSize="16"
-                                   FontWeight="Bold"
-                                   Text="平面1" />
-                        <TextBlock Grid.Column="1"
-                                   HorizontalAlignment="Center"
-                                   VerticalAlignment="Center"
-                                   FontSize="16"
-                                   Foreground="#00c9ff">
-                            <Run Text="量值" />
-                            <Run Text="{Binding Rotor.BalenceUnit, FallbackValue=[g], StringFormat={}[{0}]}" />
-                        </TextBlock>
-                        <TextBlock Grid.Column="2"
-                                   HorizontalAlignment="Center"
-                                   VerticalAlignment="Center"
-                                   FontSize="16"
-                                   Foreground="#00c9ff">
-                            <Run Text="角度" />
-                            <Run Text="[°]" />
-                        </TextBlock>
+                    <TextBlock Margin="20,0"
+                               VerticalAlignment="Center"
+                               FontSize="18"
+                               FontWeight="Bold"
+                               Foreground="White"
+                               Text="平面1" />
+                    <TextBlock Grid.Column="1"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               FontSize="18"
+                               Foreground="{StaticResource MainBrush}">
+                        <Run Text="量值" />
+                        <Run Text="{Binding Rotor.BalenceUnit, FallbackValue=[g], StringFormat={}[{0}]}" />
+                    </TextBlock>
+                    <TextBlock Grid.Column="2"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               FontSize="18"
+                               Foreground="{StaticResource MainBrush}">
+                        <Run Text="角度" />
+                        <Run Text="[°]" />
+                    </TextBlock>
 
-                        <Border Grid.Row="1"
-                                Grid.ColumnSpan="3"
-                                Margin="0,5"
-                                Background="#3300c9ff" />
-                        <TextBlock Grid.Row="1"
-                                   HorizontalAlignment="Center"
-                                   VerticalAlignment="Center"
-                                   Text="当前值" />
-                        <TextBlock Grid.Row="1"
-                                   Grid.Column="1"
-                                   HorizontalAlignment="Center"
-                                   VerticalAlignment="Center"
-                                   Text="{Binding Panel1Item.Value, Converter={StaticResource FloatDigitConverter}}" />
-                        <TextBlock Grid.Row="1"
-                                   Grid.Column="2"
-                                   HorizontalAlignment="Center"
-                                   VerticalAlignment="Center"
-                                   Text="{Binding Panel1Item.Angle, Converter={StaticResource FloatDigitConverter}}" />
-                        <Border Grid.Row="2"
-                                Grid.ColumnSpan="3"
-                                Margin="0,5"
-                                Background="#3300c9ff" />
-                        <TextBlock Grid.Row="2"
-                                   HorizontalAlignment="Center"
-                                   VerticalAlignment="Center"
-                                   Text="上一次" />
-                        <TextBlock Grid.Row="2"
-                                   Grid.Column="1"
-                                   HorizontalAlignment="Center"
-                                   VerticalAlignment="Center"
-                                   Text="{Binding Panel2Item.Value, Converter={StaticResource FloatDigitConverter}}" />
-                        <TextBlock Grid.Row="2"
-                                   Grid.Column="2"
-                                   HorizontalAlignment="Center"
-                                   VerticalAlignment="Center"
-                                   Text="{Binding Panel2Item.Angle, Converter={StaticResource FloatDigitConverter}}" />
-                    </Grid>
-                </Border>
-                <Border Grid.Row="1"
-                        Grid.Column="1"
-                        Height="250"
-                        Margin="20,30,0,0"
-                        VerticalAlignment="Top"
-                        Background="#0a305b">
-                    <Grid Margin="30">
-                        <Grid.RowDefinitions>
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                        </Grid.ColumnDefinitions>
+                    <Border Grid.Row="1"
+                            Grid.ColumnSpan="3"
+                            Margin="0,5"
+                            Background="{StaticResource DataRowBd}"
+                            CornerRadius="10" />
+                    <TextBlock Grid.Row="1"
+                               Margin="20,0"
+                               VerticalAlignment="Center"
+                               FontSize="18"
+                               Foreground="{StaticResource MainBrush}"
+                               Text="当前值" />
+                    <controls:GrowText Grid.Row="1"
+                                       Grid.Column="1"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       Text="{Binding Panel1Item.Value, FallbackValue=0.0000, Converter={StaticResource FloatDigitConverter}}" />
+                    <controls:GrowText Grid.Row="1"
+                                       Grid.Column="2"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       Text="{Binding Panel1Item.Angle, FallbackValue=0.0000, Converter={StaticResource FloatDigitConverter}}" />
 
-                        <TextBlock VerticalAlignment="Center"
-                                   FontSize="16"
-                                   FontWeight="Bold"
-                                   Text="平面2" />
-                        <TextBlock Grid.Column="1"
-                                   HorizontalAlignment="Center"
-                                   VerticalAlignment="Center"
-                                   FontSize="16"
-                                   Foreground="#00c9ff"
-                                   Text="量程[g]" />
-                        <TextBlock Grid.Column="2"
-                                   HorizontalAlignment="Center"
-                                   VerticalAlignment="Center"
-                                   FontSize="16"
-                                   Foreground="#00c9ff"
-                                   Text="角度[°]" />
+                    <Border Grid.Row="2"
+                            Grid.ColumnSpan="3"
+                            Margin="0,5"
+                            Background="{StaticResource DataRowBd}"
+                            CornerRadius="10" />
+                    <TextBlock Grid.Row="2"
+                               Margin="20,0"
+                               VerticalAlignment="Center"
+                               FontSize="18"
+                               Foreground="{StaticResource MainBrush}"
+                               Text="上一次" />
+                    <controls:GrowText Grid.Row="2"
+                                       Grid.Column="1"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       Text="{Binding Panel1Item.LastValue, FallbackValue=0.0000, Converter={StaticResource FloatDigitConverter}}" />
+                    <controls:GrowText Grid.Row="2"
+                                       Grid.Column="2"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       Text="{Binding Panel1Item.LastAngle, FallbackValue=0.0000, Converter={StaticResource FloatDigitConverter}}" />
+                </Grid>
+            </Border>
 
-                        <Border Grid.Row="1"
-                                Grid.ColumnSpan="3"
-                                Margin="0,5"
-                                Background="#3300c9ff" />
-                        <Border Grid.Row="2"
-                                Grid.ColumnSpan="3"
-                                Margin="0,5"
-                                Background="#3300c9ff" />
-                    </Grid>
-                </Border>
-            </Grid>
-        </GroupBox>
+            <Border Grid.Row="1"
+                    Grid.Column="1"
+                    Height="250"
+                    Margin="20,30,0,0"
+                    VerticalAlignment="Top"
+                    Background="{StaticResource RegionBd}">
+                <Grid Margin="30,20">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="0.5*" />
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.7*" />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Margin="20,0"
+                               VerticalAlignment="Center"
+                               FontSize="18"
+                               FontWeight="Bold"
+                               Foreground="White"
+                               Text="平面2" />
+                    <TextBlock Grid.Column="1"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               FontSize="18"
+                               Foreground="{StaticResource MainBrush}">
+                        <Run Text="量值" />
+                        <Run Text="{Binding Rotor.BalenceUnit, FallbackValue=[g], StringFormat={}[{0}]}" />
+                    </TextBlock>
+                    <TextBlock Grid.Column="2"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               FontSize="18"
+                               Foreground="{StaticResource MainBrush}">
+                        <Run Text="角度" />
+                        <Run Text="[°]" />
+                    </TextBlock>
+
+                    <Border Grid.Row="1"
+                            Grid.ColumnSpan="3"
+                            Margin="0,5"
+                            Background="{StaticResource DataRowBd}"
+                            CornerRadius="10" />
+                    <TextBlock Grid.Row="1"
+                               Margin="20,0"
+                               VerticalAlignment="Center"
+                               FontSize="18"
+                               Foreground="{StaticResource MainBrush}"
+                               Text="当前值" />
+                    <controls:GrowText Grid.Row="1"
+                                       Grid.Column="1"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       Text="{Binding Panel2Item.Value, FallbackValue=0.0000, Converter={StaticResource FloatDigitConverter}}" />
+                    <controls:GrowText Grid.Row="1"
+                                       Grid.Column="2"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       Text="{Binding Panel2Item.Angle, FallbackValue=0.0000, Converter={StaticResource FloatDigitConverter}}" />
+
+                    <Border Grid.Row="2"
+                            Grid.ColumnSpan="3"
+                            Margin="0,5"
+                            Background="{StaticResource DataRowBd}"
+                            CornerRadius="10" />
+                    <TextBlock Grid.Row="2"
+                               Margin="20,0"
+                               VerticalAlignment="Center"
+                               FontSize="18"
+                               Foreground="{StaticResource MainBrush}"
+                               Text="上一次" />
+                    <controls:GrowText Grid.Row="2"
+                                       Grid.Column="1"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       Text="{Binding Panel2Item.LastValue, FallbackValue=0.0000, Converter={StaticResource FloatDigitConverter}}" />
+                    <controls:GrowText Grid.Row="2"
+                                       Grid.Column="2"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       Text="{Binding Panel2Item.LastAngle, FallbackValue=0.0000, Converter={StaticResource FloatDigitConverter}}" />
+                </Grid>
+            </Border>
+        </Grid>
         <!--  端径跳  -->
-        <GroupBox Grid.Column="1"
-                  Margin="20"
-                  BorderThickness="0"
-                  Foreground="White"
-                  Header="端径跳"
-                  Style="{x:Null}">
-            <UniformGrid Margin="10,30,10,10"
-                         Columns="2"
-                         Rows="2">
-                <Border Margin="10" />
-                <Border Margin="10" />
-                <Border Margin="10" />
-                <Border Margin="10" />
-            </UniformGrid>
-        </GroupBox>
+        <Border Grid.Column="1"
+                Height="60"
+                Margin="20"
+                VerticalAlignment="Top"
+                Background="{StaticResource TitleBd}"
+                BorderThickness="0"
+                Style="{x:Null}">
+            <TextBlock Margin="27,2"
+                       FontSize="20"
+                       FontWeight="Bold"
+                       Foreground="White"
+                       Text="端径跳" />
+        </Border>
+        <UniformGrid Grid.Column="1"
+                     Margin="30,90,30,30"
+                     Columns="2"
+                     Rows="2">
+            <Border Margin="10" Background="{StaticResource RegionBd}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition Height="3*" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition Width="110" />
+                    </Grid.ColumnDefinitions>
+                    <controls:GrowText Margin="15,0,10,0"
+                                       HorizontalAlignment="Left"
+                                       VerticalAlignment="Center"
+                                       FontSize="25"
+                                       Text="上径面" />
+                    <controls:QualifiedBox Grid.Column="1"
+                                           HorizontalAlignment="Left"
+                                           IsQualified="False" />
+                    <TextBlock Grid.Column="2"
+                               Margin="20,0,15,0"
+                               VerticalAlignment="Center"
+                               TextAlignment="Center">
+                        <Run FontSize="20"
+                             Foreground="{StaticResource SubTextBrush}"
+                             Text="{Binding UpDiametricItem.Jumping, FallbackValue=0.000, Mode=OneWay, Converter={StaticResource DoubleDigitConverter}}" />
+                        <LineBreak />
+                        <Run FontSize="15"
+                             Foreground="White"
+                             Text="跳动值" />
+                        <Run FontSize="15"
+                             Foreground="White"
+                             Text="{Binding Rotor.BalenceUnit, FallbackValue=(μm), Mode=OneWay}" />
+                    </TextBlock>
+
+                    <controls:JumpingCircle Grid.Row="1" Grid.ColumnSpan="3" />
+
+                    <hc:Divider Grid.RowSpan="2"
+                                Grid.Column="3"
+                                Margin="5,20,0,20"
+                                HorizontalAlignment="Left"
+                                LineStroke="#334795FF"
+                                Orientation="Vertical" />
+
+                    <UniformGrid Grid.RowSpan="2"
+                                 Grid.Column="3"
+                                 Margin="0,10"
+                                 Rows="4">
+                        <TextBlock VerticalAlignment="Center" TextAlignment="Center">
+                            <Run FontSize="14"
+                                 Foreground="White"
+                                 Text="高点角度(°)" />
+                            <LineBreak />
+                            <Run FontSize="18"
+                                 Foreground="{StaticResource SubTextBrush}"
+                                 Text="{Binding UpDiametricItem.HighAngle, FallbackValue=0.000, Mode=OneWay, Converter={StaticResource DoubleDigitConverter}}" />
+                        </TextBlock>
+                        <TextBlock VerticalAlignment="Center" TextAlignment="Center">
+                            <Run FontSize="14"
+                                 Foreground="White"
+                                 Text="低点角度(°)" />
+                            <LineBreak />
+                            <Run FontSize="18"
+                                 Foreground="{StaticResource SubTextBrush}"
+                                 Text="{Binding UpDiametricItem.LowAngle, FallbackValue=0.000, Mode=OneWay, Converter={StaticResource DoubleDigitConverter}}" />
+                        </TextBlock>
+                        <TextBlock VerticalAlignment="Center" TextAlignment="Center">
+                            <Run FontSize="14"
+                                 Foreground="White"
+                                 Text="一次谐波" />
+                            <LineBreak />
+                            <Run FontSize="18"
+                                 Foreground="{StaticResource SubTextBrush}"
+                                 Text="{Binding UpDiametricItem.FirstHarmonic, FallbackValue=0.000, Mode=OneWay, Converter={StaticResource DoubleDigitConverter}}" />
+                        </TextBlock>
+                        <TextBlock VerticalAlignment="Center" TextAlignment="Center">
+                            <Run FontSize="14"
+                                 Foreground="White"
+                                 Text="二次谐波" />
+                            <LineBreak />
+                            <Run FontSize="18"
+                                 Foreground="{StaticResource SubTextBrush}"
+                                 Text="{Binding UpDiametricItem.SecondHarmonic, FallbackValue=0.000, Mode=OneWay, Converter={StaticResource DoubleDigitConverter}}" />
+                        </TextBlock>
+                    </UniformGrid>
+                </Grid>
+            </Border>
+            <Border Margin="10" Background="{StaticResource RegionBd}" />
+            <Border Margin="10" Background="{StaticResource RegionBd}" />
+            <Border Margin="10" Background="{StaticResource RegionBd}" />
+        </UniformGrid>
 
         <hc:UniformSpacingPanel Grid.Row="2"
                                 Grid.ColumnSpan="2"
                                 Margin="20,10"
                                 VerticalAlignment="Center"
                                 Spacing="20">
-            <Border>
+            <Border TextBlock.FontSize="18">
                 <hc:UniformSpacingPanel Margin="20,0" Spacing="40">
                     <TextBlock Foreground="White">
                         <Run Text="转子名称" />

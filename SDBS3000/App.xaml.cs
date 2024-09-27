@@ -1,4 +1,9 @@
-﻿using DryIoc;
+﻿using System.Diagnostics;
+using System.Globalization;
+using System.IO;
+using System.Windows;
+using System.Windows.Threading;
+using DryIoc;
 using HandyControl.Tools;
 using NLog;
 using NLog.Config;
@@ -12,11 +17,6 @@ using SDBS3000.ViewModels.Dialogs;
 using SDBS3000.Views;
 using SDBS3000.Views.Dialogs;
 using SqlSugar;
-using System.Diagnostics;
-using System.Globalization;
-using System.IO;
-using System.Windows;
-using System.Windows.Threading;
 
 namespace SDBS3000
 {
@@ -28,6 +28,7 @@ namespace SDBS3000
         public static User User { get; set; }
         public static Container Container { get; } = new();
         private readonly Logger logger;
+
         public App()
         {
 #if !DEBUG
@@ -41,7 +42,7 @@ namespace SDBS3000
             RegisterTypes();
             logger = LogManager.GetCurrentClassLogger();
             Task.Run(InitializeDatabase);
-            InitializeLanguage();                        
+            InitializeLanguage();
         }
 
         protected override void OnStartup(StartupEventArgs e)
@@ -60,8 +61,9 @@ namespace SDBS3000
         {
             MemoryHelper.Instance.StopAutoFree();
             AppSetting.Default.Save();
-            base.OnExit(e);            
+            base.OnExit(e);
         }
+
         /// <summary>
         /// 检测是否只有一个实例程序
         /// </summary>
@@ -83,7 +85,8 @@ namespace SDBS3000
             var fileTarget = new FileTarget
             {
                 FileName = "${basedir}/Logs/${shortdate}/${level}-${shortdate}.log",
-                Layout = "${longdate} : ${message} ${newline} ${onexception:${exception:format=ToString} ${newline} ${stacktrace} ${newline}",
+                Layout =
+                    "${longdate} : ${message} ${newline} ${onexception:${exception:format=ToString} ${newline} ${stacktrace} ${newline}",
                 ArchiveFileName = "${basedir}/archives/${logger}-${level}-${shortdate}-{#####}.log",
                 ArchiveAboveSize = 102400,
                 ArchiveNumbering = ArchiveNumberingMode.Sequence,
@@ -97,12 +100,9 @@ namespace SDBS3000
                 AutoFlush = false,
                 MaxArchiveFiles = 99,
             };
-            var asyncTarget = new AsyncTargetWrapper
-            {
-                WrappedTarget = fileTarget,
-            };
+            var asyncTarget = new AsyncTargetWrapper { WrappedTarget = fileTarget };
             cfg.AddTarget("asyncFile", asyncTarget);
-            
+
             cfg.LoggingRules.Add(new LoggingRule("*", LogLevel.Info, asyncTarget));
             cfg.LoggingRules.Add(new LoggingRule("*", LogLevel.Error, asyncTarget));
 #if DEBUG
@@ -116,12 +116,12 @@ namespace SDBS3000
         /// 注册IOC类型
         /// </summary>
         private void RegisterTypes()
-        {            
+        {
             Container.Register<LoginViewModel>(Reuse.Transient);
             Container.Register<LoginView>(Reuse.Transient);
 
             Container.Register<MainViewModel>(Reuse.Singleton);
-            Container.Register<MainWindow>(Reuse.Singleton);            
+            Container.Register<MainWindow>(Reuse.Singleton);
             Container.Register<IndexViewModel>(Reuse.Singleton);
             Container.Register<IndexView>(Reuse.Singleton);
             Container.Register<MeasureViewModel>(Reuse.Singleton);
@@ -149,39 +149,50 @@ namespace SDBS3000
 
             Container.Register<AddOrRemoveInfo>(Reuse.Singleton);
 
-
-            Container.RegisterDelegate(() =>
-            {
-                string ip = AppSetting.Default.PlcIP;
-                var plc = new ExtendedPlc(ip);
-                return plc;
-            }, Reuse.Singleton);
+            Container.RegisterDelegate(
+                () =>
+                {
+                    string ip = AppSetting.Default.PlcIP;
+                    var plc = new ExtendedPlc(ip);
+                    return plc;
+                },
+                Reuse.Singleton
+            );
             Container.RegisterDelegate(LogManager.GetCurrentClassLogger, Reuse.Transient);
-            //数据库orm            
-            Container.RegisterDelegate(() =>
-            {
-                var db = new SqlSugarClient(new ConnectionConfig
+            //数据库orm
+            Container.RegisterDelegate(
+                () =>
                 {
-                    DbType = AppSetting.Default.DbType,
-                    ConnectionString = AppSetting.Default.ConnectionString,
-                    InitKeyType = InitKeyType.Attribute,
-                    IsAutoCloseConnection = true,
-                });                
+                    var db = new SqlSugarClient(
+                        new ConnectionConfig
+                        {
+                            DbType = AppSetting.Default.DbType,
+                            ConnectionString = AppSetting.Default.ConnectionString,
+                            InitKeyType = InitKeyType.Attribute,
+                            IsAutoCloseConnection = true,
+                        }
+                    );
 #if DEBUG
-                db.Aop.OnLogExecuting = (sql, pars) =>
-                {                    
-                    var sqls = UtilMethods.GetNativeSql(sql, pars);
-                    Debug.WriteLine(sqls);
-                    logger.Log(LogLevel.Debug, $"执行{sqls}");
-                };
+                    db.Aop.OnLogExecuting = (sql, pars) =>
+                    {
+                        var sqls = UtilMethods.GetNativeSql(sql, pars);
+                        Debug.WriteLine(sqls);
+                        logger.Log(LogLevel.Debug, $"执行{sqls}");
+                    };
 #endif
-                db.Aop.OnError = (ex) =>
-                {
-                    Debug.WriteLine($"执行:\r\n{ex.Sql}\r\n时发生错误 : {ex.Message}");
-                    logger.Log(LogLevel.Error, $"执行:\r\n{ex.Sql}\r\n时发生错误 : {ex.Message}");
-                };
-                return db;
-            }, Reuse.Transient, Setup.With(allowDisposableTransient:true));//允许注册瞬时的IDisposable对象，自行释放
+                    db.Aop.OnError = (ex) =>
+                    {
+                        Debug.WriteLine($"执行:\r\n{ex.Sql}\r\n时发生错误 : {ex.Message}");
+                        logger.Log(
+                            LogLevel.Error,
+                            $"执行:\r\n{ex.Sql}\r\n时发生错误 : {ex.Message}"
+                        );
+                    };
+                    return db;
+                },
+                Reuse.Transient,
+                Setup.With(allowDisposableTransient: true)
+            ); //允许注册瞬时的IDisposable对象，自行释放
         }
 
         private static void InitializeDatabase()
@@ -190,35 +201,41 @@ namespace SDBS3000
             db.DbMaintenance.CreateDatabase();
             db.CodeFirst.InitTables(
                 typeof(RotorInfo),
-                typeof(User)
+                typeof(User),
+                typeof(JumpItem),
+                typeof(BalanceItem),
+                typeof(MeasureResult),
+                typeof(Alarm)
             );
-
-            //var defaultUsers = new List<User>()
-            //{
-            //    new User
-            //    {
-            //        Name = "admin",
-            //        Password = "123456",
-            //        Permission = 0,
-            //        Remark = "我是管理员",
-            //    },
-            //    new User
-            //    {
-            //        Name = "debugger",
-            //        Password = "123456",
-            //        Permission = 1,
-            //        Remark = "我是调试员",
-            //    },
-            //    new User
-            //    {
-            //        Name = "operator",
-            //        Password = "123456",
-            //        Permission = 2,
-            //        Remark = "我是操作员",
-            //    },
-            //};
-            //defaultUsers.ForEach(u => u.HashPassword());
-            //db.Insertable(defaultUsers).ExecuteCommand();
+            if (!db.Queryable<User>().Any())
+            {
+                var defaultUsers = new List<User>()
+                {
+                    new User
+                    {
+                        Name = "admin",
+                        Password = "123456",
+                        Permission = 0,
+                        Remark = "我是管理员".Localize(),
+                    },
+                    new User
+                    {
+                        Name = "debugger",
+                        Password = "123456",
+                        Permission = 1,
+                        Remark = "我是调试员".Localize(),
+                    },
+                    new User
+                    {
+                        Name = "operator",
+                        Password = "123456",
+                        Permission = 2,
+                        Remark = "我是操作员".Localize(),
+                    },
+                };
+                defaultUsers.ForEach(u => u.HashPassword());
+                db.Insertable(defaultUsers).ExecuteCommand();
+            }
         }
 
         private static void InitializeLanguage()
@@ -240,10 +257,13 @@ namespace SDBS3000
         public static void SwitchThemes(string theme)
         {
             const int THEME_INDEX = 2;
-            ResourceDictionary resource = new ()
-            {
-                Source = new Uri($"pack://application:,,,/SDBS3000;component/Dictionary/Themes/{theme}.xaml")
-            };
+            ResourceDictionary resource =
+                new()
+                {
+                    Source = new Uri(
+                        $"pack://application:,,,/SDBS3000;component/Dictionary/Themes/{theme}.xaml"
+                    ),
+                };
             Current.Resources.MergedDictionaries[THEME_INDEX] = resource;
         }
 
@@ -269,13 +289,19 @@ namespace SDBS3000
             }
         }
 
-        private void TaskScheduler_UnobservedTaskException(object sender, UnobservedTaskExceptionEventArgs e)
+        private void TaskScheduler_UnobservedTaskException(
+            object sender,
+            UnobservedTaskExceptionEventArgs e
+        )
         {
             logger.Error($"Task异常:{e.Exception.Message}", e.Exception);
             e.SetObserved();
         }
 
-        private void App_DispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
+        private void App_DispatcherUnhandledException(
+            object sender,
+            DispatcherUnhandledExceptionEventArgs e
+        )
         {
             try
             {
@@ -288,5 +314,4 @@ namespace SDBS3000
             }
         }
     }
-
 }

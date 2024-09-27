@@ -13,5 +13,10 @@ namespace SDBS3000.Views
             InitializeComponent();
             DataContext = model;
         }
+
+        private void MinimizeBtn_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            App.Current.MainWindow.WindowState = System.Windows.WindowState.Minimized;
+        }
     }
 }

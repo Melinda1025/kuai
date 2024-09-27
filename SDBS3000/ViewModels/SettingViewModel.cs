@@ -50,8 +50,8 @@ namespace SDBS3000.ViewModels
             }
         }
 
-        private string digits;
-        public string Digits
+        private int digits;
+        public int Digits
         {
             get => digits;
             set
@@ -92,20 +92,6 @@ namespace SDBS3000.ViewModels
             }
         }
 
-        private short needleMode;
-        public short NeedleMode
-        {
-            get => needleMode;
-            set
-            {
-                if (value != needleMode)
-                {
-                    SetProperty(ref needleMode, value);
-                    HasChanges = true;
-                }
-            }
-        }
-
         private short safetyMode;
         public short SafetyMode
         {
@@ -134,8 +120,7 @@ namespace SDBS3000.ViewModels
             refreshRate = AppSetting.Default.RefreshRate;
             digits = AppSetting.Default.Digits;
             workMode = AppSetting.Default.WorkMode;
-            positioningMode = AppSetting.Default.PositioningMode;
-            needleMode = AppSetting.Default.NeedleMode;
+            positioningMode = AppSetting.Default.PositioningMode;            
             safetyMode = AppSetting.Default.SafetyMode;
         }
 
@@ -147,8 +132,7 @@ namespace SDBS3000.ViewModels
             AppSetting.Default.RefreshRate = RefreshRate;
             AppSetting.Default.Digits = Digits;
             AppSetting.Default.WorkMode = WorkMode;
-            AppSetting.Default.PositioningMode = PositioningMode;
-            AppSetting.Default.NeedleMode = NeedleMode;
+            AppSetting.Default.PositioningMode = PositioningMode;            
             AppSetting.Default.SafetyMode = SafetyMode;
             AppSetting.Default.Save();
             Growl.Success("保存配置成功");
@@ -159,8 +143,7 @@ namespace SDBS3000.ViewModels
             await plc.WriteAsync("DB20.DBD314.0", SlipRange);
             await plc.WriteAsync("DB20.DBD308.0", RefreshRate);
             await plc.WriteAsync("DB20.DBW318.0", WorkMode);
-            await plc.WriteAsync("DB20.DBW320.0", PositioningMode);
-            await plc.WriteAsync("DB20.DBW330.0", NeedleMode);
+            await plc.WriteAsync("DB20.DBW320.0", PositioningMode);            
             await plc.WriteAsync("DB20.DBW328.0", SafetyMode);
             Growl.Success("写入PLC成功");
         }

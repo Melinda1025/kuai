@@ -20,20 +20,32 @@
                 <Border Width="6"
                         Height="22"
                         VerticalAlignment="Center"
-                        Background="#3BAAFF"
+                        Background="{StaticResource SubBrush}"
                         CornerRadius="3" />
                 <TextBlock Margin="5,0,0,0"
                            VerticalAlignment="Center"
                            FontSize="18"
-                           Foreground="#3BAAFF"
+                           Foreground="{StaticResource SubBrush}"
                            Text="{TemplateBinding hc:TitleElement.Title}" />
             </hc:SimpleStackPanel>
 
             <Border Name="border"
                     Grid.Row="1"
                     Grid.ColumnSpan="2"
+                    MinWidth="{TemplateBinding MinWidth}"
                     MinHeight="70"
-                    Background="{StaticResource 输入框1}" />
+                    BorderBrush="{StaticResource SubBrush}"
+                    BorderThickness="1.5"
+                    CornerRadius="10">
+                <Border CornerRadius="10"
+                        Effect="{StaticResource GrowEffect.Brighter}"
+                        Style="{StaticResource BorderClip}">
+                    <Border BorderBrush="{StaticResource SubBrush}"
+                            BorderThickness="1"
+                            CornerRadius="10"
+                            Effect="{StaticResource BlurEffect.Greater}" />
+                </Border>
+            </Border>
             <hc:ToggleBlock Grid.Row="1"
                             Grid.Column="1"
                             Margin="0,0,10,0"
@@ -50,7 +62,7 @@
                           HorizontalAlignment="Right"
                           VerticalAlignment="Center"
                           Data="{StaticResource DownGeometry}"
-                          Fill="#3baaff"
+                          Fill="{StaticResource SubBrush}"
                           Stretch="Uniform" />
                 </hc:ToggleBlock.UnCheckedContent>
                 <hc:ToggleBlock.CheckedContent>
@@ -90,11 +102,15 @@
                    IsOpen="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
                    Placement="Bottom"
                    PlacementTarget="{Binding ElementName=border}"
-                   PopupAnimation="{StaticResource {x:Static SystemParameters.ComboBoxPopupAnimationKey}}">
+                   PopupAnimation="{StaticResource {x:Static SystemParameters.ComboBoxPopupAnimationKey}}"
+                   VerticalOffset="5">
                 <Border x:Name="dropDownBorder"
                         MinWidth="{Binding ActualWidth, ElementName=root}"
                         MaxHeight="{TemplateBinding MaxDropDownHeight}"
-                        Background="{StaticResource 下拉框}">
+                        Background="{StaticResource BackgroundBrush}"
+                        BorderBrush="{StaticResource SubBrush}"
+                        BorderThickness="2"
+                        CornerRadius="10">
                     <hc:ToggleBlock HorizontalContentAlignment="Stretch"
                                     VerticalContentAlignment="Stretch"
                                     IsChecked="{Binding HasItems, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}">
@@ -130,11 +146,12 @@
                     <Condition SourceName="PART_Popup" Property="IsOpen" Value="false" />
                 </MultiTrigger.Conditions>
                 <Setter TargetName="UnCheckedPath" Property="Fill" Value="white" />
+                <Setter TargetName="border" Property="BorderBrush" Value="White" />
             </MultiTrigger>
             <Trigger Property="IsEnabled" Value="false">
-                <Setter TargetName="UnCheckedPath" Property="Opacity" Value="0.4" />
-                <Setter TargetName="border" Property="Opacity" Value="0.4" />
-                <Setter TargetName="contentPresenter" Property="Opacity" Value="0.4" />
+                <Setter TargetName="UnCheckedPath" Property="Opacity" Value="0.2" />
+                <Setter TargetName="border" Property="Opacity" Value="0.2" />
+                <Setter TargetName="contentPresenter" Property="Opacity" Value="0.2" />
             </Trigger>
         </ControlTemplate.Triggers>
     </ControlTemplate>
@@ -171,6 +188,7 @@
             </Setter.Value>
         </Setter>
     </Style>
+
     <Style x:Key="SciComboBoxStyle" TargetType="{x:Type ComboBox}">
         <Setter Property="Foreground" Value="White" />
         <Setter Property="HorizontalContentAlignment" Value="Left" />

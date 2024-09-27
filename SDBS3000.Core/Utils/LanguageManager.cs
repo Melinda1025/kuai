@@ -34,7 +34,10 @@ namespace SDBS3000.Core.Utils
         {
             get
             {
-                if (!isInit) return string.Empty;
+                if (!isInit)
+                {
+                    Init("SDBS3000.Core.Resources.Lang");
+                }
                 if (string.IsNullOrEmpty(name)) return string.Empty;
 
                 string str;
@@ -42,7 +45,7 @@ namespace SDBS3000.Core.Utils
                 if (string.IsNullOrWhiteSpace(str))
                 {
                     str = name;
-                    Debug.WriteLine($"字符串资源: {name} 未找到");
+                    Debug.WriteLine($"字符串资源: {name} 未找到");                    
                 }
                 return str;
             }

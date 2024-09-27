@@ -1,9 +1,12 @@
-﻿using System.Diagnostics;
+﻿using System.Buffers;
+using System.Diagnostics;
 using System.Windows;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DryIoc;
 using HandyControl.Controls;
+using S7.Net;
+using S7.Net.Types;
 using SDBS3000.Core.Models;
 using SDBS3000.Core.Utils;
 using SDBS3000.ViewModels.Interface;
@@ -83,9 +86,13 @@ namespace SDBS3000.ViewModels
         private float progress;
         [ObservableProperty]
         private float speed;
+        [ObservableProperty]
+        private bool isMeasuring = false;
 
 
         private readonly ExtendedPlc plc;
+        private const int UPDATE_INTERVAL = 100;
+        private readonly System.Threading.Timer updateSpeedTimer;
         public IndexViewModel(ExtendedPlc plc, AddOrRemoveInfo info)
         {            
             SimpleEventBus<Type>.Instance.Subscribe("NavigatePage", (s, t) => NavigatePage(t));
@@ -93,6 +100,9 @@ namespace SDBS3000.ViewModels
             //注册跨页面访问属性
             PropertyAccessor<IndexViewModel, float>.Instance.Register("Progress", this, vm => vm.Progress);
             PropertyAccessor<IndexViewModel, float>.Instance.Register("Speed", this, vm => vm.Speed);
+            PropertyAccessor<IndexViewModel, bool>.Instance.Register("IsMeasuring", this, vm => vm.IsMeasuring);
+
+            updateSpeedTimer = new System.Threading.Timer(OnUpdateSpeed, null, Timeout.Infinite, Timeout.Infinite);
 
             this.AddOrRemoveInfo = info;
             this.plc = plc;
@@ -100,6 +110,7 @@ namespace SDBS3000.ViewModels
             {
                 WriteSettingsToPlc();
                 ReadSettingsFromPlc();
+                updateSpeedTimer.Change(UPDATE_INTERVAL, Timeout.Infinite);
             }
             SimpleEventBus<bool>.Instance.Subscribe(
                 "IsPlcConnectedChanged",
@@ -109,10 +120,32 @@ namespace SDBS3000.ViewModels
                     {
                         WriteSettingsToPlc();
                         ReadSettingsFromPlc();
+                        updateSpeedTimer.Change(UPDATE_INTERVAL, Timeout.Infinite);
                     }
                 }
             );
             NavigatePage(typeof(MeasureView));
+        }
+
+        /// <summary>
+        /// 轮询更新速度
+        /// </summary>
+        /// <param name="state"></param>
+        private async void OnUpdateSpeed(object state)
+        {
+            if (!plc.IsConnected) return;
+            var buffer = ArrayPool<byte>.Shared.Rent(4);
+            try
+            {
+                await plc.ReadBytesAsync(buffer, DataType.DataBlock, 20, 400);
+                if(BitConverter.IsLittleEndian) Array.Reverse(buffer);
+                Speed = BitConverter.ToSingle(buffer, 0);
+            }
+            finally
+            {
+                ArrayPool<byte>.Shared.Return(buffer);
+                updateSpeedTimer.Change(UPDATE_INTERVAL, Timeout.Infinite);
+            }
         }
 
         /// <summary>
@@ -170,12 +203,13 @@ namespace SDBS3000.ViewModels
             switch(status)
             {
                 case "start":
-                    SimpleEventBus<bool>.Instance.Publish("MeasureStatusChanged", null, true);
+                    IsMeasuring = true;                    
                     break;
                 case "stop":
-                    SimpleEventBus<bool>.Instance.Publish("MeasureStatusChanged", null, false);
+                    IsMeasuring = false;
                     break;
             }
+            SimpleEventBus<bool>.Instance.Publish("MeasureStatusChanged", null, IsMeasuring);
         }
 
         [RelayCommand]

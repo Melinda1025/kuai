@@ -1,7 +1,6 @@
 ﻿<Application x:Class="SDBS3000.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:effects="clr-namespace:SDBS3000.Effects"
              xmlns:hc="https://handyorg.github.io/handycontrol"
              xmlns:local="clr-namespace:SDBS3000"
              xmlns:o="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options">
@@ -12,8 +11,13 @@
                 <ResourceDictionary Source="pack://application:,,,/HandyControl;component/Themes/Theme.xaml" />
 
                 <ResourceDictionary Source="pack://application:,,,/SDBS3000;component/Dictionary/Themes/DarkTheme.xaml" />
+                <ResourceDictionary Source="Dictionary/FontFamily.xaml" />
                 <ResourceDictionary Source="Dictionary/Converter.xaml" />
+                <ResourceDictionary Source="Dictionary/Effects.xaml" />
                 <ResourceDictionary Source="Dictionary/ImageBrushes.xaml" />
+
+                <ResourceDictionary Source="Dictionary/Themes/Generic.xaml" />
+
                 <ResourceDictionary Source="Dictionary/Styles/Button.xaml" />
                 <ResourceDictionary Source="Dictionary/Styles/ToggleButton.xaml" />
                 <ResourceDictionary Source="Dictionary/Styles/DataGrid.xaml" />
@@ -21,26 +25,6 @@
                 <ResourceDictionary Source="Dictionary/Styles/ComboBox.xaml" />
                 <ResourceDictionary Source="Dictionary/Styles/TextBox.xaml" />
             </ResourceDictionary.MergedDictionaries>
-
-            <Style x:Key="FocusVisual">
-                <Setter Property="Control.Template">
-                    <Setter.Value>
-                        <ControlTemplate>
-                            <Rectangle Margin="2"
-                                       SnapsToDevicePixels="true"
-                                       Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"
-                                       StrokeDashArray="1 2"
-                                       StrokeThickness="1" />
-                        </ControlTemplate>
-                    </Setter.Value>
-                </Setter>
-            </Style>
-
-            <FontFamily x:Key="IconFont" o:Freeze="True">Assets/Fonts/#iconfont</FontFamily>
-            <FontFamily x:Key="CKTKingkong" o:Freeze="True">Assets/Fonts/#CKTKingkong</FontFamily>
-
-            
-
         </ResourceDictionary>
     </Application.Resources>
 </Application>

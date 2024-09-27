@@ -8,4 +8,5 @@
     <cvt:Boolean2IntConverter x:Key="Boolean2IntConverter" />
     <cvt:PermissionToStringConverter x:Key="PermissionToStringConverter" />
     <cvt:FloatDigitConverter x:Key="FloatDigitConverter" />
+    <cvt:DoubleDigitConverter x:Key="DoubleDigitConverter" />
 </ResourceDictionary>

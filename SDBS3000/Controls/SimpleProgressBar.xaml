@@ -1,0 +1,23 @@
+﻿<hc:SimplePanel x:Class="SDBS3000.Controls.SimpleProgressBar"
+                xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                xmlns:hc="https://handyorg.github.io/handycontrol"
+                xmlns:local="clr-namespace:SDBS3000.Controls"
+                xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                Width="282"
+                Height="8"
+                d:DesignHeight="8"
+                d:DesignWidth="282"
+                Background="{StaticResource MainBrush}"
+                mc:Ignorable="d">
+    <Rectangle Fill="#99000000" />
+    <Border HorizontalAlignment="Left" Effect="{StaticResource GrowEffect}">
+        <Rectangle Name="FillRect"
+                   Effect="{StaticResource BlurEffect}"
+                   Fill="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:SimpleProgressBar}, Path=Background}" />
+    </Border>
+    <Rectangle Width="{Binding ElementName=FillRect, Path=ActualWidth, Mode=OneWay}"
+               HorizontalAlignment="Left"
+               Fill="White" />
+</hc:SimplePanel>

@@ -10,38 +10,10 @@
              d:DesignWidth="500"
              Foreground="White"
              mc:Ignorable="d">
-    <UserControl.Resources>
-        <Color x:Key="BgCircle1" o:Freeze="True">#00519C</Color>
-        <Color x:Key="BgCircle2" o:Freeze="True">#003266</Color>
-        <Color x:Key="BgCircle3" o:Freeze="True">#51AC9B</Color>
-        <Color x:Key="QualifiedCircle" o:Freeze="True">#7F00FF48</Color>
-        <SolidColorBrush x:Key="BgBorderBrush"
-                         o:Freeze="True"
-                         Color="#038EE5" />
-        <SolidColorBrush x:Key="QualifiedBorderBrush"
-                         o:Freeze="True"
-                         Color="#00ff48" />
-        <RadialGradientBrush x:Key="BgBrush" o:Freeze="True" GradientOrigin="0.5,0.5">
-            <GradientStop Offset="0" Color="{StaticResource BgCircle2}" />
-            <GradientStop Offset="0.2" Color="{StaticResource BgCircle2}" />
-            <GradientStop Offset="0.2" Color="{StaticResource BgCircle1}" />
-            <GradientStop Offset="0.4" Color="{StaticResource BgCircle1}" />
-            <GradientStop Offset="0.4" Color="{StaticResource BgCircle2}" />
-            <GradientStop Offset="0.6" Color="{StaticResource BgCircle2}" />
-            <GradientStop Offset="0.6" Color="{StaticResource BgCircle1}" />
-            <GradientStop Offset="0.8" Color="{StaticResource BgCircle1}" />
-            <GradientStop Offset="0.8" Color="{StaticResource BgCircle2}" />
-            <GradientStop Offset="1" Color="{StaticResource BgCircle2}" />
-        </RadialGradientBrush>
-        <RadialGradientBrush x:Key="QualifiedBrush" o:Freeze="True" GradientOrigin="0.5,0.5">
-            <GradientStop Offset="0" Color="Transparent" />
-            <GradientStop Offset="1" Color="{StaticResource QualifiedCircle}" />
-        </RadialGradientBrush>
-    </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
-            <RowDefinition />
+            <RowDefinition Height="*" />
             <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -83,20 +55,58 @@
                  VerticalAlignment="Stretch"
                  Stretch="Uniform">
             <Canvas Width="100" Height="100">
-                <Ellipse Name="BgEllipse"
-                         Width="100"
-                         Height="100"
-                         Fill="{StaticResource BgBrush}"
-                         Stroke="{StaticResource BgBorderBrush}" />
-                <Ellipse Name="QualifiedEllipse"
-                         Canvas.Left="40"
-                         Canvas.Top="40"
-                         Width="20"
-                         Height="20"
-                         Fill="{StaticResource QualifiedBrush}"
-                         Stroke="{StaticResource QualifiedBorderBrush}"
-                         StrokeThickness="0.5" />
-
+                <Path Width="100"
+                      Height="100"
+                      Stroke="{StaticResource BalenceCircleBrush2}"
+                      StrokeThickness="0.4">
+                    <Path.Data>
+                        <GeometryGroup>
+                            <LineGeometry StartPoint="50 0" EndPoint="50 100" />
+                            <LineGeometry StartPoint="0 50" EndPoint="100 50" />
+                            <LineGeometry StartPoint="6.698729810778068, 25" EndPoint="93.30127018922193 75" />
+                            <LineGeometry StartPoint="25, 6.698729810778068" EndPoint="75, 93.30127018922193" />
+                            <LineGeometry StartPoint="6.698729810778068, 75" EndPoint="93.30127018922193, 25" />
+                            <LineGeometry StartPoint="25, 93.30127018922193" EndPoint="75, 6.698729810778068" />
+                        </GeometryGroup>
+                    </Path.Data>
+                </Path>
+                <Border Width="100"
+                        Height="100"
+                        Background="{StaticResource BalenceCircleBg1}"
+                        BorderBrush="{StaticResource BalenceCircleBrush1}"
+                        BorderThickness="1"
+                        CornerRadius="50">
+                    <Border Width="30"
+                            Height="30"
+                            Background="{StaticResource BalenceCircleBg2}"
+                            CornerRadius="15" />
+                </Border>
+                <Path Width="100"
+                      Height="100"
+                      Stroke="White"
+                      StrokeEndLineCap="Round"
+                      StrokeStartLineCap="Round"
+                      StrokeThickness="0.5">
+                    <Path.Data>
+                        <GeometryGroup>
+                            <LineGeometry StartPoint="48 50" EndPoint="52 50" />
+                            <LineGeometry StartPoint="50 48" EndPoint="50 52" />
+                        </GeometryGroup>
+                    </Path.Data>
+                </Path>
+                <Border Effect="{StaticResource GrowEffect.Brighter}">
+                    <Border.RenderTransform>
+                        <TranslateTransform x:Name="PointTransform" X="49" Y="49" />
+                    </Border.RenderTransform>
+                    <Border Name="PointInnerBorder"
+                            Width="2"
+                            Height="2"
+                            Background="White"
+                            BorderBrush="#00ff00"
+                            BorderThickness="0.25"
+                            CornerRadius="1"
+                            Effect="{StaticResource BlurEffect.Small}" />
+                </Border>
             </Canvas>
         </Viewbox>
 

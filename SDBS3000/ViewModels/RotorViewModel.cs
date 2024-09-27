@@ -3,6 +3,7 @@ using System.Windows;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using HandyControl.Controls;
+using HandyControl.Tools;
 using HandyControl.Tools.Extension;
 using SDBS3000.Core.Models;
 using SDBS3000.Core.Utils;
@@ -224,6 +225,7 @@ namespace SDBS3000.ViewModels
             )
             {
                 Growl.Warning("转子参数不能为空");
+                
                 return;
             }
 

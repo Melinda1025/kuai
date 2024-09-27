@@ -1,5 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using Kdbndp.KingbaseTypes;
+using SDBS3000.Core.Models;
 using SqlSugar;
 using System.Text.Encodings.Web;
 using System.Text.Json;
@@ -51,7 +51,7 @@ namespace SDBS3000.Core.Utils
         /// <summary>
         /// 保留位数 可选0到3位
         /// </summary>
-        public string Digits {  get; set; } = "3";
+        public int Digits {  get; set; } = 3;
         /// <summary>
         /// 定位转速
         /// </summary>
@@ -97,13 +97,13 @@ namespace SDBS3000.Core.Utils
         /// </summary>
         public string AuthCode { get; set; } = string.Empty;
         /// <summary>
-        /// 光针模式 0不适用 1使用手动检测每秒脉冲数 2使用自动检测每秒脉冲数
-        /// </summary>
-        public short NeedleMode {  get; set; } = 0;
-        /// <summary>
         /// 安全门模式 0不使用 1使用
         /// </summary>
         public short SafetyMode { get; set; } = 0;
+        /// <summary>
+        /// 夹具补偿数据对象
+        /// </summary>
+        public ClampCompensatingItem ClampCompensatingItem { get; set; }
         #endregion
 
 

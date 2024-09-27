@@ -12,23 +12,14 @@
              Width="1920"
              Height="1080"
              d:DataContext="{d:DesignInstance vm:LoginViewModel}"
+             Background="{StaticResource LoginBg}"
              mc:Ignorable="d">
     <hc:Interaction.Triggers>
         <hc:EventTrigger EventName="Loaded">
             <hc:InvokeCommandAction Command="{Binding LoadedCommand}" />
         </hc:EventTrigger>
     </hc:Interaction.Triggers>
-    <UserControl.Background>
-        <ImageBrush ImageSource="../Assets/Images/Login/背景.png" />
-    </UserControl.Background>
     <UserControl.Resources>
-        <ImageBrush x:Key="输入框"
-                    o:Freeze="True"
-                    ImageSource="../Assets/Images/Login/输入框.png"
-                    Stretch="Fill" />
-        <ImageBrush x:Key="登录按钮"
-                    o:Freeze="True"
-                    ImageSource="../Assets/Images/Login/登录按钮.png" />
         <ControlTemplate x:Key="IconSciComboBoxTemplate" TargetType="ComboBox">
             <Grid Name="root">
                 <Grid.ColumnDefinitions>
@@ -40,18 +31,29 @@
                 <Border Name="border"
                         Grid.ColumnSpan="3"
                         MinHeight="70"
-                        Background="{StaticResource 输入框}" />
+                        BorderBrush="{StaticResource SubBrush}"
+                        BorderThickness="2"
+                        CornerRadius="35">
+                    <Border CornerRadius="35"
+                            Effect="{StaticResource GrowEffect.Brighter}"
+                            Style="{StaticResource BorderClip}">
+                        <Border BorderBrush="{StaticResource SubBrush}"
+                                BorderThickness="1"
+                                CornerRadius="35"
+                                Effect="{StaticResource BlurEffect.Greater}" />
+                    </Border>
+                </Border>
 
                 <TextBlock Margin="25,5,15,5"
                            VerticalAlignment="Center"
-                           FontFamily="../../Assets/Fonts/#iconfont"
+                           FontFamily="{StaticResource IconFont}"
                            FontSize="30"
-                           Foreground="#3baaff"
+                           Foreground="{StaticResource SubBrush}"
                            Text="{TemplateBinding Tag}" />
-                <hc:Divider Margin="0,20"
+                <hc:Divider Margin="0,15"
                             HorizontalAlignment="Right"
                             BorderThickness="1"
-                            LineStroke="#026fc4"
+                            LineStroke="{StaticResource SubBrush}"
                             Orientation="Vertical" />
                 <hc:ToggleBlock Grid.Column="1"
                                 Margin="0,0,10,0"
@@ -68,7 +70,7 @@
                               HorizontalAlignment="Right"
                               VerticalAlignment="Center"
                               Data="{StaticResource DownGeometry}"
-                              Fill="#3baaff"
+                              Fill="{StaticResource SubBrush}"
                               Stretch="Uniform" />
                     </hc:ToggleBlock.UnCheckedContent>
                     <hc:ToggleBlock.CheckedContent>
@@ -87,6 +89,7 @@
                                 HorizontalContentAlignment="Stretch"
                                 VerticalContentAlignment="Stretch"
                                 Background="Transparent"
+                                Cursor="Hand"
                                 IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
                                 ToggleGesture="LeftClick" />
                 <TextBox x:Name="PART_EditableTextBox"
@@ -105,11 +108,15 @@
                        IsOpen="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
                        Placement="Bottom"
                        PlacementTarget="{Binding ElementName=border}"
-                       PopupAnimation="{StaticResource {x:Static SystemParameters.ComboBoxPopupAnimationKey}}">
+                       PopupAnimation="{StaticResource {x:Static SystemParameters.ComboBoxPopupAnimationKey}}"
+                       VerticalOffset="5">
                     <Border x:Name="dropDownBorder"
                             MinWidth="{Binding ActualWidth, ElementName=root}"
                             MaxHeight="{TemplateBinding MaxDropDownHeight}"
-                            Background="{StaticResource 下拉框}">
+                            Background="{StaticResource BackgroundBrush}"
+                            BorderBrush="{StaticResource SubBrush}"
+                            BorderThickness="2"
+                            CornerRadius="10">
                         <hc:ToggleBlock HorizontalContentAlignment="Stretch"
                                         VerticalContentAlignment="Stretch"
                                         IsChecked="{Binding HasItems, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}">
@@ -145,10 +152,8 @@
                         <Condition SourceName="PART_Popup" Property="IsOpen" Value="false" />
                     </MultiTrigger.Conditions>
                     <Setter TargetName="UnCheckedPath" Property="Fill" Value="white" />
+                    <Setter TargetName="border" Property="BorderBrush" Value="White" />
                 </MultiTrigger>
-                <Trigger Property="IsEnabled" Value="false">
-                    <Setter TargetName="UnCheckedPath" Property="Opacity" Value="0.4" />
-                </Trigger>
             </ControlTemplate.Triggers>
         </ControlTemplate>
         <Style x:Key="IconSciTbxStyle" TargetType="hc:PasswordBox">
@@ -171,20 +176,32 @@
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
 
-                            <Border Grid.ColumnSpan="3"
-                                    Background="{StaticResource 输入框}"
-                                    SnapsToDevicePixels="True" />
+                            <Border Name="border"
+                                    Grid.ColumnSpan="3"
+                                    MinHeight="70"
+                                    BorderBrush="{StaticResource SubBrush}"
+                                    BorderThickness="2"
+                                    CornerRadius="35">
+                                <Border CornerRadius="35"
+                                        Effect="{StaticResource GrowEffect.Brighter}"
+                                        Style="{StaticResource BorderClip}">
+                                    <Border BorderBrush="{StaticResource SubBrush}"
+                                            BorderThickness="1"
+                                            CornerRadius="35"
+                                            Effect="{StaticResource BlurEffect.Greater}" />
+                                </Border>
+                            </Border>
 
                             <TextBlock Margin="25,5,15,5"
                                        VerticalAlignment="Center"
-                                       FontFamily="../../Assets/Fonts/#iconfont"
+                                       FontFamily="{StaticResource IconFont}"
                                        FontSize="30"
-                                       Foreground="#3baaff"
+                                       Foreground="{StaticResource SubBrush}"
                                        Text="{TemplateBinding Tag}" />
-                            <hc:Divider Margin="0,20"
+                            <hc:Divider Margin="0,15"
                                         HorizontalAlignment="Right"
                                         BorderThickness="1"
-                                        LineStroke="#026fc4"
+                                        LineStroke="{StaticResource SubBrush}"
                                         Orientation="Vertical" />
 
                             <PasswordBox x:Name="PART_PasswordBox"
@@ -219,13 +236,14 @@
                                           hc:IconSwitchElement.Geometry="{StaticResource EyeCloseGeometry}"
                                           hc:IconSwitchElement.GeometrySelected="{StaticResource EyeOpenGeometry}"
                                           Focusable="False"
-                                          Foreground="#3baaff"
+                                          Foreground="{StaticResource SubBrush}"
                                           IsChecked="{Binding ShowPassword, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
                                           Style="{StaticResource ToggleButtonIconTransparent}" />
                         </Grid>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
                                 <Setter TargetName="ButtonEye" Property="Foreground" Value="White" />
+                                <Setter TargetName="border" Property="BorderBrush" Value="White" />
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -248,8 +266,7 @@
                 VerticalAlignment="Top"
                 Click="CloseBtn_Click"
                 Content="&#xe672;"
-                FontSize="40"
-                Style="{StaticResource IconFontButton}" />
+                Style="{StaticResource IconButton}" />
 
         <controls:SpacedTextBlock Margin="0,0,0,50"
                                   Padding="2"
@@ -290,34 +307,13 @@
                 Width="475"
                 Height="70"
                 VerticalAlignment="Bottom"
+                hc:BorderElement.CornerRadius="35"
+                Background="{StaticResource SubBrush}"
                 BorderThickness="0"
                 Command="{Binding LoginCommand}"
                 Content="登录"
                 FontSize="24"
-                Foreground="White">
-            <Button.Style>
-                <Style TargetType="Button">
-                    <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}" />
-                    <Setter Property="Template">
-                        <Setter.Value>
-                            <ControlTemplate TargetType="Button">
-                                <Border Name="border" Background="{StaticResource 登录按钮}">
-                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
-                                </Border>
-                                <ControlTemplate.Triggers>
-                                    <Trigger Property="IsMouseOver" Value="true">
-                                        <Setter TargetName="border" Property="Opacity" Value="0.8" />
-                                    </Trigger>
-                                    <Trigger Property="IsPressed" Value="true">
-                                        <Setter TargetName="border" Property="Opacity" Value="0.5" />
-                                    </Trigger>
-                                </ControlTemplate.Triggers>
-                            </ControlTemplate>
-                        </Setter.Value>
-                    </Setter>
-                </Style>
-            </Button.Style>
-        </Button>
+                Foreground="White" />
 
         <controls:SpacedTextBlock Grid.Row="4"
                                   Margin="0,0,0,50"

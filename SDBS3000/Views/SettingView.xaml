@@ -6,13 +6,14 @@
              xmlns:hc="https://handyorg.github.io/handycontrol"
              xmlns:local="clr-namespace:SDBS3000.Views"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
              xmlns:vm="clr-namespace:SDBS3000.ViewModels"
              Width="1720"
              Height="732"
              Margin="75"
              d:DataContext="{d:DesignInstance vm:SettingViewModel}"
              mc:Ignorable="d">
-    <Border Background="{StaticResource 主体模块背景}" CornerRadius="20">
+    <Border Background="{StaticResource RegionBd}" CornerRadius="20">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="183" />
@@ -49,10 +50,28 @@
                           hc:TitleElement.Title="显示位数"
                           Style="{StaticResource SciComboBoxStyle}"
                           Text="{Binding Digits, UpdateSourceTrigger=LostFocus}">
-                    <ComboBoxItem Content="0" />
-                    <ComboBoxItem Content="1" />
-                    <ComboBoxItem Content="2" />
-                    <ComboBoxItem Content="3" />
+                    <ComboBox.Items>
+                        <ComboBoxItem>
+                            <ComboBoxItem.Content>
+                                <sys:Int32>0</sys:Int32>
+                            </ComboBoxItem.Content>
+                        </ComboBoxItem>
+                        <ComboBoxItem>
+                            <ComboBoxItem.Content>
+                                <sys:Int32>1</sys:Int32>
+                            </ComboBoxItem.Content>
+                        </ComboBoxItem>
+                        <ComboBoxItem>
+                            <ComboBoxItem.Content>
+                                <sys:Int32>2</sys:Int32>
+                            </ComboBoxItem.Content>
+                        </ComboBoxItem>
+                        <ComboBoxItem>
+                            <ComboBoxItem.Content>
+                                <sys:Int32>3</sys:Int32>
+                            </ComboBoxItem.Content>
+                        </ComboBoxItem>
+                    </ComboBox.Items>
                 </ComboBox>
                 <ComboBox Width="220"
                           VerticalAlignment="Center"
@@ -74,33 +93,22 @@
                 </ComboBox>
                 <ComboBox Width="220"
                           VerticalAlignment="Center"
-                          hc:TitleElement.Title="光针模式"
-                          SelectedIndex="{Binding NeedleMode, UpdateSourceTrigger=LostFocus}"
-                          Style="{StaticResource SciComboBoxStyle}">
-                    <ComboBoxItem Content="不适用" />
-                    <ComboBoxItem Content="使用手动检测每秒脉冲数" />
-                    <ComboBoxItem Content="使用自动检测每秒脉冲数" />
-                </ComboBox>
-                <ComboBox Width="220"
-                          VerticalAlignment="Center"
                           hc:TitleElement.Title="安全门模式"
                           SelectedIndex="{Binding SafetyMode, UpdateSourceTrigger=LostFocus}"
                           Style="{StaticResource SciComboBoxStyle}">
                     <ComboBoxItem Content="不使用" />
                     <ComboBoxItem Content="使用" />
                 </ComboBox>
-
             </UniformGrid>
 
             <Button Grid.Column="1"
                     HorizontalAlignment="Stretch"
                     hc:BorderElement.CornerRadius="0"
-                    Background="{StaticResource 蓝色模块上圆角}"
+                    Background="Transparent"
                     BorderThickness="0"
                     Command="{Binding SaveCommand}"
                     Content="保存"
                     FontSize="22"
-                    Style="{StaticResource LightToolButtonStyle}"
                     Tag="&#xe638;" />
         </Grid>
     </Border>

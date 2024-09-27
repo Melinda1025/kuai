@@ -120,4 +120,10 @@
   <data name="用户名" xml:space="preserve">
     <value>UserName</value>
   </data>
+  <data name="合格" xml:space="preserve">
+    <value>Qualified</value>
+  </data>
+  <data name="不合格" xml:space="preserve">
+    <value>Unqualified</value>
+  </data>
 </root>
