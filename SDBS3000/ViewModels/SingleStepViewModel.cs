@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using S7.Net;
 using SDBS3000.Core.Models;
+using SDBS3000.Core.Models.PlcStructs;
 using SDBS3000.Core.Utils;
 
 namespace SDBS3000.ViewModels

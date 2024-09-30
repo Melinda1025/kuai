@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace SDBS3000.Core.Models
 {
     /// <summary>
-    /// 夹具补偿数据
+    /// 夹具补偿数据（端径跳）
     /// </summary>
     public class ClampCompensatingItem
     {

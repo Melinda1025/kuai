@@ -16,11 +16,11 @@ namespace SDBS3000.Views.Model
         public List<double> Buffer { get; private set; } = new();
         public bool? IsQualified { get; set; } = null;
 
-        public void ConvertCurrentDatas(ReadOnlySpan<double> currentDatas)
+        public void ConvertCurrentDatas(in double[] currentDatas, int startIndex, int length)
         {
-            for (int i = 0; i < currentDatas.Length; i++)
+            for (int i = 0; i < length; i++)
             {
-                Buffer.Add((currentDatas[i] - 0.004) * 312.5);
+                Buffer.Add((currentDatas[startIndex + i] - 0.004) * 312.5);
             }
         }
 

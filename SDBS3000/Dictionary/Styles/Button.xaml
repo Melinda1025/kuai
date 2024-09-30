@@ -28,7 +28,7 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="border" Property="Background" Value="{StaticResource NavigateBd.Selected}" />
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource NavigateBd.MouseOver}" />
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
                             <Setter Property="Opacity" Value="0.5" />

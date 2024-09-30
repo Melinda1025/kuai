@@ -92,7 +92,7 @@ namespace SDBS3000.ViewModels
 
         private readonly ExtendedPlc plc;
         private const int UPDATE_INTERVAL = 100;
-        private readonly System.Threading.Timer updateSpeedTimer;
+        private readonly System.Threading.Timer updateTimer;
         public IndexViewModel(ExtendedPlc plc, AddOrRemoveInfo info)
         {            
             SimpleEventBus<Type>.Instance.Subscribe("NavigatePage", (s, t) => NavigatePage(t));
@@ -102,7 +102,7 @@ namespace SDBS3000.ViewModels
             PropertyAccessor<IndexViewModel, float>.Instance.Register("Speed", this, vm => vm.Speed);
             PropertyAccessor<IndexViewModel, bool>.Instance.Register("IsMeasuring", this, vm => vm.IsMeasuring);
 
-            updateSpeedTimer = new System.Threading.Timer(OnUpdateSpeed, null, Timeout.Infinite, Timeout.Infinite);
+            updateTimer = new System.Threading.Timer(OnUpdateSpeedAndProgress, null, Timeout.Infinite, Timeout.Infinite);
 
             this.AddOrRemoveInfo = info;
             this.plc = plc;
@@ -110,7 +110,7 @@ namespace SDBS3000.ViewModels
             {
                 WriteSettingsToPlc();
                 ReadSettingsFromPlc();
-                updateSpeedTimer.Change(UPDATE_INTERVAL, Timeout.Infinite);
+                updateTimer.Change(UPDATE_INTERVAL, Timeout.Infinite);
             }
             SimpleEventBus<bool>.Instance.Subscribe(
                 "IsPlcConnectedChanged",
@@ -120,7 +120,7 @@ namespace SDBS3000.ViewModels
                     {
                         WriteSettingsToPlc();
                         ReadSettingsFromPlc();
-                        updateSpeedTimer.Change(UPDATE_INTERVAL, Timeout.Infinite);
+                        updateTimer.Change(UPDATE_INTERVAL, Timeout.Infinite);
                     }
                 }
             );
@@ -131,7 +131,7 @@ namespace SDBS3000.ViewModels
         /// 轮询更新速度
         /// </summary>
         /// <param name="state"></param>
-        private async void OnUpdateSpeed(object state)
+        private async void OnUpdateSpeedAndProgress(object state)
         {
             if (!plc.IsConnected) return;
             var buffer = new byte[4];
@@ -140,10 +140,13 @@ namespace SDBS3000.ViewModels
                 await plc.ReadBytesAsync(buffer, DataType.DataBlock, 20, 400);
                 if(BitConverter.IsLittleEndian) Array.Reverse(buffer);
                 Speed = BitConverter.ToSingle(buffer, 0);
+                await plc.ReadBytesAsync(buffer, DataType.DataBlock, 20, 434);
+                if (BitConverter.IsLittleEndian) Array.Reverse(buffer);
+                Progress = BitConverter.ToInt16(buffer, 0);
             }
             finally
             {                
-                updateSpeedTimer.Change(UPDATE_INTERVAL, Timeout.Infinite);
+                updateTimer.Change(UPDATE_INTERVAL, Timeout.Infinite);
             }
         }
 

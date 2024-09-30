@@ -21,7 +21,7 @@
                             <Border Name="outer"
                                     Width="12"
                                     Height="12"
-                                    Margin="15,0,0,0"
+                                    Margin="10,0,0,0"
                                     VerticalAlignment="Center"
                                     Background="{StaticResource QualifiedBrush.5}"
                                     CornerRadius="6">

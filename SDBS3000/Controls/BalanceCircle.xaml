@@ -63,7 +63,7 @@
                 <Path Width="100"
                       Height="100"
                       Stroke="{StaticResource BalenceCircleBorder}"
-                      StrokeThickness="0.4">
+                      StrokeThickness="0.5">
                     <Path.Data>
                         <GeometryGroup>
                             <LineGeometry StartPoint="50 0" EndPoint="50 100" />
@@ -91,7 +91,7 @@
                       Stroke="White"
                       StrokeEndLineCap="Round"
                       StrokeStartLineCap="Round"
-                      StrokeThickness="0.5">
+                      StrokeThickness="1">
                     <Path.Data>
                         <GeometryGroup>
                             <LineGeometry StartPoint="48 50" EndPoint="52 50" />

@@ -251,6 +251,9 @@
             </Setter>
         </Style>
     </UserControl.Resources>
+    <UserControl.InputBindings>
+        <KeyBinding Key="Execute" Command="{Binding LoginCommand}" />
+    </UserControl.InputBindings>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="2.15*" />

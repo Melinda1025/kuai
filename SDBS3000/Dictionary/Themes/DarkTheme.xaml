@@ -20,6 +20,9 @@
     <SolidColorBrush x:Key="SubBrush"
                      o:Freeze="True"
                      Color="#4795FF" />
+    <SolidColorBrush x:Key="StatusBrush"
+                     o:Freeze="True"
+                     Color="#4d0072C2" />
     <SolidColorBrush x:Key="DataRowBd"
                      o:Freeze="True"
                      Color="#4c0072C2" />

@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SDBS3000.Core.Models
+namespace SDBS3000.Core.Models.PlcStructs
 {
     /// <summary>
     /// 切换页面信息

@@ -120,6 +120,8 @@ namespace SDBS3000
             Container.Register<LoginViewModel>(Reuse.Transient);
             Container.Register<LoginView>(Reuse.Transient);
 
+            Container.Register<ClampViewModel>(Reuse.Singleton);
+            Container.Register<ClampView>(Reuse.Singleton);
             Container.Register<MainViewModel>(Reuse.Singleton);
             Container.Register<MainWindow>(Reuse.Singleton);
             Container.Register<IndexViewModel>(Reuse.Singleton);

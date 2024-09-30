@@ -11,11 +11,12 @@
              Foreground="White"
              mc:Ignorable="d">
     <hc:SimplePanel>
-        <Border Effect="{StaticResource GrowEffect}">
-            <TextBlock Effect="{StaticResource BlurEffect}"
+        <Border VerticalAlignment="Center" Effect="{StaticResource GrowEffect}">
+            <TextBlock VerticalAlignment="Center"
+                       Effect="{StaticResource BlurEffect}"
                        Foreground="{StaticResource MainBrush}"
                        Text="{Binding RelativeSource={RelativeSource AncestorType=local:GrowText}, Path=Text}" />
         </Border>
-        <TextBlock Text="{Binding RelativeSource={RelativeSource AncestorType=local:GrowText}, Path=Text}" />
+        <TextBlock VerticalAlignment="Center" Text="{Binding RelativeSource={RelativeSource AncestorType=local:GrowText}, Path=Text}" />
     </hc:SimplePanel>
 </UserControl>

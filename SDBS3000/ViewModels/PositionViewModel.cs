@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using DryIoc;
 using HandyControl.Controls;
 using SDBS3000.Core.Models;
+using SDBS3000.Core.Models.PlcStructs;
 using SDBS3000.Core.Utils;
 using SDBS3000.Utils;
 using SDBS3000.ViewModels.Interface;

@@ -28,10 +28,12 @@ namespace SDBS3000.Core.Utils
                 samples[i] = new Complex32((float)span[i], 0);
             }
             Fourier.Forward(samples, FourierOptions.Matlab);            
-            var magnitudes = new float[samples.Length / 2];
+
+            var magnitudes = new float[samples.Length / 2 - 1];
+            //取[1, n/2 - 1]的数据
             for (int i = 0; i < magnitudes.Length; i++)
             {
-                magnitudes[i] = samples[i].Magnitude;
+                magnitudes[i] = samples[i + 1].Magnitude;
             }
 
             var (fidx, sidx) = GetTwoMax(magnitudes);

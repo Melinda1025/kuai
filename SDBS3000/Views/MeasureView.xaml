@@ -7,9 +7,8 @@
              xmlns:local="clr-namespace:SDBS3000.Views"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="clr-namespace:SDBS3000.ViewModels"
-             Width="1820"
+             Width="1920"
              Height="870"
-             Margin="50,0"
              d:DataContext="{d:DesignInstance vm:MeasureViewModel}"
              mc:Ignorable="d">
     <hc:Interaction.Triggers>
@@ -17,10 +16,10 @@
             <hc:InvokeCommandAction Command="{Binding LoadedCommand}" />
         </hc:EventTrigger>
     </hc:Interaction.Triggers>
-    <Grid>
+    <Grid Margin="50,0">
         <Grid.RowDefinitions>
             <RowDefinition />
-            <RowDefinition Height="100" />
+            <RowDefinition Height="85" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
@@ -113,19 +112,21 @@
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
 
-                    <TextBlock Margin="20,0"
-                               VerticalAlignment="Center"
+                    <TextBlock VerticalAlignment="Center"
+                               Effect="{StaticResource MainEffect}"
                                FontSize="18"
                                FontWeight="Bold"
-                               Foreground="White"
-                               Text="平面1" />
+                               Foreground="White">
+                        <Run FontFamily="{StaticResource IconFont}" Text="&#xe614;" />
+                        <Run Text="平面1" />
+                    </TextBlock>
                     <TextBlock Grid.Column="1"
                                HorizontalAlignment="Center"
                                VerticalAlignment="Center"
                                FontSize="18"
                                Foreground="{StaticResource MainBrush}">
                         <Run Text="量值" />
-                        <Run Text="{Binding Rotor.BalenceUnit, FallbackValue=[g], StringFormat={}[{0}]}" />
+                        <Run Text="[g]" />
                     </TextBlock>
                     <TextBlock Grid.Column="2"
                                HorizontalAlignment="Center"
@@ -200,19 +201,21 @@
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
 
-                    <TextBlock Margin="20,0"
-                               VerticalAlignment="Center"
+                    <TextBlock VerticalAlignment="Center"
+                               Effect="{StaticResource MainEffect}"
                                FontSize="18"
                                FontWeight="Bold"
-                               Foreground="White"
-                               Text="平面2" />
+                               Foreground="White">
+                        <Run FontFamily="{StaticResource IconFont}" Text="&#xe614;" />
+                        <Run Text="平面2" />
+                    </TextBlock>
                     <TextBlock Grid.Column="1"
                                HorizontalAlignment="Center"
                                VerticalAlignment="Center"
                                FontSize="18"
                                Foreground="{StaticResource MainBrush}">
                         <Run Text="量值" />
-                        <Run Text="{Binding Rotor.BalenceUnit, FallbackValue=[g], StringFormat={}[{0}]}" />
+                        <Run Text="[g]" />
                     </TextBlock>
                     <TextBlock Grid.Column="2"
                                HorizontalAlignment="Center"
@@ -284,7 +287,7 @@
                        Text="端径跳" />
         </Border>
         <UniformGrid Grid.Column="1"
-                     Margin="30,90,30,15"
+                     Margin="10,90,10,21"
                      Columns="2"
                      Rows="2">
             <Border Margin="10" Background="{StaticResource RegionBd}">
@@ -320,7 +323,7 @@
                              Text="跳动值" />
                         <Run FontSize="15"
                              Foreground="White"
-                             Text="{Binding Rotor.BalenceUnit, FallbackValue=(μm), Mode=OneWay}" />
+                             Text="{Binding Rotor.BalenceUnit, FallbackValue=[mm], Mode=OneWay}" />
                     </TextBlock>
 
                     <controls:JumpingCircle Grid.RowSpan="2"
@@ -414,7 +417,7 @@
                              Text="跳动值" />
                         <Run FontSize="15"
                              Foreground="White"
-                             Text="{Binding Rotor.BalenceUnit, FallbackValue=(μm), Mode=OneWay}" />
+                             Text="{Binding Rotor.BalenceUnit, FallbackValue=[mm], Mode=OneWay}" />
                     </TextBlock>
 
                     <controls:JumpingCircle Grid.RowSpan="2"
@@ -508,7 +511,7 @@
                              Text="跳动值" />
                         <Run FontSize="15"
                              Foreground="White"
-                             Text="{Binding Rotor.BalenceUnit, FallbackValue=(μm), Mode=OneWay}" />
+                             Text="{Binding Rotor.BalenceUnit, FallbackValue=[mm], Mode=OneWay}" />
                     </TextBlock>
 
                     <controls:JumpingCircle Grid.RowSpan="2"
@@ -602,7 +605,7 @@
                              Text="跳动值" />
                         <Run FontSize="15"
                              Foreground="White"
-                             Text="{Binding Rotor.BalenceUnit, FallbackValue=(μm), Mode=OneWay}" />
+                             Text="{Binding Rotor.BalenceUnit, FallbackValue=[mm], Mode=OneWay}" />
                     </TextBlock>
 
                     <controls:JumpingCircle Grid.RowSpan="2"
@@ -665,27 +668,126 @@
             </Border>
         </UniformGrid>
 
-        <hc:UniformSpacingPanel Grid.Row="2"
-                                Grid.ColumnSpan="2"
-                                Margin="20,10"
-                                VerticalAlignment="Center"
-                                Spacing="20">
-            <Border TextBlock.FontSize="18">
-                <hc:UniformSpacingPanel Margin="20,0" Spacing="40">
-                    <TextBlock Foreground="White">
-                        <Run Text="转子名称" />
-                        <Run FontWeight="Bold" Text="{Binding Rotor.Name}" />
-                    </TextBlock>
-                    <TextBlock Foreground="White">
-                        <Run Text="测量转速" />
-                        <Run FontWeight="Bold" Text="{Binding Rotor.Speed}" />
-                    </TextBlock>
-                    <TextBlock Foreground="White">
-                        <Run Text="PLC状态" />
-                        <Run FontWeight="Bold" Text="{Binding PlcStatus}" />
-                    </TextBlock>
-                </hc:UniformSpacingPanel>
+        <Grid Grid.Row="2"
+              Grid.ColumnSpan="2"
+              Margin="18,0,18,20"
+              Background="{StaticResource StatusBd}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition />
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <Border Width="26"
+                    Height="30"
+                    Margin="30,0,0,0"
+                    Background="{StaticResource StatusArrow}" />
+            <TextBlock Grid.Column="1"
+                       Margin="5,0,0,0"
+                       VerticalAlignment="Center"
+                       Effect="{StaticResource MainEffect}"
+                       FontSize="20"
+                       FontWeight="Bold"
+                       Foreground="White"
+                       Text="基础信息:" />
+            <Border Grid.Column="2"
+                    Margin="20,12,30,12"
+                    Background="{StaticResource StatusBrush}">
+                <UniformGrid Rows="1">
+                    <hc:SimpleStackPanel HorizontalAlignment="Center"
+                                         VerticalAlignment="Center"
+                                         Orientation="Horizontal">
+                        <TextBlock Margin="0,0,10,0"
+                                   FontSize="18"
+                                   Foreground="White"
+                                   Text="转子名称:" />
+                        <controls:GrowText FontSize="18" Text="{Binding Rotor.Name, Mode=OneWay, FallbackValue=测量转子}" />
+                    </hc:SimpleStackPanel>
+                    <hc:SimpleStackPanel HorizontalAlignment="Center"
+                                         VerticalAlignment="Center"
+                                         Orientation="Horizontal">
+                        <TextBlock Margin="0,0,10,0"
+                                   FontSize="18"
+                                   Foreground="White"
+                                   Text="测量转速:" />
+                        <controls:GrowText FontSize="18" Text="{Binding Rotor.Speed, Mode=OneWay, FallbackValue=1000 rpm, StringFormat={}{0:f0 rpm}}" />
+                    </hc:SimpleStackPanel>
+                    <hc:SimpleStackPanel HorizontalAlignment="Center"
+                                         VerticalAlignment="Center"
+                                         Orientation="Horizontal">
+                        <TextBlock Margin="0,0,10,0"
+                                   FontSize="18"
+                                   Foreground="White"
+                                   Text="PLC状态:" />
+                        <controls:GrowText MinWidth="50"
+                                           FontSize="18"
+                                           Text="{Binding PlcStatus, Mode=OneWay, FallbackValue=离线}" />
+                    </hc:SimpleStackPanel>
+                </UniformGrid>
             </Border>
-        </hc:UniformSpacingPanel>
+
+            <Border Grid.Column="3"
+                    Width="26"
+                    Height="30"
+                    Margin="10,0,0,0"
+                    Background="{StaticResource StatusArrow}" />
+            <TextBlock Grid.Column="4"
+                       Margin="5,0,0,0"
+                       VerticalAlignment="Center"
+                       Effect="{StaticResource MainEffect}"
+                       FontSize="20"
+                       FontWeight="Bold"
+                       Foreground="White"
+                       Text="统计信息:" />
+            <Border Grid.Column="5"
+                    Margin="20,12"
+                    Background="{StaticResource StatusBrush}">
+                <UniformGrid Rows="1">
+                    <hc:SimpleStackPanel HorizontalAlignment="Center"
+                                         VerticalAlignment="Center"
+                                         Orientation="Horizontal">
+                        <TextBlock Margin="0,0,10,0"
+                                   FontSize="18"
+                                   Foreground="White"
+                                   Text="合格率:" />
+                        <controls:GrowText FontSize="18" Text="50%" />
+                    </hc:SimpleStackPanel>
+                    <hc:SimpleStackPanel HorizontalAlignment="Center"
+                                         VerticalAlignment="Center"
+                                         Orientation="Horizontal">
+                        <TextBlock Margin="0,0,10,0"
+                                   FontSize="18"
+                                   Foreground="White"
+                                   Text="OK数:" />
+                        <controls:GrowText FontSize="18" Text="100" />
+                    </hc:SimpleStackPanel>
+                    <hc:SimpleStackPanel HorizontalAlignment="Center"
+                                         VerticalAlignment="Center"
+                                         Orientation="Horizontal">
+                        <TextBlock Margin="0,0,10,0"
+                                   FontSize="18"
+                                   Foreground="White"
+                                   Text="NG数:" />
+                        <controls:GrowText MinWidth="50"
+                                           FontSize="18"
+                                           Text="100" />
+                    </hc:SimpleStackPanel>
+                    <hc:SimpleStackPanel HorizontalAlignment="Center"
+                                         VerticalAlignment="Center"
+                                         Orientation="Horizontal">
+                        <TextBlock Margin="0,0,10,0"
+                                   FontSize="18"
+                                   Foreground="White"
+                                   Text="合计数:" />
+                        <controls:GrowText MinWidth="50"
+                                           FontSize="18"
+                                           Text="200" />
+                    </hc:SimpleStackPanel>
+                </UniformGrid>
+            </Border>
+        </Grid>
     </Grid>
 </UserControl>

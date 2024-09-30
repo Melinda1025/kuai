@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using SDBS3000.Core.Models;
+using SDBS3000.Core.Models.PlcStructs;
 using SDBS3000.Core.Utils;
 using SDBS3000.Utils;
 using SDBS3000.ViewModels.Interface;

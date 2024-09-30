@@ -11,6 +11,10 @@
                 o:Freeze="true"
                 ImageSource="../Assets/Images/Border/NavigateBd.png"
                 Stretch="Fill" />
+    <ImageBrush x:Key="NavigateBd.MouseOver"
+                o:Freeze="true"
+                ImageSource="../Assets/Images/Border/NavigateBd.MouseOver.png"
+                Stretch="Fill" />
     <ImageBrush x:Key="NavigateBd.Selected"
                 o:Freeze="true"
                 ImageSource="../Assets/Images/Border/NavigateBd.Selected.png"
@@ -27,6 +31,14 @@
                 o:Freeze="true"
                 ImageSource="../Assets/Images/Border/RegionBd.Small.png"
                 Stretch="Fill" />
+    <ImageBrush x:Key="StatusBd"
+                o:Freeze="true"
+                ImageSource="../Assets/Images/Border/StatusBd.png"
+                Stretch="Fill" />
+    <ImageBrush x:Key="StatusArrow"
+                o:Freeze="true"
+                ImageSource="../Assets/Images/Other/StatusArrow.png"
+                Stretch="None" />
 
 
 </ResourceDictionary>

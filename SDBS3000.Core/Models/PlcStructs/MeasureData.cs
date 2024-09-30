@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SDBS3000.Core.Models
+namespace SDBS3000.Core.Models.PlcStructs
 {
     public struct MeasureData
     {

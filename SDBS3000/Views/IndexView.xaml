@@ -84,75 +84,91 @@
                     IsEnabled="{Binding IsMeasuring, Mode=OneWay}"
                     Style="{StaticResource NavigateButtonStyle}"
                     Tag="&#xe60c;" />
-            <Button CommandParameter="stop"
-                    Content="加去重"
-                    IsEnabled="{Binding IsMeasuring, Mode=OneWay}"
-                    Style="{StaticResource NavigateButtonStyle}"
-                    Tag="&#xe613;" />
-            <Button CommandParameter="stop"
-                    Content="电补偿"
-                    IsEnabled="{Binding IsMeasuring, Mode=OneWay}"
-                    Style="{StaticResource NavigateButtonStyle}"
-                    Tag="&#xe616;" />
+
+            <ToggleButton Name="AddOrRemoveBtn"
+                          Content="加去重"
+                          Style="{StaticResource NavigateToggleButtonStyle}"
+                          Tag="&#xe613;" />
+            <Popup AllowsTransparency="True"
+                   IsOpen="{Binding ElementName=AddOrRemoveBtn, Path=IsChecked, Mode=TwoWay}"
+                   Placement="Top"
+                   PlacementTarget="{Binding ElementName=AddOrRemoveBtn, Mode=OneTime}"
+                   StaysOpen="false">
+                <Border MinWidth="200"
+                        Background="{StaticResource BackgroundBrush}"
+                        BorderBrush="{StaticResource SubBrush}"
+                        BorderThickness="2"
+                        CornerRadius="10">
+                    <hc:SimpleStackPanel Margin="0,5" Orientation="Vertical">
+                        <ToggleButton hc:StatusSwitchElement.CheckedElement="平面1去重"
+                                      Content="平面1加重"
+                                      IsChecked="{Binding AddOrRemoveInfo.LeftAddOrRemove, Mode=TwoWay}"
+                                      Style="{StaticResource PopupToggleButtonStyle}" />
+                        <ToggleButton hc:StatusSwitchElement.CheckedElement="平面2去重"
+                                      Content="平面2加重"
+                                      IsChecked="{Binding AddOrRemoveInfo.RightAddOrRemove, Mode=TwoWay}"
+                                      Style="{StaticResource PopupToggleButtonStyle}" />
+                        <ToggleButton hc:StatusSwitchElement.CheckedElement="静去重"
+                                      Content="静加重"
+                                      IsChecked="{Binding AddOrRemoveInfo.StaticAddOrRemove, Mode=TwoWay}"
+                                      Style="{StaticResource PopupToggleButtonStyle}" />
+                    </hc:SimpleStackPanel>
+                </Border>
+            </Popup>
+
+
+            <ToggleButton Content="电补偿"
+                          IsChecked="{Binding AddOrRemoveInfo.ElectricCompensation, Mode=TwoWay}"
+                          Style="{StaticResource NavigateToggleButtonStyle}"
+                          Tag="&#xe616;" />
             <Button Command="{Binding NavigatePageCommand}"
                     CommandParameter="{x:Type local:CalView}"
                     Content="标定"
-                    IsEnabled="{Binding IsMeasuring, Mode=OneWay, Converter={StaticResource Boolean2BooleanReConverter}}"
                     Style="{StaticResource NavigateButtonStyle}"
                     Tag="&#xe60f;" />
             <Button Command="{Binding NavigatePageCommand}"
                     CommandParameter="{x:Type local:RotorView}"
                     Content="转子设置"
-                    IsEnabled="{Binding IsMeasuring, Mode=OneWay, Converter={StaticResource Boolean2BooleanReConverter}}"
                     Style="{StaticResource NavigateButtonStyle}"
                     Tag="&#xe608;" />
             <Button Command="{Binding NavigatePageCommand}"
                     CommandParameter="{x:Type local:SettingView}"
                     Content="机器设置"
-                    IsEnabled="{Binding IsMeasuring, Mode=OneWay, Converter={StaticResource Boolean2BooleanReConverter}}"
                     Style="{StaticResource NavigateButtonStyle}"
                     Tag="&#xe607;" />
             <Button Content="夹具补偿"
-                    IsEnabled="{Binding IsMeasuring, Mode=OneWay, Converter={StaticResource Boolean2BooleanReConverter}}"
                     Style="{StaticResource NavigateButtonStyle}"
                     Tag="&#xe604;" />
             <Button Command="{Binding NavigatePageCommand}"
                     CommandParameter="{x:Type local:KeyView}"
                     Content="键补偿"
-                    IsEnabled="{Binding IsMeasuring, Mode=OneWay, Converter={StaticResource Boolean2BooleanReConverter}}"
                     Style="{StaticResource NavigateButtonStyle}"
                     Tag="&#xe603;" />
             <Button Command="{Binding NavigatePageCommand}"
                     CommandParameter="{x:Type local:PositionView}"
                     Content="定位"
-                    IsEnabled="{Binding IsMeasuring, Mode=OneWay, Converter={StaticResource Boolean2BooleanReConverter}}"
                     Style="{StaticResource NavigateButtonStyle}"
                     Tag="&#xe610;" />
             <Button Command="{Binding NavigatePageCommand}"
                     CommandParameter="{x:Type local:SingleStepView}"
                     Content="单步"
-                    IsEnabled="{Binding IsMeasuring, Mode=OneWay, Converter={StaticResource Boolean2BooleanReConverter}}"
                     Style="{StaticResource NavigateButtonStyle}"
                     Tag="&#xe612;" />
             <Button Command="{Binding NavigatePageCommand}"
                     CommandParameter="{x:Type local:UserView}"
                     Content="用户管理"
-                    IsEnabled="{Binding IsMeasuring, Mode=OneWay, Converter={StaticResource Boolean2BooleanReConverter}}"
                     Style="{StaticResource NavigateButtonStyle}"
                     Tag="&#xe602;" />
             <Button Content="记录"
-                    IsEnabled="{Binding IsMeasuring, Mode=OneWay, Converter={StaticResource Boolean2BooleanReConverter}}"
                     Style="{StaticResource NavigateButtonStyle}"
                     Tag="&#xe605;" />
             <Button Command="{Binding NavigatePageCommand}"
                     CommandParameter="{x:Type local:AlarmView}"
                     Content="报警"
-                    IsEnabled="{Binding IsMeasuring, Mode=OneWay, Converter={StaticResource Boolean2BooleanReConverter}}"
                     Style="{StaticResource NavigateButtonStyle}"
                     Tag="&#xe6b8;" />
             <Button Command="{Binding ExitCommand}"
                     Content="退出"
-                    IsEnabled="{Binding IsMeasuring, Mode=OneWay, Converter={StaticResource Boolean2BooleanReConverter}}"
                     Style="{StaticResource NavigateButtonStyle}"
                     Tag="&#xe60e;" />
         </UniformGrid>

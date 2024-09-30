@@ -25,9 +25,9 @@ namespace SDBS3000.Core.Models
         {
             get => leftAddOrRemove;
             set
-            {
-                if(!plc.IsConnected || value == leftAddOrRemove) return;
-                plc.Write("DB20.DBX116.0", value);
+            {                
+                //if (!plc.IsConnected || value == leftAddOrRemove) return;
+                //plc.Write("DB20.DBX116.0", value);
                 SetProperty(ref leftAddOrRemove, value);                
             }
         }
@@ -38,8 +38,8 @@ namespace SDBS3000.Core.Models
             get => rightAddOrRemove;
             set
             {
-                if(!plc.IsConnected && value == rightAddOrRemove) return;
-                plc.Write("DB20.DBX116.1", value);
+                //if(!plc.IsConnected || value == rightAddOrRemove) return;
+                //plc.Write("DB20.DBX116.1", value);
                 SetProperty(ref rightAddOrRemove, value);
 
             }
@@ -51,8 +51,8 @@ namespace SDBS3000.Core.Models
             get => staticAddOrRemove;
             set
             {
-                if(!plc.IsConnected && value == staticAddOrRemove) return;
-                plc.Write("DB20.DBX116.2", value);
+                //if(!plc.IsConnected || value == staticAddOrRemove) return;
+                //plc.Write("DB20.DBX116.2", value);
                 SetProperty(ref staticAddOrRemove, value);
             }
         }        
@@ -62,8 +62,8 @@ namespace SDBS3000.Core.Models
             get => electricCompensation;
             set
             {
-                if(!plc.IsConnected && value == electricCompensation) return;
-                plc.Write("DB20.DBX440.2", value);
+                //if (!plc.IsConnected || value == electricCompensation) return;
+                //plc.Write("DB20.DBX440.2", value);
                 SetProperty(ref electricCompensation, value);
             }
         }
